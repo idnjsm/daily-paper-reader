@@ -1,0 +1,204 @@
+{
+  "mode": "skims",
+  "generated_at": "2026-07-08T11:42:01.534675+00:00",
+  "stats": {
+    "mode": "skims",
+    "forced_all_quick": true,
+    "min_score": 8.0,
+    "deep_divecandidates": 5,
+    "deep_cap": null,
+    "deep_selected": 0,
+    "quick_candidates": 5,
+    "quick_skim_target": null,
+    "quick_selected": 5
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2606.16192v1",
+      "source": "arxiv",
+      "title": "Infinite-lattice discrete Calderón projection via the lattice Green's function for active noise shielding and confinement",
+      "abstract": "We construct an infinite-lattice discrete Calderón projection for the Helmholtz equation by convolution with the lattice Green's function (LGF), and apply it to active noise shielding and confinement on Cartesian grids with arbitrary geometry. The LGF fixes the outgoing radiation condition and removes the geometry-dependent auxiliary Helmholtz problem and artificial outer boundary from the projection and control synthesis; its finite numerical tabulation depends only on $(h,k)$ and is reusable across geometries. We prove idempotence, characterize the range as the trace space of interior lattice-Helmholtz solutions, and establish range equivalence with a well-posed Tsynkov-type projection. The two projectors coincide as operators when the auxiliary problem reproduces the exact lattice radiation condition. A capacity-matrix realization yields closed-form shielding and confinement densities supported on the exterior and interior sublayers of a single lattice boundary strip, respectively. For pure-noise shielding, exterior-sublayer measurements suffice under explicit invertibility assumptions; preservation of an unknown wanted interior field requires the full strip trace. Experiments on circular, L-shaped, and star-shaped regions verify machine-precision cancellation for LGF-consistent sources and near-second-order convergence for analytic plane waves and point sources. Conditioning and measurement noise tests quantify the configuration dependence of the reconstruction.",
+      "authors": [
+        "Qing Xia"
+      ],
+      "primary_category": "math.NA",
+      "categories": [
+        "math.NA",
+        "physics.comp-ph"
+      ],
+      "published": "2026-06-15T04:10:38+00:00",
+      "link": "https://arxiv.org/pdf/2606.16192v1",
+      "tags": [
+        "keyword:deep-anc"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "directly addresses active noise shielding and confinement using mathematical projection method",
+      "llm_evidence_cn": "直接研究主动噪声屏蔽与围堵，采用数学投影方法",
+      "llm_evidence": "直接研究主动噪声屏蔽与围堵，采用数学投影方法",
+      "canonical_evidence": "直接研究主动噪声屏蔽与围堵，采用数学投影方法",
+      "llm_tldr_en": "Constructs an infinite-lattice discrete Calderon projection for Helmholtz equation via lattice Green's function, applied to active noise shielding and confinement on Cartesian grids.",
+      "llm_tldr_cn": "本文构建了无限晶格离散Calderon投影，通过晶格林函数求解亥姆霍兹方程，并应用于笛卡尔网格上的主动噪声屏蔽与围堵。该方法利用晶格林函数固定出射辐射条件，消除了几何依赖的辅助问题，数值表格仅依赖于波数和网格间距，可跨几何重复使用。理论证明了幂等性并与Tsynkov投影等价，为主动噪声控制提供了新型数学工具。",
+      "llm_tldr": "本文构建了无限晶格离散Calderon投影，通过晶格林函数求解亥姆霍兹方程，并应用于笛卡尔网格上的主动噪声屏蔽与围堵。该方法利用晶格林函数固定出射辐射条件，消除了几何依赖的辅助问题，数值表格仅依赖于波数和网格间距，可跨几何重复使用。理论证明了幂等性并与Tsynkov投影等价，为主动噪声控制提供了新型数学工具。",
+      "llm_tags": [
+        "query:deep-anc"
+      ],
+      "matched_query_tag": "query:deep-anc",
+      "matched_query_text": "active noise control",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.22563v1",
+      "source": "arxiv",
+      "title": "A DDSP Framework for Adaptive Room Equalization",
+      "abstract": "Adaptive room equalization remains challenging under time-varying acoustic conditions and complex excitation signals, such as music. In these scenarios, classical filtered-x least mean squares (Fx-LMS) methods falter due to their rigid formulation. We present a modular differentiable digital signal processing (DDSP) framework for closed-loop adaptive room equalization that recovers Fx-LMS as a special case through automatic differentiation. The framework supports interchangeable EQ structures, response estimation methods, loss functions, and optimizers. Experiments with time-varying measured room impulse responses show that frequency-domain objectives provide more stable adaptation than time-domain objectives in the considered scenarios. Relative to the non-equalized response, system distance is reduced by 70% and mel-spectral distance by 13% (worst-case scenario). We further examine how online room response estimation accuracy and frame length affect the trade-off between responsiveness and convergence stability. Overall, the framework provides a unified open-source basis for exploring synergies between classical adaptive filtering and DDSP-based optimization.",
+      "authors": [
+        "F. Marcos-Macias",
+        "M. P. Daza-Llin",
+        "M. Camara",
+        "J. L. Blanco"
+      ],
+      "primary_category": "eess.AS",
+      "categories": [
+        "eess.AS",
+        "cs.SD"
+      ],
+      "published": "2026-06-21T15:43:46+00:00",
+      "link": "https://arxiv.org/pdf/2606.22563v1",
+      "tags": [
+        "keyword:deep-anc",
+        "query:deep-anc"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "adaptive room equalization using Fx-LMS and DDSP framework",
+      "llm_evidence_cn": "使用Fx-LMS和可微数字信号处理框架的自适应房间均衡",
+      "llm_evidence": "使用Fx-LMS和可微数字信号处理框架的自适应房间均衡",
+      "canonical_evidence": "使用Fx-LMS和可微数字信号处理框架的自适应房间均衡",
+      "llm_tldr_en": "Presents a modular DDSP framework for closed-loop adaptive room equalization that recovers Fx-LMS via auto-differentiation, with experiments on time-varying RIRs showing stability.",
+      "llm_tldr_cn": "针对时变声学条件下自适应房间均衡的挑战，提出了模块化的可微数字信号处理框架，通过自动微分恢复经典Fx-LMS算法。该框架支持可互换的均衡结构和优化器，实验表明频域目标比时域更稳定，为主动噪声控制提供了灵活的自适应方法。",
+      "llm_tldr": "针对时变声学条件下自适应房间均衡的挑战，提出了模块化的可微数字信号处理框架，通过自动微分恢复经典Fx-LMS算法。该框架支持可互换的均衡结构和优化器，实验表明频域目标比时域更稳定，为主动噪声控制提供了灵活的自适应方法。",
+      "llm_tags": [
+        "query:deep-anc"
+      ],
+      "matched_query_tag": "query:deep-anc",
+      "matched_query_text": "active noise control",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.15702v1",
+      "source": "arxiv",
+      "title": "Schattor: Schatten-family methods for deep learning optimization",
+      "abstract": "Modern deep learning optimization features heterogeneous parameter structures, noisy gradients, and highly nonconvex landscapes, posing significant challenges for both algorithm design and theoretical analysis. Motivated by the limitations of SGD and the success of adaptive optimizers, we propose {\\it Schattor}, a family of adaptive first-order methods based on Schatten norms. Schattor unifies SGD and the recently proposed matrix-variate adaptive optimizer Muon within a single Schatten-norm-based framework. We establish dimension-free stationarity guarantees for methods in the Schattor family for stochastic matrix optimization problems via a novel matrix martingale moment bound. We also develop multi-block extensions that adaptively balance block-wise optimization progress and prove dimension-free stationarity guarantees in this more general setting.",
+      "authors": [
+        "Bohao Ma",
+        "Junyu Zhang",
+        "Chuan He"
+      ],
+      "primary_category": "math.OC",
+      "categories": [
+        "math.OC",
+        "cs.LG"
+      ],
+      "published": "2026-06-14T09:31:59+00:00",
+      "link": "https://arxiv.org/pdf/2606.15702v1",
+      "tags": [
+        "keyword:deep-anc",
+        "query:deep-anc"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "deep learning optimizer based on Schatten norms applicable to adaptive algorithms",
+      "llm_evidence_cn": "基于Schatten范数的深度学习优化器，可应用于自适应算法",
+      "llm_evidence": "基于Schatten范数的深度学习优化器，可应用于自适应算法",
+      "canonical_evidence": "基于Schatten范数的深度学习优化器，可应用于自适应算法",
+      "llm_tldr_en": "Introduces Schattor, a family of adaptive first-order optimizers based on Schatten norms, unifying SGD and Muon with dimension-free convergence guarantees for matrix optimization.",
+      "llm_tldr_cn": "针对深度学习优化中参数异构和梯度噪声问题，提出基于Schatten范数的自适应一阶优化器家族Schattor，统一了SGD和Muon。理论证明维度无关的驻点保证，并开发了多块扩展以自适应平衡块间优化，为自适应算法提供新优化工具。",
+      "llm_tldr": "针对深度学习优化中参数异构和梯度噪声问题，提出基于Schatten范数的自适应一阶优化器家族Schattor，统一了SGD和Muon。理论证明维度无关的驻点保证，并开发了多块扩展以自适应平衡块间优化，为自适应算法提供新优化工具。",
+      "llm_tags": [
+        "query:deep-anc"
+      ],
+      "matched_query_tag": "query:deep-anc",
+      "matched_query_text": "deep learning based optimizer for adaptive algorithms",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.21887v1",
+      "source": "arxiv",
+      "title": "Improving Engine Sound Analysis in Hot-Test Environments via a RAB-U-Net (Residual Attention Block U-Net) Noise Removal Method",
+      "abstract": "During hot tests on a production line, engine-sound analysis is crucial to ensuring product quality and performance. However, background noise often interferes with accurate sound analysis, leading to potential errors in engine diagnostics. Traditionally, skilled technicians listen to engine sounds to assess engine health, but this is prone to significant inaccuracies. This study presents an innovative deep learning-based approach to address this issue by removing background noise from engine sound recordings using a U-Net neural network structure enhanced with Residual Attention Blocks (RAB-U-Net). Our intelligent noise removal system significantly improves the accuracy of engine noise detection, outperforming traditional techniques and providing a robust solution for real-time applications in production line environments. This study proposes a novel system for engine noise detection in production lines, marking a valuable advancement for the automotive industry in applying deep learning methods to improve the quality of engine diagnostics.",
+      "authors": [
+        "Raheleh Mohseni",
+        "Mahdi Alyari"
+      ],
+      "primary_category": "cs.SD",
+      "categories": [
+        "cs.SD",
+        "cs.AI",
+        "eess.AS"
+      ],
+      "published": "2026-06-20T05:17:31+00:00",
+      "link": "https://arxiv.org/pdf/2606.21887v1",
+      "tags": [
+        "keyword:deep-anc",
+        "query:deep-anc"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "deep learning for acoustic noise reduction in engine sound",
+      "llm_evidence_cn": "深度学习用于发动机声音噪声消除",
+      "llm_evidence": "深度学习用于发动机声音噪声消除",
+      "canonical_evidence": "深度学习用于发动机声音噪声消除",
+      "llm_tldr_en": "Proposes a RAB-U-Net deep learning method to remove background noise from engine sound recordings, improving accuracy of engine diagnostics in hot-test environments.",
+      "llm_tldr_cn": "针对热测试环境中背景噪声干扰发动机声音分析的问题，本文提出了一种基于RAB-U-Net（残差注意力块U-Net）的深度学习噪声移除方法。该方法利用U-Net结构结合残差注意力机制，从发动机声音记录中有效去除背景噪声。实验表明，该方法显著提高了发动机噪声检测的准确性，优于传统人工听诊方法。这项工作展示了深度学习在工业声学噪声消除中的应用潜力。",
+      "llm_tldr": "针对热测试环境中背景噪声干扰发动机声音分析的问题，本文提出了一种基于RAB-U-Net（残差注意力块U-Net）的深度学习噪声移除方法。该方法利用U-Net结构结合残差注意力机制，从发动机声音记录中有效去除背景噪声。实验表明，该方法显著提高了发动机噪声检测的准确性，优于传统人工听诊方法。这项工作展示了深度学习在工业声学噪声消除中的应用潜力。",
+      "llm_tags": [
+        "query:deep-anc"
+      ],
+      "matched_query_tag": "query:deep-anc",
+      "matched_query_text": "deep learning in acoustic noise reduction",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.24137v1",
+      "source": "arxiv",
+      "title": "Joint Learning of Covariance Estimation and White Noise Gain for Robust MVDR Beamforming",
+      "abstract": "The minimum variance distortionless response (MVDR) beamformer is widely used for multichannel speech enhancement due to strong noise suppression while preserving target signals. In practice, its performance is sensitive to microphone self-noise and array mismatches. Existing approaches typically rely on fixed, manually tuned WNG thresholds or diagonal loading, leading to suboptimal performance under unknown or time-varying acoustic conditions. This paper proposes a data-driven MVDR framework that adaptively estimates the WNG constraint using a deep neural network. The network jointly predicts a time-frequency noise mask for covariance estimation and a frequency-dependent WNG threshold, enabling dynamic robustness-directivity control. A differentiable robust MVDR layer is integrated into the framework, allowing end-to-end optimization. Experiments demonstrate consistent improvements in speech quality and intelligibility over conventional fixed-WNG MVDR methods.",
+      "authors": [
+        "Yongyi Deng",
+        "Hanchen Pei",
+        "Jianbo Ma",
+        "Gongping Huang",
+        "Jingdong Chen",
+        "Jacob Benesty"
+      ],
+      "primary_category": "eess.AS",
+      "categories": [
+        "eess.AS",
+        "cs.SD"
+      ],
+      "published": "2026-06-23T04:44:54+00:00",
+      "link": "https://arxiv.org/pdf/2606.24137v1",
+      "tags": [
+        "keyword:deep-anc",
+        "query:deep-anc"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "uses deep neural network for adaptive beamforming with noise suppression, related to adaptive filtering with deep learning",
+      "llm_evidence_cn": "使用深度神经网络进行自适应波束形成实现噪声抑制，与深度学习自适应滤波相关",
+      "llm_evidence": "使用深度神经网络进行自适应波束形成实现噪声抑制，与深度学习自适应滤波相关",
+      "canonical_evidence": "使用深度神经网络进行自适应波束形成实现噪声抑制，与深度学习自适应滤波相关",
+      "llm_tldr_en": "Proposes a data-driven MVDR beamforming framework that jointly learns covariance estimation and white noise gain constraint via a deep neural network, achieving dynamic robustness-directivity control.",
+      "llm_tldr_cn": "针对传统MVDR波束形成对麦克风自噪声和阵列失配敏感的问题，本文提出数据驱动框架，利用深度神经网络联合预测时频噪声掩码和频率相关的白噪声增益阈值，实现动态鲁棒性与指向性控制。该方法显著提升了在未知和时变声学环境下的噪声抑制性能，是深度学习在自适应滤波中的典型应用。",
+      "llm_tldr": "针对传统MVDR波束形成对麦克风自噪声和阵列失配敏感的问题，本文提出数据驱动框架，利用深度神经网络联合预测时频噪声掩码和频率相关的白噪声增益阈值，实现动态鲁棒性与指向性控制。该方法显著提升了在未知和时变声学环境下的噪声抑制性能，是深度学习在自适应滤波中的典型应用。",
+      "llm_tags": [
+        "query:deep-anc"
+      ],
+      "matched_query_tag": "query:deep-anc",
+      "matched_query_text": "adaptive filtering with deep learning",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    }
+  ]
+}

@@ -1,0 +1,1426 @@
+Title: Infinite-lattice discrete Calderón projection via the lattice Green's function for active noise shielding and confinement
+
+URL Source: https://arxiv.org/pdf/2606.16192v1
+
+Published Time: Tue, 16 Jun 2026 01:39:48 GMT
+
+Number of Pages: 21
+
+Markdown Content:
+# Infinite-lattice discrete Calderón projection via the lattice Green’s function for active noise shielding and confinement 
+
+Qing Xia ∗
+
+Department of Mathematics, Wenzhou Kean University, Wenzhou 325060, China 
+
+Abstract 
+
+We construct an infinite-lattice discrete Calderón projection for the Helmholtz equation by convolution with the lattice Green’s function (LGF), and apply it to active noise shielding and confinement on Cartesian grids with arbitrary geometry. The LGF fixes the outgoing radiation condition and removes the geometry-dependent auxiliary Helmholtz problem and artificial outer boundary from the projection and control synthesis; its finite numerical tabulation depends only on (h, k ) and is reusable across geometries. We prove idempotence, characterize the range as the trace space of interior lattice-Helmholtz solutions, and establish range equivalence with a well-posed Tsynkov-type projection. The two projectors coincide as operators when the auxiliary problem reproduces the exact lattice radiation condition. A capacity-matrix realization yields closed-form shielding and confinement densities supported on the exterior and interior sublayers of a single lattice boundary strip, respectively. For pure-noise shielding, exterior-sublayer measurements suffice under explicit invertibility assumptions; preservation of an unknown wanted interior field requires the full strip trace. Experiments on circular, L-shaped, and star-shaped regions verify machine-precision cancellation for LGF-consistent sources and near-second-order convergence for analytic plane waves and point sources. Conditioning and measurement noise tests quantify the configuration dependence of the reconstruction. 
+
+Keywords: active noise control; active shielding; Helmholtz equation; lattice Green’s function; discrete Calderón projection; one-sided measurement 
+
+## 1 Introduction 
+
+Active noise control (ANC) suppresses acoustic disturbances by radiating a secondary field that cancels the adverse field in a prescribed region. Since Lueg’s 1936 patent [ 1 ], ANC has developed from single-point adaptive filtering to spatial wave-domain control and multi-zone sound reproduction [ 2, 3, 4, 5]. The central challenge for extended regions is to construct a physically outgoing control field that acts through boundary data while remaining insensitive to the unknown source configuration. A complementary mathematical approach was initiated by Lončarić, Ryaben’kii, and Tsynkov [ 6 ], who reformulated ANC through Calderón boundary projections and generalized surface potentials. In this framework, the total time-harmonic field decomposes into outgoing and ingoing components relative to the protected region Ωin , and the controls are obtained from the trace of the total field alone on ∂Ωin , without prior knowledge of the noise sources, the wanted interior sources, or the medium parameters outside a neighbourhood of ∂Ωin . The discrete realization through the method of difference potentials was developed in [ 7, 8 ], extended 
+
+> ∗Corresponding author: qxia@kean.edu
+
+1
+
+> arXiv:2606.16192v1 [math.NA] 15 Jun 2026
+
+to composite domains in [ 9, 10 ], optimised in [ 11 , 12 ], validated experimentally on ducts in [13 , 14 ], and carried to three dimensions in [ 15 , 16 , 17 ]. The nonlocal active sound control (NASC) scheme of Utyuzhnikov, Hu, and Zhou [ 18 , 19 , 20 , 21 ] places two concentric Huygens surfaces around the protected region and is the most advanced practical realization of this programme to date. In all these works, the discrete Calderón projection P hγ is constructed on a finite auxiliary domain Ω0 ⊃ Ωin by inverting the Helmholtz operator on Ω0 with a chosen outer boundary condition. This paper presents an alternative construction that replaces the finite auxiliary inverse by convolution with the Helmholtz lattice Green’s function (LGF) on the infinite lattice 
+
+hZd. The resulting projection is infinite-lattice: no artificial outer boundary enters the discrete wave representation. Its implementation uses the finite LGF tabulation of [ 22 ], which depends only on (h, k ) and is independent of the protected geometry. The framework handles both 
+
+shielding (cancelling exterior noise inside a protected region) and its dual, confinement (cancelling interior noise outside), through complementary projections. Our main contributions are as follows. 1. Infinite-lattice projection and trace space. We define P hγ by LGF convolution, prove that it is a projection, and characterize its range as the trace space of interior lattice-Helmholtz solutions. This range agrees with that of any well-posed Tsynkov-type construction, while the LGF selects the outgoing complement directly through the lattice radiation condition. 2. Capacity-matrix control formulas. A single dense solve on the lattice boundary strip separates the two Calderón components. The exterior-sublayer density cancels adverse sound inside the protected region while preserving wanted interior sound; the interior-sublayer density gives the dual confinement control and preserves an ambient exterior field. 3. Conditional one-sided sensing. For pure-noise shielding, measurements on γ− determine the missing interior trace when the exterior single-layer matrix and the interior Dirichlet map are invertible. An unknown wanted interior field requires the full two-sided trace or prior subtraction of its known contribution. 4. Geometry-independent discretization and validation. Level-set classification extracts the boundary strip without body fitting. Two-dimensional tests on circular, reentrant, and non-convex regions verify the exact discrete identities, near-second-order accuracy for analytic fields, and the effects of conditioning and measurement noise. The theory itself applies in d ∈ { 2, 3}.The use of lattice Green’s functions for Helmholtz problems has a substantial history. Bamberger, Guillot, and Joly [ 23 ] pioneered the numerical treatment of diffraction by a uniform grid using discrete Fourier techniques. Martin [ 24 ] developed a discrete scattering theory and derived the Green’s function for a square lattice via contour integration. Bhat and Osting [ 25 ]extended this to diffraction problems on the two-dimensional square lattice with detailed asymptotic analysis. Poblet-Puig, Valyaev, and Shanin [ 26 ] identified and suppressed spurious frequencies in discrete scattering through boundary algebraic and combined field equations, and Poblet-Puig and Shanin [27] applied these techniques to acoustic radiation problems. The Helmholtz LGF used here is computed by the method of Wang and Xia [ 22 ], which combines a discrete sine transform with a Hankel-function boundary correction. The new contribution is the use of this outgoing infinite-lattice kernel to realize the discrete Calderón projection and its active controls entirely through boundary-strip algebra. The theory is formulated for d ∈ { 2, 3}; the numerical study is restricted to two dimensions. Section 2 introduces the lattice geometry and LGF. Sections 3–6 develop the projection, control formulas, and one-sided reconstruction; Sections 7 and 8 present the numerical results and computational realization. 2M + (interior)      
+
+> ■γ−(exterior boundary layer) ◦γ+(interior boundary layer)
+
+Figure 1: Cartesian lattice Λh = hZ2 with a rectangular protected region M + (blue). The boundary strip γ = γ+ ∪ γ− is the set of lattice nodes whose 5-point stencil straddles the boundary: γ+ (orange) lies just inside M +, γ− (red) lies just outside. The shielding control gh
+
+is supported on the single exterior layer γ−.
+
+## 2 Preliminaries: lattice, Helmholtz LGF, boundary strip 
+
+Lattice Fix h > 0 and let Λh = hZd, d ∈ { 2, 3}. Grid functions are maps vh : Λ h → C with appropriate summability. We denote by Lh the standard second-order finite-difference Helmholtz operator at wavenumber k,
+
+(Lhvh)m = − 1
+
+h2
+
+∑
+
+> |e|1=1
+
+(vh 
+
+> m+e
+
+− vh
+
+> m
+
+) − k2vh
+
+> m
+
+, m ∈ Zd. (1) 
+
+Protected region, lattice subsets, boundary strip Let Ωin ⊂ Rd be a bounded Lipschitz domain with Γb = ∂Ωin , not assumed to align with Λh. Define M + = {m ∈ Zd : hm ∈
+
+Ωin }, M − = {m ∈ Zd : hm /∈ Ωin }. The five- or seven-point stencil sweep of Lh on M ± produces extended sets N ±, and the lattice boundary strip is γ = N + ∩ N −, split into γ+ = γ ∩ M + and 
+
+γ− = γ ∩ M − [7 , 22 ]. Functions supported on γ play the role of boundary-strip densities and form the finite-dimensional trace space relevant to ANC. 
+
+Helmholtz LGF The Helmholtz LGF Gh on Λh is the tempered fundamental solution of Lh
+
+selected by the Sommerfeld radiation condition, 
+
+Gh 
+
+> m
+
+= 1(2 π)d
+
+∫
+
+> [−π,π ]d
+
+ei m·θ
+
+σ(θ) − k2h2 + i0+ dθ, σ(θ) = 
+
+> d
+
+∑
+
+> j=1
+
+2(1 − cos θj ). (2) Efficient evaluation of Gh is provided in [ 22 ]; for the classical theory of discrete scattering and lattice Green’s functions see [ 23 , 24 , 25 ]. With the normalization in (2) , LhGh = h−2δ0. We therefore define the lattice convolution by 
+
+(Gh ∗ vh)m := h2 ∑
+
+> n∈Zd
+
+Gh
+
+> m−n
+
+vh
+
+> n
+
+. (3) For compactly supported lattice functions this convention gives 
+
+Lh(Gh ∗ vh) = vh, (4) and selects the outgoing solution. The sum is finite for compactly supported vh.3Total boundary trace                                  
+
+> uh|γ
+> Discrete decomposition
+> Noise component
+> uh, −|γ=Phγ
+> (uh|γ
+> )
+> uh, −|γ∈Im Phγ
+> Wanted component
+> uh, +|γ= ( I−Phγ)(uh|γ
+> )
+> uh, +|γ∈ker Phγ
+> Control source
+> gh=−(LhVh)1M−
+> supp gh⊂γ−
+> Controlled field in the protected region
+> ˜uh|M+=uh, +|M+
+> noise cancelled; wanted sound preserved
+> PhγI−Phγ
+> control synthesis
+> cancellation
+> preserved
+> discrete boundary projection
+
+Figure 2: Conceptual structure of the LGF Calderón projection for ANC shielding. The total-field trace on γ is decomposed by P hγ into a noise component uh, −|γ ∈ Im P hγ and a wanted component uh, +|γ ∈ ker P hγ . The closed-form control gh is supported on the single exterior layer 
+
+γ− and cancels the noise on M + while leaving the wanted field unaltered. 
+
+Nonresonance assumption Throughout, we assume that k2 is not a Dirichlet eigenvalue of the discrete Laplacian on M + with homogeneous data on γ. Equivalently, the interior lattice Helmholtz problem Lhuh = 0 on M + with uh|γ = 0 admits only the trivial solution. This guarantees unique solvability of the interior Dirichlet problem and well-posedness of the Calderón projection. In computation this condition is not binary in a robust sense: proximity of k2 to the discrete Dirichlet spectrum appears as a small singular value of the relevant capacity or Dirichlet map and can substantially amplify perturbations. We therefore report condition numbers under grid refinement in Section 7.6; because both the difference operator and the staircase geometry change with h, closeness to a discrete resonance need not vary monotonically. 
+
+Boundary-strip classification Figure 1 illustrates the setup. The sets M ± and the boundary strip γ = γ+ ∪ γ− are computed from a level-set function ϕ describing Ωin by a single 5-point stencil sweep over the lattice. No cut-cell interpolation, body-fitting, or surface meshing is required; the protected region geometry enters the method only through this classification step. 
+
+## 3 LGF-based discrete Calderón projection 
+
+3.1 Definition 
+
+Figure 2 sketches the conceptual structure of the LGF projection and the resulting shielding control. Let ξγ : γ → C be a grid density. We call V h : Λ h → C an admissible extension of ξγ if 
+
+V h|γ = ξγ , LhV h has finite support, and either V h is compactly supported or it is the outgoing 4solution generated by LhV h. For either class, uniqueness of the outgoing lattice problem gives 
+
+Gh ∗ LhV h = V h. Compactly supported extensions always exist; the outgoing class includes the single-layer realization used in Theorem 4.3. For any admissible extension define 
+
+P h ξγ := V h − Gh ∗ [(LhV h) 1M +
+
+] = Gh ∗ [(LhV h) 1M −
+
+], (5) and let P hγ ξγ := ( P hξγ )|γ .
+
+Remark 3.1 (Comparison with [ 7 ]) . The formula (5) replaces the volumetric inverse (Lh 
+
+> Ω0
+
+)−1
+
+of [ 7] by convolution with Gh. Because Gh is finite at the origin and already satisfies the lattice radiation condition, the projection requires neither singularity subtraction nor a geometry-dependent artificial outer boundary. The finite tabulation used in computation approximates this infinite-lattice kernel. 
+
+3.2 Main properties 
+
+Theorem 3.2 (LGF discrete Calderón projection) . Assume the nonresonance condition of Section 2 (the interior lattice Dirichlet problem on M + is uniquely solvable). Then: (i) P hγ is independent of the chosen extension V h.(ii) P hγ is idempotent: (P hγ )2 = P hγ .(iii) ξγ ∈ Im P hγ if and only if there exists uh : N + → C with Lhuh = 0 on M + and uh|γ = ξγ ;in that case P hξγ |N + = uh.Proof. Let V h 
+
+> 1
+
+and V h 
+
+> 2
+
+be admissible extensions of the same trace and set W h = V h 
+
+> 1
+
+− V h 
+
+> 2
+
+.Write W h = W h 
+
+> +
+
++ W h
+
+> −
+
+, where W h 
+
+> ±
+
+= W h1M ± . Since W h|γ = 0 , the stencil coupling across the boundary gives 
+
+(LhW h)1M + = LhW h
+
+> +
+
+.
+
+Hence the difference between the two potentials defined by (5) is 
+
+W h − Gh ∗ [(LhW h)1M +
+
+] = W h − Gh ∗ LhW h 
+
+> +
+
+= W h
+
+> −
+
+.
+
+The function W h 
+
+> −
+
+vanishes on N +: away from the strip it is supported in M −, while on the exterior strip nodes γ− ⊂ N + it vanishes because W h|γ = 0 . Thus P hξγ |N + , and in particular its trace on γ, is independent of the extension. This proves (i). For (ii), let uh = P hξγ |N + and ηγ = uh|γ = P hγ ξγ . Applying Lh to (5) shows that Lhuh = 0 
+
+on M +. Choose a compactly supported extension U h of uh that agrees with it on N +. Then 
+
+(LhU h)1M + = 0 , and therefore 
+
+P hηγ |N + = U h|N + = uh.
+
+Taking the trace on γ yields P hγ ηγ = ηγ , which is (P hγ )2 = P hγ .For (iii), if ξγ ∈ Im P hγ , write ξγ = P hγ μγ . The function uh = P hμγ |N + is lattice Helmholtz on M + and has trace ξγ . Conversely, suppose that Lhuh = 0 on M + and uh|γ = ξγ . Choose a compactly supported extension U h agreeing with uh on N +. Since (LhU h)1M + = 0 , equation (5) gives P hξγ |N + = uh and hence P hγ ξγ = ξγ . Thus ξγ ∈ Im P hγ .53.3 Comparison with the Tsynkov projection 
+
+The LGF and Tsynkov constructions identify the same canonical range: the traces of interior lattice-Helmholtz solutions on N +. Their complementary exterior trace spaces depend on the radiation treatment; the LGF encodes the infinite-lattice outgoing condition, whereas a bounded auxiliary problem encodes its chosen outer boundary operator. 
+
+Theorem 3.3 (Range equivalence) . Under the hypothesis of Theorem 3.2, Im P hγ = Im P hγ, Ω0
+
+for any Tsynkov-type discrete Calderón projection P hγ, Ω0 constructed from a well-posed auxiliary problem on a bounded lattice-aligned domain Ω0 ⊃ Ωin . Both projections therefore characterize the same space of lattice-Helmholtz traces on γ.Proof. By Theorem 3.2(iii), Im P hγ consists of traces on γ of lattice-Helmholtz solutions uh
+
+satisfying Lhuh = 0 on M +. The defining property of any Tsynkov-type projection [ 7 ] implies the same characterization for Im P hγ, Ω0 . The two sets are therefore equal. 
+
+Remark 3.4 . If Ω0 is equipped with an exact discrete transparent boundary condition that reproduces the lattice Green’s function on ∂M 0, then the two projections coincide as operators, 
+
+P hγ, Ω0 = P hγ . With an approximate outer condition, Theorem 3.3 asserts equality of the ranges only. The projectors may have different kernels and may therefore act differently on a general trace; equality of the resulting control fields requires an additional consistency or error analysis. 
+
+## 4 Interior cancellation from the total-field trace 
+
+4.1 Setting 
+
+Consider the continuous Helmholtz equation on Rd with source f = f + + f − supported respectively inside and outside Ωin , and the outgoing Sommerfeld radiation condition. Here 
+
+f + is the wanted interior sound and f − is the adverse exterior noise. Let u± be the outgoing solutions of Lu ± = f ±; then u = u+ + u−.Discretize on Λh with localized source vectors f h, ± on M ±. The discrete ANC problem asks for a control gh with supp gh ⊆ M − such that the solution ˜uh of 
+
+Lh ˜uh = f h, + + f h, − + gh on Λh, (6) with outgoing LGF tails, satisfies ˜uh|N + = uh, +|N + , where uh, + = Gh ∗ f h, +.
+
+4.2 Kernel of the projection 
+
+Definition 4.1 (Exterior LGF projection) . For ξγ : γ → C, pick any admissible extension V h
+
+with V h|γ = ξγ and set Qhξγ := V h − Gh ∗ [( LhV h)1M − ], Qhγ ξγ := ( Qhξγ )|γ .
+
+Proposition 4.2 (Complementarity) . Under the hypothesis of Theorem 3.2 (and the outgoing character of Gh for the exterior side), the operator Qhγ is a projection onto the trace space of outgoing lattice-Helmholtz solutions on M − ∪ γ, and 
+
+P hγ + Qhγ = I γ . (7) The proof repeats Theorem 3.2 with M + replaced by M −; (7) follows by adding (5) and the corresponding Qh formula and using Gh ∗ LhV h = V h.The following theorem is the computational core of the method: after one dense solve on the boundary strip, the two sublayer densities generate the shielding and confinement components separately. 6Theorem 4.3 (Capacity-matrix realization) . Let 
+
+(Sγγ )ij = h2Gh(γi − γj ), γi, γ j ∈ γ, 
+
+and assume that Sγγ is nonsingular. For a trace ξγ , let λ = S−1 
+
+> γγ
+
+ξγ and extend λ by zero away from γ. Set V h = Gh ∗ λ and λ± = λ1γ± . This is the outgoing admissible extension from Section 3; compact support of V h is not required. Then V h|γ = ξγ , LhV h = λ, and 
+
+P hξγ = Gh ∗ λ−, Qhξγ = Gh ∗ λ+. (8) 
+
+Consequently, the single-layer shielding and confinement controls are gh 
+
+> sh
+
+= −λ− and gh 
+
+> conf
+
+= −λ+,respectively. Proof. The capacity equation gives V h|γ = ξγ , while (4) gives LhV h = λ. Since γ+ ⊂ M + and 
+
+γ− ⊂ M −, substitution in (5) yields 
+
+P hξγ = Gh ∗ λ − Gh ∗ (λ1M + ) = Gh ∗ λ−.
+
+The identity for Qh follows analogously, and the control formulas follow by changing the sign of the corresponding projected field. 
+
+Proposition 4.4. Under the hypothesis of Theorem 3.2, ker P hγ = Im Qhγ , and ℓ2(γ) = Im P hγ ⊕
+
+Im Qhγ .
+
+This is the discrete counterpart of the classical Calderón decomposition into interior- and exterior-extendable traces. It is an immediate algebraic consequence of Proposition 4.2: since 
+
+Qhγ = I γ − P hγ and P hγ is a projection, 
+
+Im Qhγ = ker P hγ , ℓ2(γ) = Im P hγ ⊕ Im Qhγ .
+
+4.3 Closed-form shielding control 
+
+Theorem 4.5 (Closed-form control) . Under the hypothesis of Theorem 3.2, given the measured boundary-strip trace ξγ = uh|γ of the total field, pick any compactly supported V h with V h|γ = ξγ .Define 
+
+gh = −(LhV h) · 1M − . (9) 
+
+Then the solution ˜uh of (6) satisfies 
+
+˜uh∣∣N + = uh, +∣∣N + . (10) 
+
+Equivalently, the adverse component is cancelled inside the protected region while the wanted component is preserved. Furthermore, gh is independent of V h up to an additive term annihilated on N + by LGF convolution. Proof. Decompose the total field on the lattice as uh = uh, + + uh, −, where uh, ± is the outgoing LGF solution of Lhuh, ± = f h, ±; in particular 
+
+Lhuh, − = 0 on M +, Lhuh, + = 0 on M −. (11) Let ξγ = uh|γ , and pick any compactly supported extension V h with V h|γ = ξγ .From (9) and (4), the control response on the lattice is 
+
+wh = Gh ∗ gh = − Gh ∗ [(LhV h) 1M −
+
+]. (12) 7Since 1M + + 1M − = 1Λh and Gh ∗ LhV h = V h by (4), we rewrite the exterior convolution as 
+
+Gh ∗ [(LhV h) 1M −
+
+] = V h − Gh ∗ [(LhV h) 1M +
+
+]. (13) Substituting into (12) and restricting to N +,
+
+wh∣∣N + = (Gh ∗ [(LhV h) 1M +
+
+] − V h)∣∣∣N + = − P h ξγ
+
+∣∣N + , (14) by the definition (5) of the discrete Calderón potential. By linearity of P h,
+
+P h ξγ = P h(uh, +|γ
+
+) + P h(uh, −|γ
+
+). (15) We evaluate the two terms separately on N +.
+
+(a) Noise component lies in the range. By (11) , uh, − satisfies Lhuh, − = 0 on M + and has trace uh, −|γ on γ. By Theorem 3.2(iii), 
+
+P h(uh, −|γ
+
+)∣ ∣N + = uh, −∣∣N + . (16) 
+
+(b) Wanted component lies in the kernel. By (11) , uh, + satisfies Lhuh, + = 0 on M −, i.e. uh, +
+
+is an outgoing lattice-Helmholtz solution on the exterior M −. By Proposition 4.4, such a trace lies in the kernel of P hγ on N +:
+
+P h(uh, +|γ
+
+)∣ ∣N + = 0 . (17) Combining (15), (16), and (17), 
+
+P h ξγ
+
+∣∣N + = uh, −∣∣N + . (18) Substituting (18) into (14), 
+
+wh∣∣N + = − uh, −∣∣N + . (19) By linearity, ˜uh = uh, + + uh, − + wh, and therefore 
+
+˜uh∣∣N + = (uh, + + uh, − − uh, −)∣ ∣N + = uh, +∣∣N + , (20) which is (10). 
+
+Proposition 4.6 (Control support) . Assume that the capacity matrix Sγγ is nonsingular. Then the shielding control can be chosen with supp gh ⊆ γ−, i.e. on the single exterior lattice layer adjacent to the protected region. Proof. Apply Theorem 4.3. The admissible extension V h = Gh ∗ λ satisfies LhV h = λ with 
+
+supp λ ⊆ γ. Therefore 
+
+gh = −(LhV h)1M − = −λ1γ− ,
+
+which has the asserted support. 
+
+Remark 4.7 . The crossing nodes of γ− constitute the admissible actuator layer. A particular density may vanish at some of these nodes, so minimality is understood in terms of the available support rather than nonzero amplitude at every node. The resulting control has the form of a discrete single-layer potential on the exterior boundary strip. 8Theorem 4.8 (Volumetric cancellation with wanted-sound preservation) . Under the hypotheses of Theorem 4.5, ˜uh|M + = uh, +|M + , and outside Ωin the controlled field is the sum of the original total field and the outgoing LGF response of gh. The wanted interior sound is preserved exactly; the control is a physically outgoing field generated by secondary sources on a single exterior layer adjacent to Γb.Remark 4.9 (Measurement noise) . For the capacity realization, δλ = S−1 
+
+> γγ
+
+δξ γ . Hence, in the Euclidean norm, 
+
+∥δλ ∥2
+
+∥λ∥2
+
+≤ κ2(Sγγ ) ∥δξ γ ∥2
+
+∥ξγ ∥2
+
+,
+
+whenever the denominators are nonzero. This is a worst-case finite-dimensional perturbation bound for the density. For the field evaluated on a target set X, an additional operator factor appears: 
+
+∥δu h∥2,X ≤ ∥ h2Gh(X, γ )∥2∥S−1 
+
+> γγ
+
+∥2∥δξ γ ∥2.
+
+Thus the condition number alone does not determine the physical-field error. No monotone asymptotic law in h is assumed. The experiments in Section 7 show a noise floor set jointly by discretisation error and matrix conditioning, consistent with the observations in [13, 14]. 
+
+## 5 Exterior cancellation from the total-field trace: acoustic con-finement of interior noise 
+
+5.1 Motivation and setting 
+
+The shielding problem of Section 4 cancels exterior noise inside Ωin . A dual problem, of equal practical relevance, is acoustic confinement : an adverse source lies inside Ωin (a loud machine, a speaker in a meeting pod), and one seeks controls supported near the boundary from the interior side that cancel the adverse field outside Ωin while preserving any ambient exterior sound. The LGF construction handles both sides symmetrically because convolution with Gh respects the radiation condition regardless of source location. Let fadv be the interior adverse source (to be confined) and famb the exterior ambient source (to be preserved). The confinement problem asks for a control g with supp g ⊆ Ωin such that the modified field satisfies ˜u = uamb outside Ωin .
+
+5.2 Discrete confinement and dual projection 
+
+On the lattice, seek gh with supp gh ⊆ M + such that the solution ˜uh of Lh ˜uh = f h 
+
+> adv
+
++ f h 
+
+> amb
+
++ gh
+
+satisfies ˜uh|N − = uh
+
+> amb
+
+|N − . This is the exact dual of the shielding constraint on N +.Define the exterior LGF projection Qhξγ := V h − Gh ∗ [( LhV h) 1M − ], Qhγ ξγ := ( Qhξγ )|γ .Under nonresonance, Qhγ is a projection onto the trace space of outgoing lattice-Helmholtz solutions on M − ∪ γ, and P hγ + Qhγ = I γ [6]. 
+
+Theorem 5.1 (Closed-form confinement control) . Assume the hypothesis of Proposition 4.2. Given the measured boundary trace ξγ = uh|γ , pick any compactly supported extension V h with 
+
+V h|γ = ξγ and define 
+
+gh = −(LhV h) · 1M + . (21) 
+
+Then ˜uh|M −∪γ = uh
+
+> amb
+
+|M −∪γ : the adverse interior field is cancelled exactly outside Ωin while the ambient exterior field is preserved. 
+
+9Proof. Let wh = Gh ∗ gh. From the definition of Qh and (21), 
+
+wh = −Gh ∗ [(LhV h)1M +
+
+] = −Qhξγ .
+
+Write the measured trace as ξγ = uh
+
+> adv
+
+|γ + uh
+
+> amb
+
+|γ . The field generated by the interior adverse source is outgoing and lattice Helmholtz on M −, so its trace lies in Im Qhγ and 
+
+Qh(uh
+
+> adv
+
+|γ )|N − = uh
+
+> adv
+
+|N − .
+
+The ambient exterior field is lattice Helmholtz on M +, so its trace lies in Im P hγ = ker Qhγ .Therefore Qhξγ |N − = uh
+
+> adv
+
+|N − and wh|N − = −uh
+
+> adv
+
+|N − . It follows that ˜uh|N − = uh
+
+> amb
+
+|N − . Under the capacity-matrix hypothesis of Theorem 4.3, the control is gh = −λ+ and is supported on 
+
+γ+.
+
+Remark 5.2 . The confinement control (21) differs from the shielding control (9) only in the indicator: 1M + for confinement versus 1M − for shielding. The two controls are supported on opposite sides of the boundary strip ( γ+ versus γ−) and cancel the adverse field on opposite sides of Ωin . The identity P hγ + Qhγ = I γ expresses a decomposition of the trace space, not simultaneous satisfaction of two preservation objectives. Adding the shielding and confinement densities gives −λ in the capacity realization and generally cancels the full represented trace; a combined design therefore requires its own coupled objective. 
+
+## 6 One-sided measurement for pure-noise shielding 
+
+The full shielding construction uses the trace on γ = γ+ ∪ γ−. We now consider the restricted setting in which no unknown wanted source is present and only the exterior-layer trace is measured. The result requires two additional invertibility assumptions, which also expose the possible instability of the reconstruction. Let 
+
+S−− = h2Gh(γ−, γ −), S+− = h2Gh(γ+, γ −),
+
+where the first argument denotes target nodes and the second source nodes. Assume that S−− 
+
+is nonsingular and that the interior lattice Dirichlet problem on M + with prescribed values on 
+
+γ− is uniquely solvable. Given ξγ− , define 
+
+T − 
+
+> h
+
+:= S+−S−1
+
+> −−
+
+, ξγ+ = T − 
+
+> h
+
+ξγ− . (22) The reconstruction matrix has size |γ+| × | γ−| and satisfies 
+
+∥T − 
+
+> h
+
+∥2 = ∥S+−S−1
+
+> −−
+
+∥2 ≤ ∥S+−∥2
+
+σmin (S−− ) . (23) Thus a small singular value of S−− can strongly amplify measurement or discretisation errors. The displayed estimate is a worst-case submultiplicative bound; equality would additionally require alignment of the relevant singular directions, so typical amplification may be milder. 
+
+Theorem 6.1 (One-sided measurement for pure-noise shielding) . Assume the hypotheses above and suppose that f h, + = 0 . Let ξγ− = uh, −|γ− and set 
+
+λ− = S−1
+
+> −−
+
+ξγ− , vh = Gh ∗ λ−,
+
+where λ− is extended by zero away from γ−. Then vh|N + = uh, −|N + , and the control 
+
+gh 
+
+> −
+
+= −λ− on γ−, gh 
+
+> −
+
+= 0 elsewhere , (24) 
+
+produces ˜uh|N + = 0 .
+
+10 Table 1: Convergence of one-sided ( γ−-only) vs. two-sided shielding (circle, k = 5 , analytic point source). 
+
+n h Two-sided εrel One-sided εrel εone /ε two Rate 31 1.34 ×10 −1 2.55 ×10 −2 5.04 ×10 −2 2.0 –63 6.72 ×10 −2 8.20 ×10 −3 1.90 ×10 −2 2.3 1.40 127 3.36 ×10 −2 2.16 ×10 −3 6.96 ×10 −3 3.2 1.45 255 1.68 ×10 −2 5.41 ×10 −4 2.17 ×10 −3 4.0 1.68 
+
+Proof. By construction, vh|γ− = ξγ− . Both vh and uh, − satisfy the homogeneous lattice Helmholtz equation on M +. Their difference therefore solves the interior homogeneous problem with zero data on γ−, and uniqueness gives vh = uh, − on N +. The field generated by gh 
+
+> −
+
+is −vh,so it cancels uh, − on N +. Equation (22) is obtained by evaluating vh on γ+.If an unknown wanted interior source is present, the measured value on γ− is uh, −|γ− +uh, +|γ− .The second component is not generally determined by a homogeneous interior extension from 
+
+γ−, and applying T − 
+
+> h
+
+to the total measurement need not reproduce the true trace on γ+.Consequently, one-sided data alone do not in general preserve an unknown wanted field. The full two-sided trace, or prior subtraction of a known wanted field, is then required. 
+
+Numerical verification. Table 1 reports a grid-refinement study for an analytic point source on the circular region. The one-sided residual is larger than the two-sided residual and the observed rate increases from approximately 1.4 to 1.7. These tests include consistency error because the analytic source does not satisfy the lattice equation exactly. 
+
+Remark 6.2 (Practical interpretation) . The reconstruction T − 
+
+> h
+
+is relevant when microphones are available only outside the protected region and the measured field is pure adverse noise, or when a known wanted contribution has first been subtracted. It is a geometry- and frequency-dependent map and should be monitored through (23) ; it is not a uniformly stable replacement for two-sided measurement. 
+
+Connection to NASC. The nonlocal active sound control scheme of Utyuzhnikov, Hu, and Zhou [ 18 , 19 , 20 , 21 ] uses two geometrically separated Huygens surfaces: an observation surface supplies field data and a control surface carries equivalent secondary sources. The present boundary strip γ = γ+ ∪ γ− is the lattice counterpart of this two-surface structure, but the two sublayers are one stencil apart and arise from the discrete operator rather than from independently meshed physical surfaces. The map T − 
+
+> h
+
+transfers measurements from γ− to the missing trace on γ+, after which the capacity solve produces the control density. Under the stated invertibility assumptions this map is exact for the discrete pure-noise problem; its practical stability is governed by the singular values in (23) . NASC permits more flexible physical separation of sensing and actuation surfaces, whereas the present result emphasizes an exact boundary-strip algebra on a Cartesian lattice. 
+
+## 7 Numerical experiments 
+
+All numerical experiments are two-dimensional. We validate the control construction on three geometries: (a) a circular protected region of radius 0.5 centered at the origin; (b) an L-shaped region (bounding square 1.4 × 1.4, arm thickness 0.3); (c) a star-shaped region with radial profile 
+
+r(θ) = 0 .5 + 0 .12 cos (5 θ). All experiments use the same lattice: n = 2 7 − 1 = 127 nodes per dimension over the sampling window [−2.15 , 2.15] 2, with mesh spacing h ≈ 0.0336 , wavenumber 
+
+k = 5 (roughly 38 points per wavelength). The LGF is precomputed on [0 , n − 1] 2 by the DST-with-Hankel-correction method of [22]. 11 Incident fields. Two classes of incident field are used. LGF-constructed point sources are built by placing a discrete delta at the nearest lattice node and convolving with the precomputed LGF Gh: uh 
+
+> LGF
+
+= Gh ∗ δm0 . These fields satisfy the discrete Helmholtz equation exactly, and the shielding control cancels them to machine precision — a verification of the algebraic identity. 
+
+Analytic incident fields are evaluated from their continuum formulas directly on the grid: 
+
+upw (x) = eik d·x (plane wave) and 
+
+ups (x) = i
+
+4 H(1) 0 (k|x − xs|) (point source, free-space Hankel function) These do not satisfy the discrete Helmholtz equation; the residual after shielding is therefore con-trolled by the discretisation error of the 5-point Laplacian and the boundary-strip approximation. Heuristically, the smooth-field consistency error of the five-point operator is O(h2) away from a source, while sampling the continuum field on a staircase boundary strip introduces geometry-and source-distance-dependent pre-asymptotic terms. For a Hankel source outside the protected region, the solution is smooth inside but its higher derivatives grow as the source approaches the strip. The measured rates therefore need not be exactly two on the available grids, even though the finite-difference consistency error is second order. For the circular region at k = 5 on the 
+
+127 × 127 grid, the analytic point source and plane wave give comparable residuals ( 2.2 × 10 −3
+
+and 2.0 × 10 −3), consistent with a common discretisation floor. Unless stated otherwise, the experiments in Sections 7.1–7.2 use LGF-constructed sources (self-consistency check), while Sections 7.3–7.5 use analytic sources (discretisation-error test). Source positions are given in Table 2. Table 2: Computational setup and source positions. Geometry |M +| |γ| (|γ−|) x− 
+
+> 0
+
+(noise) x+0 (wanted) Circle ( r = 0 .5) 697 172 (88) (0 .9, 0) (0 , 0) 
+
+L-shape 830 322 (163) (1 .0, 0.5) (−0.2, −0.55) 
+
+Star (5-fold) 773 212 (108) (0 .9, 0) (0 , 0) 
+
+7.1 Noise shielding 
+
+We first verify the full-density shielding control with LGF-constructed point sources, which satisfy the discrete Helmholtz equation exactly. Figure 3 shows the magnitude of the total field before and after control for all three geometries. Before control, the point-source field radiates through the protected region, producing complex interference patterns that are visible even in the L-shaped and star-shaped regions. After control, the residual is at machine precision for the smooth circular, reentrant L-shaped, and non-convex star-shaped regions. Control nodes on γ−
+
+are shown as cyan dots; they form a single-exterior-layer ring around each protected region. Figure 4 displays the pointwise attenuation 20 log 10 (|uh, −|/|˜uh − uh, +|) inside each protected region on a dB scale. Median attenuation exceeds 215 dB for all three geometries, with the interior uniformly reaching > 200 dB. The attenuation remains high throughout the protected region, showing volumetric cancellation rather than interpolation only at the boundary-strip nodes. These results verify the discrete algebraic identity: when the incident field is built from the same LGF used in the capacity matrix, the control cancels it to machine precision. The next section shows that the cancellation is equally exact when an interior wanted source is present. 12 2 1 0 1 2
+
+2
+
+1
+
+0
+
+1
+
+2
+
+> y
+
+circle before 
+
+2 1 0 1 2
+
+2
+
+1
+
+0
+
+1
+
+2
+
+lshape before 
+
+2 1 0 1 2
+
+2
+
+1
+
+0
+
+1
+
+2
+
+star before 
+
+2 1 0 1 2
+
+x
+
+2
+
+1
+
+0
+
+1
+
+2
+
+> y
+
+circle after 
+
+2 1 0 1 2
+
+x
+
+2
+
+1
+
+0
+
+1
+
+2
+
+lshape after 
+
+2 1 0 1 2
+
+x
+
+2
+
+1
+
+0
+
+1
+
+2
+
+star after 
+
+0.00 
+
+0.02 
+
+0.04 
+
+0.06 
+
+0.08 
+
+0.10 
+
+0.12 
+
+0.14 
+
+> |u|
+
+Noise shielding k=5 Figure 3: Magnitude |uh| before (top row) and after (bottom row) noise shielding for the three test geometries at k = 5 , LGF-constructed point source. Relative ℓ2 residuals: circle 6.1 × 10 −15 ,L-shape 5.5 × 10 −15 , star 8.5 × 10 −15 .2 1 0 1 2
+
+> x
+> 2.0
+> 1.5
+> 1.0
+> 0.5
+> 0.0
+> 0.5
+> 1.0
+> 1.5
+> 2.0
+> y
+
+circle 
+
+median att = 219 dB     
+
+> 21012
+> x
+> 2.0
+> 1.5
+> 1.0
+> 0.5
+> 0.0
+> 0.5
+> 1.0
+> 1.5
+> 2.0
+
+lshape 
+
+median att = 217 dB     
+
+> 21012
+> x
+> 2.0
+> 1.5
+> 1.0
+> 0.5
+> 0.0
+> 0.5
+> 1.0
+> 1.5
+> 2.0
+
+star 
+
+median att = 219 dB 
+
+> 0
+> 25
+> 50
+> 75
+> 100
+> 125
+> 150
+> 175
+> 200
+> dB
+> 0
+> 25
+> 50
+> 75
+> 100
+> 125
+> 150
+> 175
+> 200
+> dB
+> 0
+> 25
+> 50
+> 75
+> 100
+> 125
+> 150
+> 175
+> 200
+> dB
+
+Attenuation inside protected region k=5 
+
+Figure 4: Pointwise attenuation (dB) inside the protected region for the three test geometries at 
+
+k = 5 , LGF-constructed point source. Median attenuation: circle 219 dB, L-shape 217 dB, star 219 dB. 2 1 0 1 2
+
+2
+
+1
+
+0
+
+1
+
+2
+
+> y
+
+circle before 
+
+2 1 0 1 2
+
+2
+
+1
+
+0
+
+1
+
+2
+
+lshape before 
+
+2 1 0 1 2
+
+2
+
+1
+
+0
+
+1
+
+2
+
+star before 
+
+2 1 0 1 2
+
+x
+
+2
+
+1
+
+0
+
+1
+
+2
+
+> y
+
+circle after 
+
+2 1 0 1 2
+
+x
+
+2
+
+1
+
+0
+
+1
+
+2
+
+lshape after 
+
+2 1 0 1 2
+
+x
+
+2
+
+1
+
+0
+
+1
+
+2
+
+star after 
+
+0.00 
+
+0.02 
+
+0.04 
+
+0.06 
+
+0.08 
+
+0.10 
+
+0.12 
+
+0.14 
+
+0.16 
+
+> |u|
+
+Wanted-sound preservation k=5 
+
+Figure 5: Magnitude |uh| before (top row: noise + wanted) and after (bottom row: controlled) shielding for the three test geometries at k = 5 , with interior wanted sources. 13 2 1 0 1 2                     
+
+> x
+> 2.0
+> 1.5
+> 1.0
+> 0.5
+> 0.0
+> 0.5
+> 1.0
+> 1.5
+> 2.0
+> y
+> Re(before)
+> 21012
+> x
+> 2.0
+> 1.5
+> 1.0
+> 0.5
+> 0.0
+> 0.5
+> 1.0
+> 1.5
+> 2.0
+> y
+> Im(before)
+> 21012
+> x
+> 2.0
+> 1.5
+> 1.0
+> 0.5
+> 0.0
+> 0.5
+> 1.0
+> 1.5
+> 2.0
+> y
+> |before|
+> 21012
+> x
+> 2.0
+> 1.5
+> 1.0
+> 0.5
+> 0.0
+> 0.5
+> 1.0
+> 1.5
+> 2.0
+> y
+> Re(after)
+> 21012
+> x
+> 2.0
+> 1.5
+> 1.0
+> 0.5
+> 0.0
+> 0.5
+> 1.0
+> 1.5
+> 2.0
+> y
+> Im(after)
+> 21012
+> x
+> 2.0
+> 1.5
+> 1.0
+> 0.5
+> 0.0
+> 0.5
+> 1.0
+> 1.5
+> 2.0
+> y
+> |after|
+> 1.5
+> 1.0
+> 0.5
+> 0.0
+> 0.5
+> 1.0
+> 1.5
+> 1.0
+> 0.5
+> 0.0
+> 0.5
+> 1.0
+> 0.00
+> 0.25
+> 0.50
+> 0.75
+> 1.00
+> 1.25
+> 1.50
+> 1.75
+> 1.5
+> 1.0
+> 0.5
+> 0.0
+> 0.5
+> 1.0
+> 1.5
+> 1.0
+> 0.5
+> 0.0
+> 0.5
+> 1.0
+> 0.00
+> 0.25
+> 0.50
+> 0.75
+> 1.00
+> 1.25
+> 1.50
+> 1.75
+> Confinement interior PS + exterior PW, k=5
+
+Figure 6: Confinement: interior point source (adverse) confined by controls on γ+ (cyan dots, 84 nodes), exterior plane wave (ambient) preserved. Top row: before control. Bottom row: after control. Columns: real part, imaginary part, magnitude. The exterior field matches the ambient plane wave after control (relative residual 1.4 × 10 −3, discretisation-limited). 
+
+7.2 Wanted-sound preservation 
+
+We add an interior wanted source to each geometry (positions in Table 2) and repeat the shielding computation. The control must now cancel the exterior noise while leaving the wanted field unchanged inside Ωin . Figure 5 compares the total field before control (top row: noise + wanted) with the controlled field (bottom row). After control, the interior field equals uh, + to machine precision — the wanted source is preserved while the noise is eliminated. This is the projection property P hγ (uh, +|γ ) = 0 established in Proposition 4.4 in action: the wanted field lies in the kernel of the Calderón projection, so it is annihilated by the control formula. 
+
+7.3 Acoustic confinement 
+
+Figure 6 demonstrates confinement on the circular region ( R = 0 .5) at k = 5 . The adverse source is an interior monopole at (0 , 0) (amplitude ×10 ); the ambient field is a plane wave 
+
+eik d·x, d = ( √3/2, 0.5) . Control nodes are placed on γ+ (84 nodes, cyan dots). After control, the exterior field matches the plane wave to within a relative residual of 1.4 × 10 −3, while the interior contains the confined adverse source and the control response. 
+
+7.4 Analytic incident fields 
+
+Sections 7.1–7.2 used LGF-constructed point sources, which satisfy the discrete Helmholtz equation exactly and are cancelled to machine precision — a verification of the algebraic identity. We now replace the LGF point source by two analytic incident fields that do not satisfy the discrete equation: a plane wave upw = eik d·x (d = ( √3/2, 0.5) ) and a free-space point source 
+
+ups = i
+
+4 H(1) 0 (k|x − xs|) with xs = (0 .9, 0.0) . The LGF is used only for the capacity matrix and control. Figure 7 compares the real and imaginary parts before and after shielding for the circular region at k = 5 . The plane wave and point source produce nearly identical residuals ( 2.0 × 10 −3
+
+14 2 1 0 1 2                             
+
+> 2
+> 1
+> 0
+> 1
+> 2
+> y
+> PW Re (before)
+> 21012
+> 2
+> 1
+> 0
+> 1
+> 2
+> PW Im (before)
+> 21012
+> 2
+> 1
+> 0
+> 1
+> 2
+> PS Re (before)
+> 21012
+> 2
+> 1
+> 0
+> 1
+> 2
+> PS Im (before)
+> 21012
+> x
+> 2
+> 1
+> 0
+> 1
+> 2
+> y
+> PW Re (after)
+> 21012
+> x
+> 2
+> 1
+> 0
+> 1
+> 2
+> PW Im (after)
+> 21012
+> x
+> 2
+> 1
+> 0
+> 1
+> 2
+> PS Re (after)
+> 21012
+> x
+> 2
+> 1
+> 0
+> 1
+> 2
+> PS Im (after)
+> 1.0
+> 0.5
+> 0.0
+> 0.5
+> 1.0
+> Re/Im
+> Re/Im plane wave (PW) vs analytic point source (PS), k=5
+
+Figure 7: Re/Im before (top row) and after (bottom row) shielding for the circular region, k = 5 .Columns 1–2: plane wave (PW). Columns 3–4: analytic point source (PS). The two residuals are comparable. and 2.2 × 10 −3), consistent with the same discretisation scale for the 5-point operator and boundary-strip representation. Combined | · | and Re/Im plots for the L-shaped and star-shaped regions are provided as supplementary material; the residuals are 1.3 × 10 −3 and 1.9 × 10 −3
+
+(L-shape) and 1.9 × 10 −3 and 1.8 × 10 −3 (star) for the plane wave and point source respectively. 2 1 0 1 2                 
+
+> 2.0
+> 1.5
+> 1.0
+> 0.5
+> 0.0
+> 0.5
+> 1.0
+> 1.5
+> 2.0
+> y
+> PW before
+> 21012
+> 2.0
+> 1.5
+> 1.0
+> 0.5
+> 0.0
+> 0.5
+> 1.0
+> 1.5
+> 2.0
+> PS before
+> 21012
+> x
+> 2.0
+> 1.5
+> 1.0
+> 0.5
+> 0.0
+> 0.5
+> 1.0
+> 1.5
+> 2.0
+> y
+> PW after
+> 21012
+> x
+> 2.0
+> 1.5
+> 1.0
+> 0.5
+> 0.0
+> 0.5
+> 1.0
+> 1.5
+> 2.0
+> PS after
+> 0.0
+> 0.2
+> 0.4
+> 0.6
+> 0.8
+> 1.0
+> 1.2
+> |u|
+> Circle k=5
+
+Figure 8: Magnitude |uh| before (top) and after (bottom) shielding, circular region. Left: plane wave. Right: analytic point source. Figures 8 and 9 show comparable controlled fields for the two incident-wave classes. Across all three geometries, the median attenuation is 57–60 dB and the relative residual is of order 
+
+2 × 10 −3. These values are substantially below the machine-precision attenuation obtained for LGF-consistent sources because the analytic tests include the consistency error of the discrete operator and boundary-strip representation. We report the relative ℓ2 residual εrel = ∥˜uh − uh, +∥2,M + /∥uh, −∥2,M + and the median pointwise attenuation inside M +.Both analytic fields are discretisation-limited and exhibit near-second-order convergence under grid refinement. Tables 3 and 4 report the plane-wave and analytic point-source results for all three geometries at n = 31 , 63 , 127 , 255 (pure noise). The fitted rates are approximately 
+
+1.8–1.9 over the four grids, with the finest-grid pair approaching second order in several cases. 15 2 1 0 1 2                           
+
+> 2
+> 1
+> 0
+> 1
+> 2
+> PW
+> circle (PW) 58 dB
+> 21012
+> 2
+> 1
+> 0
+> 1
+> 2
+> lshape (PW) 58 dB
+> 21012
+> 2
+> 1
+> 0
+> 1
+> 2
+> star (PW) 58 dB
+> 21012
+> x
+> 2
+> 1
+> 0
+> 1
+> 2
+> PS
+> circle (PS) 57 dB
+> 21012
+> x
+> 2
+> 1
+> 0
+> 1
+> 2
+> lshape (PS) 56 dB
+> 21012
+> x
+> 2
+> 1
+> 0
+> 1
+> 2
+> star (PS) 60 dB
+> 0
+> 20
+> 40
+> 60
+> 80
+> dB
+> Attenuation analytic sources, k=5
+
+Figure 9: Pointwise attenuation (dB) for plane wave (top row) and analytic point source (bottom row), k = 5 . Columns: circle (58/57 dB median PW/PS), L-shape (58/56 dB), star (58/60 dB). This is consistent with, but does not constitute a proof of, the second-order truncation accuracy of the 5-point operator. At n = 31 the diameter of the circular protected region is resolved by fewer than eight mesh intervals, and the reentrant and non-convex strips are similarly under-resolved; the first refinement step should therefore be viewed as pre-asymptotic. The first refinement step for the circle and star (rate ∼ 1.6) is pre-asymptotic, due to the coarse boundary representation on the 31 × 31 grid. The attenuation at n = 255 reaches ∼ 69 dB across all geometries and source types, a factor of 10 3.5 in amplitude reduction. Table 3: Plane-wave convergence: relative ℓ2 residual and attenuation (dB) for all three geometries (pure noise, k = 5 ). 
+
+n εrel Attenuation [dB] Circle L-shape Star Circle L-shape Star 31 2.34 ×10 −2 2.11 ×10 −2 2.23 ×10 −2 37.9 34.1 37.3 63 7.57 ×10 −3 5.54 ×10 −3 7.22 ×10 −3 46.4 45.5 46.4 127 2.01 ×10 −3 1.34 ×10 −3 1.93 ×10 −3 57.8 57.6 57.4 255 5.49 ×10 −4 3.68 ×10 −4 5.30 ×10 −4 69.0 68.9 68.7 Rate ≈ 1.8 ≈ 1.9 ≈ 1.8
+
+7.5 Two-sided vs. one-sided measurement 
+
+Table 5 compares full two-sided data with the conditional one-sided reconstruction of Theorem 6.1. Because the incident field is analytic rather than LGF-constructed, both columns include discretisation consistency error. At k = 5 the one-sided residual is a factor of approximately 2–4
+
+larger and decreases under refinement. Figure 10 confirms that at k = 5 , n = 127 the one-sided shielding is visually indistinguishable from the two-sided result. 
+
+7.6 Wavenumber and grid-refinement sensitivity 
+
+Table 6 extends the shielding results to k = 10 across all three test geometries using the analytic point source. The attenuation drops to 35–41 dB (compared to > 215 dB with LGF-16 Table 4: Analytic point-source convergence (circle, L-shape, star; k = 5 , amplitude ×10 ). Residuals and attenuation are comparable to the plane-wave case. 
+
+n εrel Attenuation [dB] Circle L-shape Star Circle L-shape Star 31 2.55 ×10 −2 2.97 ×10 −2 2.20 ×10 −2 38.6 30.1 38.3 63 8.20 ×10 −3 8.94 ×10 −3 7.06 ×10 −3 46.1 40.3 48.8 127 2.16 ×10 −3 2.18 ×10 −3 1.83 ×10 −3 56.9 52.7 59.8 255 5.41 ×10 −4 5.45 ×10 −4 4.64 ×10 −4 69.1 64.8 71.5 Rate ≈ 1.8 ≈ 1.9 ≈ 1.9
+
+Table 5: Two-sided vs. one-sided ( γ−-only) shielding: relative residual, attenuation, and wall-clock time (circle, analytic point source, k = 5 ). 
+
+n |γ| ε2 Att 2 t2 (s) ε1 Att 1 t1 (s) 63 84 8.2×10 −3 46 0.13 1.9×10 −2 36 0.13 127 172 2.2×10 −3 57 1.04 7.0×10 −3 45 1.04 255 340 5.4×10 −4 69 8.32 2.2×10 −3 55 8.18 2 1 0 1 2             
+
+> x
+> 2.0
+> 1.5
+> 1.0
+> 0.5
+> 0.0
+> 0.5
+> 1.0
+> 1.5
+> 2.0
+> y
+> |u|, two-sided
+> 21012
+> x
+> 2.0
+> 1.5
+> 1.0
+> 0.5
+> 0.0
+> 0.5
+> 1.0
+> 1.5
+> 2.0
+> y
+> |u|, one-sided
+> 21012
+> x
+> 2.0
+> 1.5
+> 1.0
+> 0.5
+> 0.0
+> 0.5
+> 1.0
+> 1.5
+> 2.0
+> y
+> Re(u), two-sided
+> 21012
+> x
+> 2.0
+> 1.5
+> 1.0
+> 0.5
+> 0.0
+> 0.5
+> 1.0
+> 1.5
+> 2.0
+> y
+> Re(u), one-sided
+> 0.0
+> 0.2
+> 0.4
+> 0.6
+> 0.8
+> 1.0
+> 1.2
+> 1.4
+> 1.6
+> 0.0
+> 0.2
+> 0.4
+> 0.6
+> 0.8
+> 1.0
+> 1.2
+> 1.4
+> 1.6
+> 1.0
+> 0.5
+> 0.0
+> 0.5
+> 1.0
+> 1.0
+> 0.5
+> 0.0
+> 0.5
+> 1.0
+> Two-sided vs one-sided ( only) shielding, circle, k=5
+
+Figure 10: Two-sided (left) vs. one-sided γ−-only (right) shielding, circle, k = 5 , n = 127 . Top: magnitude. Bottom: real part. At this configuration the two plots are visually close, although the one-sided residual is larger. 17 constructed sources), consistent with the coarser resolution at higher wavenumber ( ∼ 19 points per wavelength). The condition numbers are consistently lower at k = 10 than at k = 5 .Table 6: Shielding results at k = 10 across geometries ( 127 × 127 grid, analytic point source). Geometry |γ| κ(Sγγ ) εrel Attenuation Circle ( r = 0 .5) 172 6.5 × 10 1 2.0 × 10 −2 36 dB L-shape 322 9.2 × 10 1 9.8 × 10 −3 41 dB Star (5-fold) 212 6.8 × 10 1 2.0 × 10 −2 35 dB The smaller condition numbers at k = 10 are specific to these grids and geometries. Changing 
+
+k shifts the discrete Helmholtz spectrum and may move the problem either toward or away from a resonance; no monotone conditioning trend with wavenumber is expected in general. Table 7 reports the single-layer condition number under grid refinement for the circular region at k = 5 . The variation is non-monotone: κ(Sγγ ) rises from 37 .8 at p = 6 to 361 at 
+
+p = 7 , then falls to 157 at p = 8 . Refinement changes both the finite-difference spectrum and the staircase boundary, so the discrete eigenvalue nearest k2 may move toward or away from the operating frequency. The p = 7 spike is therefore consistent with a near-resonant configuration, although no specific eigenvalue distance is computed here. 
+
+7.7 Measurement noise sensitivity 
+
+In practice the boundary-strip trace ξγ is obtained from microphone measurements and is subject to noise. To assess robustness, we use the analytic point source (the more realistic test case) and add independent circularly symmetric complex Gaussian noise to ξγ at relative standard deviations σ ∈ { 10 −6, 10 −4, 10 −2, 10 −1}, recompute the control gh from the perturbed trace, and measure the resulting attenuation. The results are summarised in Table 8. With the analytic source, the clean attenuation is limited by discretisation error (57 dB) rather than by the algebraic identity, so sub-discretisation-level measurement noise ( σ ≤ 10 −4)produces essentially no degradation — the method is robust up to noise levels comparable to the discretisation floor. At σ = 10 −2 (1% relative noise), the method still retains 34 dB of attenuation. For larger σ, the degradation is consistent with amplification by the inverse capacity matrix, as quantified by Remark 4.9. The table reports a representative realization and therefore illustrates a trend rather than a statistical confidence interval. Regularization and ensemble noise studies are left to future work. 
+
+## 8 Computational realization and complexity 
+
+8.1 Algorithmic realization 
+
+The implementation is the capacity-matrix realization proved in Theorem 4.3. Let Sij =
+
+h2Gh(γi − γj ) and solve 
+
+Sγγ λ = ξγ . (25) For the particular outgoing extension V h = Gh ∗ λ, one has LhV h = λ and V h|γ = ξγ . Splitting 
+
+λ = λ+ + λ− by the two sublayers gives 
+
+P hξγ = Gh ∗ λ−, Qhξγ = Gh ∗ λ+.
+
+Thus the shielding control is 
+
+gh 
+
+> sh
+
+= −λ−, (26) 18 Table 7: Single-layer capacity-matrix condition number under grid refinement (circle, k = 5 ). 
+
+p n h |γ| κ(Sγγ )
+
+5 31 1.34 × 10 −1 44 14.1 6 63 6.72 × 10 −2 84 37.8 7 127 3.36 × 10 −2 172 361 8 255 1.68 × 10 −2 340 157 Table 8: Effect of measurement noise on shielding performance (circle, k = 5 , analytic point source). Attenuation in dB for one representative noise realization. Relative noise σ Attenuation (dB) Degradation (dB) 0 (clean) 56.9 —
+
+10 −6 56.9 0.0 
+
+10 −4 56.8 0.1 
+
+10 −2 34.4 22.5 
+
+10 −1 12.1 44.8 while the confinement control is gh 
+
+> conf
+
+= −λ+. The corresponding field is evaluated by LGF convolution and added to the measured or simulated total field. The full potential Gh ∗ λ
+
+reproduces the original trace; it is the sublayer potentials Gh ∗ λ− and Gh ∗ λ+ that realize the two Calderón components. 
+
+8.2 Comparison with truncated-domain realizations 
+
+For fixed (h, k ), the LGF table is reused across protected geometries and source configurations. A change of geometry requires a new boundary-strip classification and capacity-matrix factorization, but no volumetric Helmholtz solve on an auxiliary domain. A truncated-domain method may likewise reuse its factorization while the auxiliary domain and outer treatment remain fixed; its projection, however, changes when either choice changes. The principal distinction is therefore the radiation model. The LGF selects the infinite-lattice outgoing solution directly, whereas a bounded auxiliary realization inherits the accuracy of its outer boundary operator. Theorem 3.3 shows that both constructions represent the same interior trace space; equality as operators requires the auxiliary problem to reproduce the exact lattice radiation condition. Once assembled, the capacity matrix and LGF evaluation maps are reusable for all source configurations associated with the same boundary strip. 
+
+8.3 LGF precomputation and complexity 
+
+The LGF depends only on (h, k ). Tabulation on [0 , n − 1] 2 is therefore performed once and reused across geometries; for each boundary strip, assembling Sγγ requires O(|γ|2) kernel lookups, and a direct factorization costs O(|γ|3) operations and O(|γ|2) storage. The tested geometries have 
+
+|γ| ≈ 100 –300 , for which the direct implementation is inexpensive and the factorization is reused across all incident fields. A d-dimensional LGF table requires O(nd) complex values. This is modest in the present two-dimensional experiments but becomes a primary cost in three dimensions. Scalable extensions will require symmetry, on-demand kernel evaluation, compression, or hierarchical/FFT-based application, together with iterative treatment of larger capacity systems. 19 9 Conclusions and outlook 
+
+We developed an infinite-lattice LGF realization of the discrete Calderón projection for active acoustic shielding and confinement. The outgoing radiation condition is built into the kernel, while the geometry-specific computation reduces to a capacity system on the lattice boundary strip. The two sublayer densities yield exact single-layer shielding and confinement controls, and exterior-only measurements suffice for pure-noise shielding under explicit invertibility conditions. LGF-consistent sources verify the discrete identities to machine precision on smooth, reentrant, and non-convex regions. Analytic plane waves and point sources converge at observed rates of approximately 1.8–1.9, and the conditioning and noise experiments identify the main stability limitations. The present direct implementation is two-dimensional and best suited to moderate boundary-strip sizes. The capacity-matrix formulation also provides a natural starting point for constrained and regularized active-control problems. In practical settings, the control amplitudes may be bounded, only a subset of boundary-strip actuators may be available, and the measured trace may be incomplete or contaminated by noise. These situations lead to regularized least-squares, sparse-control, and sensor–actuator placement problems posed entirely on the boundary strip. The present work focuses instead on the canonical unconstrained projection in order to isolate the role of the infinite-lattice Green’s function and the exact discrete outgoing condition. Optimization under physical constraints will be considered separately. 
+
+## Acknowledgments 
+
+This work was partially funded by the Natural Science Foundation of China (NSFC Grant No. 12401546) and Wenzhou Kean University (Grant Nos. ISRG2024003 and KY20250604000452). 
+
+## References 
+
+[1] P. Lueg. Process of silencing sound oscillations. U.S. Patent 2,043,416, 1936. [2] S. M. Kuo and D. R. Morgan. Active noise control: A tutorial review. Proceedings of the IEEE , 87(6):943–973, 1999. [3] S. J. Elliott. Signal Processing for Active Control . Elsevier, San Diego, CA, 2000. [4] J. Zhang, T. D. Abhayapala, W. Zhang, P. N. Samarasinghe, and S. Jiang. Active noise control over space: A wave domain approach. IEEE/ACM Transactions on audio, speech, and language processing , 26(4):774–786, 2018. [5] T. Betlehem, W. Zhang, M. A. Poletti, and T. D. Abhayapala. Personal sound zones: Delivering interface-free audio to multiple listeners. IEEE Signal Processing Magazine , 32 (2):81–91, 2015. [6] J. Lončarić, V. S. Ryaben’kii, and S. V. Tsynkov. Active shielding and control of noise. 
+
+SIAM Journal on Applied Mathematics , 62(2):563–596, 2001. [7] S. V. Tsynkov. On the definition of surface potentials for finite-difference operators. Journal of Scientific Computing , 18(2):155–189, 2003. [8] V. S. Ryaben’kii. Method of Difference Potentials and Its Applications . Number 30 in Springer Series Comput. Math. Springer, Berlin, 2002. [9] A. W. Petersen and S. V. Tsynkov. Active control of sound for composite regions. SIAM Journal on Applied Mathematics , 67(6):1582–1609, 2007. 20 [10] V. S. Ryaben’kii, S. V. Tsynkov, and S. V. Utyuzhnikov. Inverse source problem and active shielding for composite domains. Applied Mathematics Letters , 20(5):511–515, 2007. [11] J. Lončarić and S. V. Tsynkov. Optimization of acoustic source strength in the problems of active noise control. SIAM Journal on Applied Mathematics , 63(4):1141–1183, 2003. [12] J. Lončarić and S. V. Tsynkov. Quadratic optimization in the problems of active control of sound. Applied numerical mathematics , 52(4):381–400, 2005. [13] H. Lim, S. V. Utyuzhnikov, Y. W. Lam, A. Turan, M. R. Avis, V. S. Ryaben’kii, and S. V. Tsynkov. Experimental validation of the active noise control methodology based on difference potentials. AIAA Journal , 47(4):874–884, 2009. [14] H. Lim, S. V. Utyuzhnikov, Y. W. Lam, and A. Turan. Multi-domain active sound control and noise shielding. The Journal of the Acoustical Society of America , 129(2):717–725, 2011. [15] H. Lim, S. V. Utyuzhnikov, Y. W. Lam, and L. Kelly. Potential-based methodology for active sound control in three dimensional settings. The Journal of the Acoustical Society of America , 136(3):1101–1111, 2014. [16] E. A. Ntumy and S. V. Utyuzhnikov. Active sound control in 3D bounded regions. Wave Motion , 51(2):284–295, 2014. [17] E. A. Ntumy and S. V. Utyuzhnikov. Active sound control in composite regions. Applied Numerical Mathematics , 93:242–253, 2015. [18] S. V. Utyuzhnikov. A practical algorithm for real-time active sound control with preservation of interior sound. Computers & Fluids , 157:175–181, 2017. [19] C. Zhou and S. V. Utyuzhnikov. Real-time active noise control with preservation of desired sound. 157:106971, 2020. [20] N. Hu and S. V. Utyuzhnikov. Optimized nonlocal active sound control in frequency domain. 
+
+Applied Acoustics , 187:108506, 2022. [21] N. Hu and S. V. Utyuzhnikov. Nonlocal active sound control for composite regions. 
+
+Mathematical Methods in the Applied Sciences , 2024. [22] Siyuan Wang and Qing Xia. Unfitted lattice Green’s function method for exterior scattering in complex geometry, 2026. [23] Alain Bamberger, Jean-Claude Guillot, and Patrick Joly. Numerical diffraction by a uniform grid. SIAM Journal on Numerical Analysis , 25(4):753–783, 1988. [24] Paul A Martin. Discrete scattering theory: Green’s function for a square lattice. Wave motion , 43(7):619–629, 2006. [25] Harish S Bhat and Braxton Osting. Diffraction on the two-dimensional square lattice. SIAM Journal on Applied Mathematics , 70(5):1389–1406, 2010. [26] J. Poblet-Puig, V. Y. Valyaev, and A. V. Shanin. Suppression of spurious frequencies in scattering problems by means of boundary algebraic and combined field equations. Journal of Integral Equations and Applications , 27(2):233–274, 2015. [27] J. Poblet-Puig and A. V. Shanin. A new numerical method for solving the acoustic radiation problem. Acoustical Physics , 64(2):252–259, 2018. 21
