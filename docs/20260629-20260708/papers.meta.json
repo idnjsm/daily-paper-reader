@@ -1,0 +1,24 @@
+{
+  "label": "2026-06-29 ~ 2026-07-08",
+  "date": "2026-06-29 ~ 2026-07-08",
+  "generated_at": "2026-07-08T11:32:30",
+  "count": 1,
+  "papers": [
+    {
+      "paper_id": "20260629-20260708/2607.02062v1-lmpan-a-lightweight-multi-path-alignment-network-for-joint-full-duplex-acoustic-echo-cancellation-and-noise-suppression",
+      "section": "quick",
+      "title_en": "LMPAN: A Lightweight Multi-Path Alignment Network for Joint Full-Duplex Acoustic Echo Cancellation and Noise Suppression",
+      "authors": "Chengwei Liu, Shaofei Xue, Haoyin Yan, Xiaotao Liang, Zheng Xue",
+      "date": "2026-07-02",
+      "pdf": "https://arxiv.org/pdf/2607.02062v1",
+      "score": "7.0",
+      "evidence": "基于深度学习的声学噪声抑制",
+      "tldr": "针对全双工语音交互系统中声学回声消除与噪声抑制任务，提出轻量化多路径对齐网络LMPAN。通过多路径对齐校正时域和能量失配，注意力机制融合线性回声消除与麦克风特征，后滤波模块动态生成目标。仅480K参数和126MACs，性能媲美DeepVQE-S并支持实时推理。",
+      "tags": "query:deep-anc",
+      "abstract_en": "We propose a lightweight multi-path alignment network (LMPAN) for on-device joint acoustic echo cancellation (AEC) and noise suppression (NS) in full-duplex spoken dialogue systems. To address hardware-induced distortions and dynamic acoustic conditions, we introduce three core innovations: (1) a multi-path alignment stage correcting temporal and energy mismatches across reference, linear AEC (LAEC) output, and microphone signals; (2) an attention-based mechanism that dynamically integrates enhanced LAEC and microphone features under varying acoustic scenarios; (3) a post-filtering module with a dynamic target generation strategy for downstream tasks (ASR, VAD). Furthermore, we adopt a two-stage training framework leveraging self-supervised learning representations to enhance perceptual quality. Experiments show that LMPAN, with only 480K parameters and 126 MACs, achieves performance comparable to the state-of-the-art lightweight model DeepVQE-S, while ensuring real-time inference capability.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

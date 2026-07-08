@@ -1,0 +1,56 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-08T11:31:55.474883+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2607.02062v1",
+      "source": "arxiv",
+      "title": "LMPAN: A Lightweight Multi-Path Alignment Network for Joint Full-Duplex Acoustic Echo Cancellation and Noise Suppression",
+      "abstract": "We propose a lightweight multi-path alignment network (LMPAN) for on-device joint acoustic echo cancellation (AEC) and noise suppression (NS) in full-duplex spoken dialogue systems. To address hardware-induced distortions and dynamic acoustic conditions, we introduce three core innovations: (1) a multi-path alignment stage correcting temporal and energy mismatches across reference, linear AEC (LAEC) output, and microphone signals; (2) an attention-based mechanism that dynamically integrates enhanced LAEC and microphone features under varying acoustic scenarios; (3) a post-filtering module with a dynamic target generation strategy for downstream tasks (ASR, VAD). Furthermore, we adopt a two-stage training framework leveraging self-supervised learning representations to enhance perceptual quality. Experiments show that LMPAN, with only 480K parameters and 126 MACs, achieves performance comparable to the state-of-the-art lightweight model DeepVQE-S, while ensuring real-time inference capability.",
+      "authors": [
+        "Chengwei Liu",
+        "Shaofei Xue",
+        "Haoyin Yan",
+        "Xiaotao Liang",
+        "Zheng Xue"
+      ],
+      "primary_category": "eess.AS",
+      "categories": [
+        "eess.AS"
+      ],
+      "published": "2026-07-02T11:40:03+00:00",
+      "link": "https://arxiv.org/pdf/2607.02062v1",
+      "tags": [
+        "keyword:deep-anc",
+        "query:deep-anc"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "deep learning based acoustic noise reduction",
+      "llm_evidence_cn": "基于深度学习的声学噪声抑制",
+      "llm_evidence": "基于深度学习的声学噪声抑制",
+      "canonical_evidence": "基于深度学习的声学噪声抑制",
+      "llm_tldr_en": "LMPAN is a lightweight deep network for joint acoustic echo cancellation and noise suppression, using multi-path alignment and attention to handle hardware distortions and dynamic acoustic conditions, achieving strong results on downstream tasks.",
+      "llm_tldr_cn": "针对全双工对话系统中硬件失真和动态声学条件导致的回声和噪声问题，提出LMPAN轻量级多路径对齐网络。该方法通过多路径对齐校正时域和能量失配，利用注意力机制动态融合增强特征，并采用后滤波模块优化下游任务。实验表明该方法在声学回声消除和噪声抑制上效果显著，适用于资源受限设备。",
+      "llm_tldr": "针对全双工对话系统中硬件失真和动态声学条件导致的回声和噪声问题，提出LMPAN轻量级多路径对齐网络。该方法通过多路径对齐校正时域和能量失配，利用注意力机制动态融合增强特征，并采用后滤波模块优化下游任务。实验表明该方法在声学回声消除和噪声抑制上效果显著，适用于资源受限设备。",
+      "llm_tags": [
+        "query:deep-anc"
+      ],
+      "matched_query_tag": "query:deep-anc",
+      "matched_query_text": "deep learning in acoustic noise reduction",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}
