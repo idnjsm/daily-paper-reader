@@ -1,0 +1,54 @@
+{
+  "label": "2026-07-09",
+  "date": "2026-07-09",
+  "generated_at": "2026-07-09T20:37:45",
+  "count": 3,
+  "papers": [
+    {
+      "paper_id": "202607/09/2607.00548v1-ambidrop-ambisonics-based-array-agnostic-neural-speech-enhancement",
+      "section": "deep",
+      "title_en": "AmbiDrop: Ambisonics-Based Array-Agnostic Neural Speech Enhancement",
+      "authors": "Michael Tatarjitzky, Vladimir Tourbabin, Boaz Rafaely",
+      "date": "2026-07-01",
+      "pdf": "https://arxiv.org/pdf/2607.00548v1",
+      "score": "8.0",
+      "evidence": "神经语音增强用于降噪，直接关联深度学习的声学降噪",
+      "tldr": "现有固定阵列多声道DNN语音增强泛化性差。AmbiDrop通过理想Ambisonics输入与通道级dropout训练解耦几何结构，推理时用Ambisonics信号匹配处理任意阵列。在未见模拟和真实阵列上均保持高鲁棒性，对传感器故障和网络缩减稳定。该框架实现阵列无关增强，适合资源受限设备。",
+      "tags": "query:deep-anc",
+      "abstract_en": "Multichannel Deep Neural Networks (DNNs) have significantly improved speech enhancement performance; however, they typically remain constrained by reliance on fixed microphone array geometries, leading to poor generalization on unseen or irregular configurations. Current array-agnostic approaches often rely on high-complexity architectures or massive, diverse datasets, yet they still struggle to generalize to out-of-distribution layouts. In this paper, we present an in-depth analysis of AmbiDrop, a recently proposed framework that achieves geometry independence by leveraging ideal Ambisonics as the DNN input. By employing a channel-wise dropout layer during training to simulate Ambisonics encoding errors, AmbiDrop decouples the learning process from the physical sensor arrangement. During inference, microphone signals from arbitrary array configurations are transformed into the Ambisonics domain via Ambisonics Signal Matching (ASM) before processing. Extensive experiments demonstrate that AmbiDrop maintains high robustness across a diverse suite of unseen simulated arrays and real-world recordings. Furthermore, our results show that the framework is resilient to sensor failures and remains effective even with reduced network scales, making it highly suitable for deployment on resource-constrained edge devices and versatile wearable hardware.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/09/2607.04195v1-noisy-environment-adaptation-of-neural-speech-codec-via-focal-mask-and-noise-feature-separation",
+      "section": "quick",
+      "title_en": "Noisy Environment Adaptation of Neural Speech Codec via Focal Mask and Noise Feature Separation",
+      "authors": "Shaokai Li, Weiping Tu, Yuhong Yang",
+      "date": "2026-07-05",
+      "pdf": "https://arxiv.org/pdf/2607.04195v1",
+      "score": "7.0",
+      "evidence": "基于深度学习的语音增强方法，通过焦点掩码和噪声分离实现降噪",
+      "tldr": "真实噪声严重降低神经语音编解码器在低比特率下的重建质量。本文提出FocalSE方法，在连续嵌入空间中通过焦点调制生成焦点掩码进行特征去噪，并分离噪声特征、识别噪声类别以辅助去噪。在LibriTTS和ESC50数据集上，低比特率和低信噪比条件下性能显著优于现有方法，贡献在于为噪声环境下的语音编解码提供了鲁棒的增强方案。",
+      "tags": "query:deep-anc",
+      "abstract_en": "Neural speech codec has attracted extensive attention for high-quality reconstruction at low-bitrate. However, real-world noise severely degrades its performance and hinders high-quality clean speech reconstruction. To tackle this problem, we propose FocalSE, a novel speech enhancement method that performs feature denoising, noise feature separation and noise recognition in the continuous embedding space of neural speech codecs. Specifically, we develop focal modulation-based compression and decompression to capture global context and local mutual information, and generate focal masks to recover clean feature embeddings. We then separate noise embeddings from noisy embeddings to improve denoising performance. Finally, we use ResNet1D-18 to recognize noise categories for better separation effectiveness. Extensive experiments on two standard datasets, LibriTTS and ESC50, demonstrate that our method outperforms state-of-the-art approaches under low-bitrate and low-SNR conditions.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/09/2607.06772v1-efficient-long-horizon-learning-for-learned-optimization",
+      "section": "quick",
+      "title_en": "Efficient Long-Horizon Learning for Learned Optimization",
+      "authors": "Xiaolong Huang, Benjamin Thérien, James Harrison, Eugene Belilovsky",
+      "date": "2026-07-07",
+      "pdf": "https://arxiv.org/pdf/2607.06772v1",
+      "score": "6.0",
+      "evidence": "元学习用于学习优化器，可应用于主动噪声控制中的自适应算法优化",
+      "tldr": "学习优化器面临无法高效扩展至长视野内问题和难以超越手工优化器的困境。本文提出高效长视野学习（ELO），通过重分配冗余计算到更长失败区间并采用解耦渐进专家监督，实现了高效长视野元训练。在GPT-2、ResNet-50、ViT-B/16等任务上，ELO显著提升基优化器的长展开性能和分布外泛化，ELO-Celo2一致优于调优AdamW，与Muon竞争力相当。所有基线元训练仅需不到7 H100 GPU小时。",
+      "tags": "query:deep-anc",
+      "abstract_en": "Learned optimization aims to improve upon hand-designed optimizers (e.g., Adam and Muon) by meta-learning small neural network optimizers over a distribution of tasks. While recent work has greatly advanced the architectural design and inductive biases of learned optimizers (LOs), current meta-training approaches still suffer from two main difficulties: (1) they cannot efficiently scale meta-training to long-horizon inner problems and (2) they often fail to surpass comparable hand-designed optimizers. To address these limitations, we propose Efficient Long-hOrizon (ELO) learning, an efficient meta-training algorithm that (1) reallocates redundant meta-training compute to longer failure regimes, achieving efficient long-horizon learning, and (2) enforces decoupled progressive expert supervision, providing stable meta-learning signals that additionally improve the generalization of LOs. Our empirical study evaluates ELO for meta-training both element-wise and matrix-based LOs. Across downstream language modeling (GPT-2-124M/350M on FineWeb) and image classification (ViT-B/16, ResNet-50 on ImageNet-1K) tasks, ELO substantially improves the long-unroll performance and out-of-distribution generalization of the base LOs. In particular, ELO-Celo2 consistently outperforms well-tuned AdamW across all evaluated tasks, while remaining competitive with Muon on language modeling. \\textit{Notably, all ELO baselines require less than 7 H100 GPU-hours for meta-training.}",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
