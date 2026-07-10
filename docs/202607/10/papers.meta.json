@@ -1,0 +1,24 @@
+{
+  "label": "2026-07-10",
+  "date": "2026-07-10",
+  "generated_at": "2026-07-10T21:34:44",
+  "count": 1,
+  "papers": [
+    {
+      "paper_id": "202607/10/2607.06772v2-efficient-long-horizon-learning-for-learned-optimization",
+      "section": "quick",
+      "title_en": "Efficient Long-Horizon Learning for Learned Optimization",
+      "authors": "Xiaolong Huang, Benjamin Thérien, James Harrison, Eugene Belilovsky",
+      "date": "2026-07-07",
+      "pdf": "https://arxiv.org/pdf/2607.06772v2",
+      "score": "7.0",
+      "evidence": "学习型优化器用于自适应算法",
+      "tldr": "学习优化器元训练面临两大挑战：无法高效扩展至长horizon内问题，且常难敌手工优化器。提出ELO算法，通过重新分配冗余计算到长失败区域实现高效长horizon学习，并采用解耦渐进专家监督提供稳定信号。在GPT-2-124M/350M和ViT-B/16等任务上，ELO显著提升长展开性能和泛化，ELO-Celo2一致优于AdamW，与Muon竞争力相当。所有基线仅需不到7个H100 GPU小时。",
+      "tags": "query:deep-anc",
+      "abstract_en": "Learned optimization aims to improve upon hand-designed optimizers (e.g., Adam and Muon) by meta-learning small neural network optimizers over a distribution of tasks. While recent work has greatly advanced the architectural design and inductive biases of learned optimizers (LOs), current meta-training approaches still suffer from two main difficulties: (1) they cannot efficiently scale meta-training to long-horizon inner problems and (2) they often fail to compete with strong hand-designed optimizers. To address these limitations, we propose Efficient Long-hOrizon (ELO) learning, an efficient meta-training algorithm that (1) reallocates redundant meta-training compute to longer failure regimes, achieving efficient long-horizon learning, and (2) enforces decoupled progressive expert supervision, providing stable meta-learning signals that additionally improve the generalization of LOs. Our empirical study evaluates ELO for meta-training both element-wise and matrix-based LOs. Across downstream language modeling (GPT-2-124M/350M on FineWeb) and image classification (ViT-B/16, ResNet-50 on ImageNet-1K) tasks, ELO substantially improves the long-unroll performance and out-of-distribution generalization of the base LOs. In particular, ELO-Celo2 consistently outperforms well-tuned AdamW across all evaluated tasks, while remaining competitive with Muon on language modeling. \\textit{Notably, all ELO baselines require less than 7 H100 GPU-hours for meta-training.}",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

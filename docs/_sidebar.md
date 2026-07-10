@@ -1,6 +1,9 @@
 * <a class="dpr-sidebar-root-link" href="#/">首页</a>
 * <a class="dpr-sidebar-root-link dpr-sidebar-noactive-link" href="javascript:void(0)" data-dpr-hash="#/tutorial/README">使用教程</a>
 * Daily Papers
+  * 2026-07-10 <!--dpr-date:20260710-->
+    * 速读区
+      * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202607/10/2607.06772v2-efficient-long-horizon-learning-for-learned-optimization" data-sidebar-item="{&quot;title&quot;: &quot;Efficient Long-Horizon Learning for Learned Optimization&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2607.06772v2-efficient-long-horizon-learning-for-learned-optimization&quot;, &quot;score&quot;: &quot;7.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;deep-anc&quot;}], &quot;evidence&quot;: &quot;学习型优化器用于自适应算法&quot;}">Efficient Long-Horizon Learning for Learned Optimization</a>
   * 2026-07-09 <!--dpr-date:20260709-->
     * 精读区
       * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202607/09/2607.00548v1-ambidrop-ambisonics-based-array-agnostic-neural-speech-enhancement" data-sidebar-item="{&quot;title&quot;: &quot;AmbiDrop: Ambisonics-Based Array-Agnostic Neural Speech Enhancement&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2607.00548v1-ambidrop-ambisonics-based-array-agnostic-neural-speech-enhancement&quot;, &quot;score&quot;: &quot;8.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;deep-anc&quot;}], &quot;evidence&quot;: &quot;神经语音增强用于降噪，直接关联深度学习的声学降噪&quot;}">AmbiDrop: Ambisonics-Based Array-Agnostic Neural Speech Enhancement</a>
