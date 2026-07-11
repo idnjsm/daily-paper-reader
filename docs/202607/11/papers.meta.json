@@ -1,0 +1,54 @@
+{
+  "label": "2026-07-11",
+  "date": "2026-07-11",
+  "generated_at": "2026-07-11T20:39:51",
+  "count": 3,
+  "papers": [
+    {
+      "paper_id": "202607/11/2607.08645v1-it-takes-few-to-tango-a-quantized-distributed-model-for-binaural-speech-enhancement",
+      "section": "deep",
+      "title_en": "It Takes Few to TANGO: A Quantized Distributed Model for Binaural Speech Enhancement",
+      "authors": "Zahra Benslimane, Pierre Chouteau, Martyna Poreba, Fabrice Auzanneau, Michal Szczepanski, Fabian Chersi, Romain Serizel",
+      "date": "2026-07-09",
+      "pdf": "https://arxiv.org/pdf/2607.08645v1",
+      "score": "8.0",
+      "evidence": "深度学习用于双耳语音增强",
+      "tldr": "多通道语音增强系统计算和内存需求大，难以部署于资源受限设备。本文针对TANGO系统采用低精度推理，量化神经掩码估计器并分析误差传播。发现量化虽然降低中间掩码质量，但空间滤波阶段能补偿大部分误差，从而将TANGO简化为MN-TANGO。结合INT8量化、ERB压缩和分组递归层，最紧凑模型仅需4.65 MMAC/s和0.177 MB，保持性能的同时大幅降低资源需求。",
+      "tags": "query:deep-anc",
+      "abstract_en": "Neural network-based multichannel speech enhancement systems achieve strong enhancement performance, but their computational and memory requirements limit deployment on resource-constrained devices. This paper investigates low-precision inference for TANGO, a hybrid distributed binaural speech enhancement system combining neural mask estimation with spatial filtering. We evaluate post-training quantization and quantization-aware training for the neural components, and analyze how quantization errors in the mask estimators propagate through the downstream spatial filtering stage. Our analysis shows that, although quantization degrades intermediate mask estimates, the spatial filtering stage compensates for most quantization-induced errors. Leveraging this robustness, we simplify TANGO into MN-TANGO, reducing both model size and computational complexity while maintaining comparable final performance. By combining INT8 weight-and-activation quantization with ERB compression and grouped recurrent layers, the most compact MN-TANGO reaches 4.65 MMAC/s and 0.177 MB.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/11/2607.04233v1-unified-convergence-analysis-for-gradient-descent-optimization-methods-in-the-training-of-deep-neural-networks",
+      "section": "quick",
+      "title_en": "Unified convergence analysis for gradient descent optimization methods in the training of deep neural networks",
+      "authors": "Shokhrukh Ibragimov, Arnulf Jentzen",
+      "date": "2026-07-05",
+      "pdf": "https://arxiv.org/pdf/2607.04233v1",
+      "score": "6.0",
+      "evidence": "梯度下降优化方法的统一收敛分析",
+      "tldr": "深度神经网络训练中，梯度下降优化方法种类繁多但缺乏统一收敛分析。本文针对解析激活函数（softplus、GeLU）的DNN，利用Kurdyka-Łojasiewicz不等式，建立了涵盖标准GD、动量、NAG、RMSprop、Adam等十余种优化器的统一收敛框架。理论证明这些方法均能收敛到临界点，首次为如此广泛的优化器提供了统一分析，对Adam本身也是新贡献。",
+      "tags": "query:deep-anc",
+      "abstract_en": "Gradient based optimization methods are nowadays the methods of choice for training deep neural networks (DNNs) in artificial intelligence (AI) systems. In practically relevant DNN training problems, one does usually not apply the standard gradient descent (GD) optimization method but instead one employs suitable sophisticated GD optimization methods, which incorporate adaptivity and/or acceleration techniques, such as the famous Adam optimizer. It is a key contribution of this work to provide a general unified convergence analysis for GD optimization methods in the training of DNNs with analytic activations such as the softplus and the popular Gaussian error linear unit (GeLU) activation. Our general unified convergence result applies to a large class of gradient based optimization methods such as the standard GD, the momentum, the Nesterov accelerated gradient (NAG), the RMSprop, the Adam, the Adamax, the Nadam, the Nadamax, the Adan, the AdaBelief, the AMSGrad, and the Yogi optimizers. Our analysis employs the theory of Kurdyka-Łojasiewicz (KL) inequalities to establish convergence to critical points in the training of DNNs. To the best of our knowledge, the generality of our convergence analysis is also just in the special situation of the Adam optimizer a new contribution to the literature on the analysis of AI optimization algorithms.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/11/2607.06151v1-leveraging-extragradient-for-effective-sharpness-aware-minimization-in-deep-learning",
+      "section": "quick",
+      "title_en": "Leveraging Extragradient for Effective Sharpness-Aware Minimization in Deep Learning",
+      "authors": "Yao Fu, Chunxia Zhang, Junmin Liu, Yihang Jin, Haishan Ye, Yuanao Yang",
+      "date": "2026-07-07",
+      "pdf": "https://arxiv.org/pdf/2607.06151v1",
+      "score": "6.0",
+      "evidence": "提出一种深度学习优化器EISAM，可提升自适应算法的优化效果。",
+      "tldr": "深度学习泛化问题中，传统优化器如SGD常收敛于尖锐最小值，导致过拟合和泛化性能下降。本文基于SAM，提出外梯度启发锐度感知最小化（EISAM），采用两步更新：预测步探索损失景观几何，扰动步用基础优化器精炼，实现更好的泛化。在多个基准数据集和架构上，EISAM在测试准确率和训练效率上持续优于SGD、Adam和SAM，同时降低了对扰动半径的敏感性，简化了调参。理论分析进一步证明EISAM收紧泛化界，引导参数向更平坦最小值收敛，为深度学习优化提供了鲁棒可扩展的解决方案。",
+      "tags": "query:deep-anc",
+      "abstract_en": "Generalization remains a pivotal challenge in deep learning, where traditional optimizers like Stochastic Gradient Descent (SGD) often converge to sharp minima, leading to overfitting and reduced performance on unseen data. Building on Sharpness-Aware Minimization (SAM), for seeking flat minima associated with improved generalization, we propose the Extragradient-Inspired Sharpness-Aware Minimization (EISAM), a novel optimizer that enhances generalization via the extragradient technique. EISAM uses a two-step update process: a prediction step investigating the geometry of the loss landscape and a perturbation step that refines updates with a base optimizer. This approach achieves better generalization performance than SAM. Crucially, EISAM reduces sensitivity to the perturbation radius, enhancing robustness, and simplifying the tuning across diverse settings. Extensive experiments on benchmark datasets demonstrate that EISAM consistently outperforms SGD, Adaptive Moment Estimation (Adam), and SAM in test accuracy and training efficiency across various architectures. Theoretical analysis further confirms that EISAM tightens the generalization bound by steering parameters toward flatter minima with reduced curvature. Accompanied by a thorough hyperparameter analysis, EISAM offers practical tuning guidance, establishing it as a robust, scalable, and broadly applicable optimization solution that advances both the theory and practice in deep learning.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

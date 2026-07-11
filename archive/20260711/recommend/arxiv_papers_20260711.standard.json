@@ -1,0 +1,136 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-11T20:36:29.912893+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 1,
+    "deep_cap": 6,
+    "deep_selected": 1,
+    "quick_candidates": 2,
+    "quick_skim_target": 11,
+    "quick_selected": 2
+  },
+  "deep_dive": [
+    {
+      "id": "2607.08645v1",
+      "source": "arxiv",
+      "title": "It Takes Few to TANGO: A Quantized Distributed Model for Binaural Speech Enhancement",
+      "abstract": "Neural network-based multichannel speech enhancement systems achieve strong enhancement performance, but their computational and memory requirements limit deployment on resource-constrained devices. This paper investigates low-precision inference for TANGO, a hybrid distributed binaural speech enhancement system combining neural mask estimation with spatial filtering. We evaluate post-training quantization and quantization-aware training for the neural components, and analyze how quantization errors in the mask estimators propagate through the downstream spatial filtering stage. Our analysis shows that, although quantization degrades intermediate mask estimates, the spatial filtering stage compensates for most quantization-induced errors. Leveraging this robustness, we simplify TANGO into MN-TANGO, reducing both model size and computational complexity while maintaining comparable final performance. By combining INT8 weight-and-activation quantization with ERB compression and grouped recurrent layers, the most compact MN-TANGO reaches 4.65 MMAC/s and 0.177 MB.",
+      "authors": [
+        "Zahra Benslimane",
+        "Pierre Chouteau",
+        "Martyna Poreba",
+        "Fabrice Auzanneau",
+        "Michal Szczepanski",
+        "Fabian Chersi",
+        "Romain Serizel"
+      ],
+      "primary_category": "cs.SD",
+      "categories": [
+        "cs.SD"
+      ],
+      "published": "2026-07-09T16:17:42+00:00",
+      "link": "https://arxiv.org/pdf/2607.08645v1",
+      "tags": [
+        "keyword:deep-anc",
+        "query:deep-anc"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "deep learning for binaural speech enhancement",
+      "llm_evidence_cn": "深度学习用于双耳语音增强",
+      "llm_evidence": "深度学习用于双耳语音增强",
+      "canonical_evidence": "深度学习用于双耳语音增强",
+      "llm_tldr_en": "Investigates low-precision inference for TANGO, a hybrid distributed binaural speech enhancement system, showing quantization errors are compensated by spatial filtering.",
+      "llm_tldr_cn": "该论文研究了TANGO双耳语音增强系统的低精度推理，TANGO结合了神经网络掩膜估计和空间滤波。通过后训练量化和量化感知训练，作者分析了量化误差在空间滤波阶段的传播，发现尽管中间掩膜估计退化，但空间滤波能补偿大部分误差，为在资源受限设备上部署深度学习降噪模型提供了实用指导。",
+      "llm_tldr": "该论文研究了TANGO双耳语音增强系统的低精度推理，TANGO结合了神经网络掩膜估计和空间滤波。通过后训练量化和量化感知训练，作者分析了量化误差在空间滤波阶段的传播，发现尽管中间掩膜估计退化，但空间滤波能补偿大部分误差，为在资源受限设备上部署深度学习降噪模型提供了实用指导。",
+      "llm_tags": [
+        "query:deep-anc"
+      ],
+      "matched_query_tag": "query:deep-anc",
+      "matched_query_text": "neural network based active noise cancellation",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2607.04233v1",
+      "source": "arxiv",
+      "title": "Unified convergence analysis for gradient descent optimization methods in the training of deep neural networks",
+      "abstract": "Gradient based optimization methods are nowadays the methods of choice for training deep neural networks (DNNs) in artificial intelligence (AI) systems. In practically relevant DNN training problems, one does usually not apply the standard gradient descent (GD) optimization method but instead one employs suitable sophisticated GD optimization methods, which incorporate adaptivity and/or acceleration techniques, such as the famous Adam optimizer. It is a key contribution of this work to provide a general unified convergence analysis for GD optimization methods in the training of DNNs with analytic activations such as the softplus and the popular Gaussian error linear unit (GeLU) activation. Our general unified convergence result applies to a large class of gradient based optimization methods such as the standard GD, the momentum, the Nesterov accelerated gradient (NAG), the RMSprop, the Adam, the Adamax, the Nadam, the Nadamax, the Adan, the AdaBelief, the AMSGrad, and the Yogi optimizers. Our analysis employs the theory of Kurdyka-Łojasiewicz (KL) inequalities to establish convergence to critical points in the training of DNNs. To the best of our knowledge, the generality of our convergence analysis is also just in the special situation of the Adam optimizer a new contribution to the literature on the analysis of AI optimization algorithms.",
+      "authors": [
+        "Shokhrukh Ibragimov",
+        "Arnulf Jentzen"
+      ],
+      "primary_category": "math.OC",
+      "categories": [
+        "math.OC",
+        "cs.LG"
+      ],
+      "published": "2026-07-05T11:11:40+00:00",
+      "link": "https://arxiv.org/pdf/2607.04233v1",
+      "tags": [
+        "keyword:deep-anc",
+        "query:deep-anc"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "unified convergence analysis for gradient descent optimizers",
+      "llm_evidence_cn": "梯度下降优化方法的统一收敛分析",
+      "llm_evidence": "梯度下降优化方法的统一收敛分析",
+      "canonical_evidence": "梯度下降优化方法的统一收敛分析",
+      "llm_tldr_en": "Provides a unified convergence analysis for adaptive and accelerated gradient descent methods in training deep neural networks with analytic activations.",
+      "llm_tldr_cn": "该论文为训练深度神经网络中使用的自适应和加速梯度下降优化方法（如Adam）提供了统一的收敛性分析。针对softplus和GeLU等解析激活函数，作者证明了这些优化器在非凸优化下的收敛性，为设计更高效的深度学习优化器提供了理论基础，可间接支持主动降噪中的自适应算法优化。",
+      "llm_tldr": "该论文为训练深度神经网络中使用的自适应和加速梯度下降优化方法（如Adam）提供了统一的收敛性分析。针对softplus和GeLU等解析激活函数，作者证明了这些优化器在非凸优化下的收敛性，为设计更高效的深度学习优化器提供了理论基础，可间接支持主动降噪中的自适应算法优化。",
+      "llm_tags": [
+        "query:deep-anc"
+      ],
+      "matched_query_tag": "query:deep-anc",
+      "matched_query_text": "deep learning based optimizer for adaptive algorithms",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.06151v1",
+      "source": "arxiv",
+      "title": "Leveraging Extragradient for Effective Sharpness-Aware Minimization in Deep Learning",
+      "abstract": "Generalization remains a pivotal challenge in deep learning, where traditional optimizers like Stochastic Gradient Descent (SGD) often converge to sharp minima, leading to overfitting and reduced performance on unseen data. Building on Sharpness-Aware Minimization (SAM), for seeking flat minima associated with improved generalization, we propose the Extragradient-Inspired Sharpness-Aware Minimization (EISAM), a novel optimizer that enhances generalization via the extragradient technique. EISAM uses a two-step update process: a prediction step investigating the geometry of the loss landscape and a perturbation step that refines updates with a base optimizer. This approach achieves better generalization performance than SAM. Crucially, EISAM reduces sensitivity to the perturbation radius, enhancing robustness, and simplifying the tuning across diverse settings. Extensive experiments on benchmark datasets demonstrate that EISAM consistently outperforms SGD, Adaptive Moment Estimation (Adam), and SAM in test accuracy and training efficiency across various architectures. Theoretical analysis further confirms that EISAM tightens the generalization bound by steering parameters toward flatter minima with reduced curvature. Accompanied by a thorough hyperparameter analysis, EISAM offers practical tuning guidance, establishing it as a robust, scalable, and broadly applicable optimization solution that advances both the theory and practice in deep learning.",
+      "authors": [
+        "Yao Fu",
+        "Chunxia Zhang",
+        "Junmin Liu",
+        "Yihang Jin",
+        "Haishan Ye",
+        "Yuanao Yang"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "math.PR"
+      ],
+      "published": "2026-07-07T11:25:46+00:00",
+      "link": "https://arxiv.org/pdf/2607.06151v1",
+      "tags": [
+        "keyword:deep-anc",
+        "query:deep-anc"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Proposes a deep learning optimizer (EISAM) that enhances generalization, relevant to optimizing adaptive algorithms.",
+      "llm_evidence_cn": "提出一种深度学习优化器EISAM，可提升自适应算法的优化效果。",
+      "llm_evidence": "提出一种深度学习优化器EISAM，可提升自适应算法的优化效果。",
+      "canonical_evidence": "提出一种深度学习优化器EISAM，可提升自适应算法的优化效果。",
+      "llm_tldr_en": "EISAM introduces an extragradient-inspired sharpness-aware minimization optimizer that achieves better generalization than SAM, potentially improving deep learning based adaptive algorithms.",
+      "llm_tldr_cn": "深度学习的泛化能力仍是挑战，传统优化器易收敛到尖锐极小值。本文提出基于外梯度启发的锐度感知最小化优化器EISAM，通过两步更新（预测步+扰动步）探索损失景观几何并优化更新，相比SAM取得更好泛化性能。该方法作为通用的深度学习优化器，有望提升基于深度学习的自适应算法优化效果。",
+      "llm_tldr": "深度学习的泛化能力仍是挑战，传统优化器易收敛到尖锐极小值。本文提出基于外梯度启发的锐度感知最小化优化器EISAM，通过两步更新（预测步+扰动步）探索损失景观几何并优化更新，相比SAM取得更好泛化性能。该方法作为通用的深度学习优化器，有望提升基于深度学习的自适应算法优化效果。",
+      "llm_tags": [
+        "query:deep-anc"
+      ],
+      "matched_query_tag": "query:deep-anc",
+      "matched_query_text": "deep learning based optimizer for adaptive algorithms",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
