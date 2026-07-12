@@ -1,0 +1,56 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-12T19:59:27.729154+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 1,
+    "deep_cap": 6,
+    "deep_selected": 1,
+    "quick_candidates": 0,
+    "quick_skim_target": 11,
+    "quick_selected": 0
+  },
+  "deep_dive": [
+    {
+      "id": "2607.04826v1",
+      "source": "arxiv",
+      "title": "Ranking the Impact of Contextual Specialization in Neural Speech Enhancement",
+      "abstract": "We systematically investigate neural speech enhancement systems, ranging from very small ($\\sim$10\\,k parameters) to medium-large ($\\sim$2-5\\,M parameters), which specialize to acoustic conditions using contextual information such as speaker identity, noise type, speaker gender, spoken language, and SNR. By fine-tuning generalist models on specific data subsets, we find that specializing to a speaker's identity consistently yields the largest gains in estimated speech intelligibility and quality. In contrast, specializing to SNR, noise type, or gender offers only marginal benefits. Crucially, we show that a small model specialized to both a specific speaker and a specific noise type can match or exceed the performance of a generalist model ten times its size. Further, cross-lingual tests reveal that models specialized to a target language outperform multilingual generalists, suggesting that language is a salient feature for specialization. These findings highlight the potential of small, adaptive models for resource-constrained applications like hearing aids, which specialize on-the-fly to contextual information.",
+      "authors": [
+        "Peter Leer",
+        "Svend Feldt",
+        "Zheng-Hua Tan",
+        "Jan Østergaard",
+        "Jesper Jensen"
+      ],
+      "primary_category": "eess.AS",
+      "categories": [
+        "eess.AS",
+        "cs.SD"
+      ],
+      "published": "2026-07-06T08:59:07+00:00",
+      "link": "https://arxiv.org/pdf/2607.04826v1",
+      "tags": [
+        "keyword:deep-anc",
+        "query:deep-anc"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "neural speech enhancement specializing to noise types for acoustic noise reduction",
+      "llm_evidence_cn": "神经语音增强通过特化到噪声类型来实现声学降噪",
+      "llm_evidence": "神经语音增强通过特化到噪声类型来实现声学降噪",
+      "canonical_evidence": "神经语音增强通过特化到噪声类型来实现声学降噪",
+      "llm_tldr_en": "This paper systematically studies how specialization to acoustic contexts (speaker, noise type, etc.) improves neural speech enhancement, showing speaker specialization yields biggest gains and small specialized models can match large generalist models.",
+      "llm_tldr_cn": "该文系统研究了上下文特化（如说话人身份、噪声类型等）对神经语音增强性能的影响。实验发现，针对说话人身份的特化能带来最大的语音可懂度和质量提升。更重要的是，一个小型模型若同时特化于特定说话人和噪声类型，其性能可匹敌十倍大的通用模型。这项工作为设计高效的专用语音增强系统提供了指导。",
+      "llm_tldr": "该文系统研究了上下文特化（如说话人身份、噪声类型等）对神经语音增强性能的影响。实验发现，针对说话人身份的特化能带来最大的语音可懂度和质量提升。更重要的是，一个小型模型若同时特化于特定说话人和噪声类型，其性能可匹敌十倍大的通用模型。这项工作为设计高效的专用语音增强系统提供了指导。",
+      "llm_tags": [
+        "query:deep-anc"
+      ],
+      "matched_query_tag": "query:deep-anc",
+      "matched_query_text": "deep learning in acoustic noise reduction",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": []
+}

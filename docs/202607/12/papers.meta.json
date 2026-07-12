@@ -1,0 +1,24 @@
+{
+  "label": "2026-07-12",
+  "date": "2026-07-12",
+  "generated_at": "2026-07-12T20:00:22",
+  "count": 1,
+  "papers": [
+    {
+      "paper_id": "202607/12/2607.04826v1-ranking-the-impact-of-contextual-specialization-in-neural-speech-enhancement",
+      "section": "deep",
+      "title_en": "Ranking the Impact of Contextual Specialization in Neural Speech Enhancement",
+      "authors": "Peter Leer, Svend Feldt, Zheng-Hua Tan, Jan Østergaard, Jesper Jensen",
+      "date": "2026-07-06",
+      "pdf": "https://arxiv.org/pdf/2607.04826v1",
+      "score": "8.0",
+      "evidence": "神经语音增强通过特化到噪声类型来实现声学降噪",
+      "tldr": "该研究系统评估了不同规模（~10k到~5M参数）的神经语音增强系统在利用上下文信息（说话人身份、噪声类型、性别、语言、SNR）进行专业化时的表现。通过微调通用模型，发现专用于说话人身份能最大程度提升语音可懂度和质量，而专用于SNR、噪声类型或性别收益甚微。一个专用于特定说话人和噪声的小模型可匹敌十倍大的通用模型，且跨语言测试表明专用于目标语言的模型优于多语言通用模型。这些结果凸显了小规模自适应模型在助听器等资源受限场景中的潜力。",
+      "tags": "query:deep-anc",
+      "abstract_en": "We systematically investigate neural speech enhancement systems, ranging from very small ($\\sim$10\\,k parameters) to medium-large ($\\sim$2-5\\,M parameters), which specialize to acoustic conditions using contextual information such as speaker identity, noise type, speaker gender, spoken language, and SNR. By fine-tuning generalist models on specific data subsets, we find that specializing to a speaker's identity consistently yields the largest gains in estimated speech intelligibility and quality. In contrast, specializing to SNR, noise type, or gender offers only marginal benefits. Crucially, we show that a small model specialized to both a specific speaker and a specific noise type can match or exceed the performance of a generalist model ten times its size. Further, cross-lingual tests reveal that models specialized to a target language outperform multilingual generalists, suggesting that language is a salient feature for specialization. These findings highlight the potential of small, adaptive models for resource-constrained applications like hearing aids, which specialize on-the-fly to contextual information.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

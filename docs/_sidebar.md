@@ -1,6 +1,9 @@
 * <a class="dpr-sidebar-root-link" href="#/">首页</a>
 * <a class="dpr-sidebar-root-link dpr-sidebar-noactive-link" href="javascript:void(0)" data-dpr-hash="#/tutorial/README">使用教程</a>
 * Daily Papers
+  * 2026-07-12 <!--dpr-date:20260712-->
+    * 精读区
+      * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202607/12/2607.04826v1-ranking-the-impact-of-contextual-specialization-in-neural-speech-enhancement" data-sidebar-item="{&quot;title&quot;: &quot;Ranking the Impact of Contextual Specialization in Neural Speech Enhancement&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2607.04826v1-ranking-the-impact-of-contextual-specialization-in-neural-speech-enhancement&quot;, &quot;score&quot;: &quot;8.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;deep-anc&quot;}], &quot;evidence&quot;: &quot;神经语音增强通过特化到噪声类型来实现声学降噪&quot;}">Ranking the Impact of Contextual Specialization in Neural Speech Enhancement</a>
   * 2026-07-11 <!--dpr-date:20260711-->
     * 精读区
       * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202607/11/2607.08645v1-it-takes-few-to-tango-a-quantized-distributed-model-for-binaural-speech-enhancement" data-sidebar-item="{&quot;title&quot;: &quot;It Takes Few to TANGO: A Quantized Distributed Model for Binaural Speech Enhancement&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2607.08645v1-it-takes-few-to-tango-a-quantized-distributed-model-for-binaural-speech-enhancement&quot;, &quot;score&quot;: &quot;8.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;deep-anc&quot;}], &quot;evidence&quot;: &quot;深度学习用于双耳语音增强&quot;}">It Takes Few to TANGO: A Quantized Distributed Model for Binaural Speech Enhancement</a>
