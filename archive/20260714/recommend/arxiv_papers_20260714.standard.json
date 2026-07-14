@@ -1,0 +1,142 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-14T20:01:34.890902+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 1,
+    "deep_cap": 6,
+    "deep_selected": 1,
+    "quick_candidates": 2,
+    "quick_skim_target": 11,
+    "quick_selected": 2
+  },
+  "deep_dive": [
+    {
+      "id": "2607.10191v1",
+      "source": "arxiv",
+      "title": "Breaking the Quality--Intelligibility Trade-off in Streaming Target Speaker Extraction via Deep-Feature-Anchored Preference Optimization",
+      "abstract": "Generative streaming models for Target Speaker Extraction (TSE) commonly exhibit a quality--intelligibility trade-off, wherein naive optimization for perceptual audio quality tends to degrade speech intelligibility, and conversely. We reveal that this trade-off arises not from the constraints of streaming architectures, but from an inappropriate choice of optimization anchor. Directly optimizing against audio quality metrics induces catastrophic reward hacking, where content critical to pronunciation and intelligibility is systematically erased to maximize a proxy score. To break this bottleneck, we propose two complementary improvements: an enlarged Conformer convolution kernel for richer local spectro-temporal modeling, and WavLM-anchored Direct Preference Optimization (DPO) fine-tuning strategy. DPO preference pairs are ranked by WavLM cosine similarity, a deep acoustic feature encoding both phonetic structure and speaker identity, providing an optimization anchor that resists hacking. Under a 560 ms streaming chunk size, the proposed method achieves a 10.9% relative intelligibility improvement (word error rate: 0.138 to 0.123), with marginal simultaneous gains in audio quality and speaker similarity.",
+      "authors": [
+        "Shuhai Peng",
+        "Jinjiang Liu",
+        "Hui Lu",
+        "Liyang Chen",
+        "Guiping Zhong",
+        "Jiakui Li",
+        "Shiyin Kang",
+        "Zhiyong Wu"
+      ],
+      "primary_category": "cs.SD",
+      "categories": [
+        "cs.SD",
+        "cs.AI"
+      ],
+      "published": "2026-07-11T08:06:24+00:00",
+      "link": "https://arxiv.org/pdf/2607.10191v1",
+      "tags": [
+        "keyword:deep-anc",
+        "query:deep-anc"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "deep learning for acoustic noise reduction in speaker extraction",
+      "llm_evidence_cn": "深度学习用于说话人提取中的声学噪声抑制",
+      "llm_evidence": "深度学习用于说话人提取中的声学噪声抑制",
+      "canonical_evidence": "深度学习用于说话人提取中的声学噪声抑制",
+      "llm_tldr_en": "Breaks the quality-intelligibility trade-off in streaming target speaker extraction using deep-feature-anchored preference optimization, improving both metrics.",
+      "llm_tldr_cn": "针对流式目标说话人提取中常见的质量-可懂度折中问题，揭示了该折衷源于优化锚点选择不当引起的奖励黑客行为。提出基于深度特征锚定的偏好优化方法，通过扩大卷积核和改进优化目标，在流式架构上同时提升语音质量和清晰度，为声学噪声抑制任务提供了新见解。",
+      "llm_tldr": "针对流式目标说话人提取中常见的质量-可懂度折中问题，揭示了该折衷源于优化锚点选择不当引起的奖励黑客行为。提出基于深度特征锚定的偏好优化方法，通过扩大卷积核和改进优化目标，在流式架构上同时提升语音质量和清晰度，为声学噪声抑制任务提供了新见解。",
+      "llm_tags": [
+        "query:deep-anc"
+      ],
+      "matched_query_tag": "query:deep-anc",
+      "matched_query_text": "deep learning in acoustic noise reduction",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2607.10142v1",
+      "source": "arxiv",
+      "title": "CoFi-Lite: Pushing the Limits of Ultra-Lightweight Speech Enhancement",
+      "abstract": "Ultra-lightweight models are essential for the deployment of deep learning-based speech enhancement algorithms on edge devices. Although recent approaches have achieved a certain balance between computational complexity and performance, pushing the complexity limits further demands more sophisticated designs. In this letter, we propose CoFi-Lite, a highly efficient model that decouples spectral modeling into coarse- and fine-grained streams. By leveraging two parallel and symmetric encoder-decoder paths, it simultaneously extracts full-band envelopes and low-frequency details for complementary enhancement. In addition, a novel Cross-Path Fusion (CPF) module is introduced to bridge the distinct paths, facilitating efficient feature interaction. Remarkably, CoFi-Lite requires extremely low computational resources, featuring only 12.87M MACs/s and 83.12k parameters. Experimental results demonstrate that our proposed model outperforms the ultra-lightweight baseline GTCRN while requiring only 40.26% of its computational complexity. Its scaled-up variant also delivers performance on par with that of the SOTA ultra-lightweight model AdaptCRN alongside a 19.34% reduction in computational cost. Audio examples are available at https://acceleration123.github.io/CoFiLite-demo/.",
+      "authors": [
+        "Leyan Yang",
+        "Dahan Wang",
+        "Xiaobin Rong",
+        "Jiadong Zhao",
+        "Jing Lu"
+      ],
+      "primary_category": "eess.AS",
+      "categories": [
+        "eess.AS"
+      ],
+      "published": "2026-07-11T06:01:04+00:00",
+      "link": "https://arxiv.org/pdf/2607.10142v1",
+      "tags": [
+        "keyword:deep-anc",
+        "query:deep-anc"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "deep learning speech enhancement for acoustic noise reduction",
+      "llm_evidence_cn": "深度学习语音增强用于声学降噪",
+      "llm_evidence": "深度学习语音增强用于声学降噪",
+      "canonical_evidence": "深度学习语音增强用于声学降噪",
+      "llm_tldr_en": "CoFi-Lite proposes an ultra-lightweight deep learning model for speech enhancement, using coarse-fine decomposition and cross-path fusion to achieve high efficiency on edge devices for acoustic noise reduction.",
+      "llm_tldr_cn": "现有轻量模型在性能和复杂度之间平衡不足。本文提出CoFi-Lite超轻量深度学习模型用于语音增强，通过粗-细粒度解耦和跨路径融合模块，在极小计算量下实现高性能。实验表明其在多个基准上以超低参数达到与大型模型相当的效果，为边缘设备部署提供了实用声学降噪方案。",
+      "llm_tldr": "现有轻量模型在性能和复杂度之间平衡不足。本文提出CoFi-Lite超轻量深度学习模型用于语音增强，通过粗-细粒度解耦和跨路径融合模块，在极小计算量下实现高性能。实验表明其在多个基准上以超低参数达到与大型模型相当的效果，为边缘设备部署提供了实用声学降噪方案。",
+      "llm_tags": [
+        "query:deep-anc"
+      ],
+      "matched_query_tag": "query:deep-anc",
+      "matched_query_text": "deep learning in acoustic noise reduction",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.11473v1",
+      "source": "arxiv",
+      "title": "Towards Efficient Convolutional Neural Network for Embedded Hardware via Multi-Dimensional Pruning",
+      "abstract": "In this paper, we propose TECO, a multi-dimensional pruning framework to collaboratively prune the three dimensions (depth, width, and resolution) of convolutional neural networks (CNNs) for better execution efficiency on embedded hardware. In TECO, we first introduce a two-stage importance evaluation framework, which efficiently and comprehensively evaluates each pruning unit according to both the local importance inside each dimension and the global importance across different dimensions. Based on the evaluation framework, we present a heuristic pruning algorithm to progressively prune the three dimensions of CNNs towards the optimal trade-off between accuracy and efficiency. Experiments on multiple benchmarks validate the advantages of TECO over existing state-of-the-art (SOTA) approaches. The code and pre-trained models are available at https://github.com/ntuliuteam/Teco.",
+      "authors": [
+        "Hao Kong",
+        "Di Liu",
+        "Xiangzhong Luo",
+        "Shuo Huai",
+        "Ravi Subramaniam",
+        "Christian Makaya",
+        "Qian Lin",
+        "Weichen Liu"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.LG"
+      ],
+      "published": "2026-07-13T12:27:33+00:00",
+      "link": "https://arxiv.org/pdf/2607.11473v1",
+      "tags": [
+        "keyword:deep-anc",
+        "query:deep-anc"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "multi-dimensional pruning for efficient CNN on embedded hardware, applicable to deep ANC models",
+      "llm_evidence_cn": "多维剪枝方法可应用于主动噪声控制的深度学习模型部署",
+      "llm_evidence": "多维剪枝方法可应用于主动噪声控制的深度学习模型部署",
+      "canonical_evidence": "多维剪枝方法可应用于主动噪声控制的深度学习模型部署",
+      "llm_tldr_en": "Proposes TECO, a multi-dimensional pruning framework to reduce depth, width, and resolution of CNNs for embedded hardware, enabling efficient deployment of deep learning models; can support ANC systems on devices.",
+      "llm_tldr_cn": "针对深度神经网络在嵌入式硬件上部署效率低的问题，本文提出TECO多维剪枝框架，对CNN的深度、宽度和分辨率三个维度进行协同剪枝。通过两阶段重要性评估和启发式剪枝算法，在精度与效率间取得最优权衡。实验表明该方法能显著降低模型复杂度，适用于将深度主动降噪模型部署到嵌入式设备。",
+      "llm_tldr": "针对深度神经网络在嵌入式硬件上部署效率低的问题，本文提出TECO多维剪枝框架，对CNN的深度、宽度和分辨率三个维度进行协同剪枝。通过两阶段重要性评估和启发式剪枝算法，在精度与效率间取得最优权衡。实验表明该方法能显著降低模型复杂度，适用于将深度主动降噪模型部署到嵌入式设备。",
+      "llm_tags": [
+        "query:deep-anc"
+      ],
+      "matched_query_tag": "query:deep-anc",
+      "matched_query_text": "deep learning based adaptive algorithm optimization techniques",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "label": "2026-07-14",
+  "date": "2026-07-14",
+  "generated_at": "2026-07-14T20:04:14",
+  "count": 3,
+  "papers": [
+    {
+      "paper_id": "202607/14/2607.10191v1-breaking-the-quality--intelligibility-trade-off-in-streaming-target-speaker-extraction-via-deep-feature-anchored-preference-optimization",
+      "section": "deep",
+      "title_en": "Breaking the Quality--Intelligibility Trade-off in Streaming Target Speaker Extraction via Deep-Feature-Anchored Preference Optimization",
+      "authors": "Shuhai Peng, Jinjiang Liu, Hui Lu, Liyang Chen, Guiping Zhong, Jiakui Li, Shiyin Kang, Zhiyong Wu",
+      "date": "2026-07-11",
+      "pdf": "https://arxiv.org/pdf/2607.10191v1",
+      "score": "8.0",
+      "evidence": "深度学习用于说话人提取中的声学噪声抑制",
+      "tldr": "流式目标说话人提取（TSE）存在质量-可懂度权衡，直接优化音频质量指标会导致奖励破解，破坏发音关键内容。本文提出两项改进：增大Conformer卷积核增强局部建模，以及基于WavLM深度特征锚定的直接偏好优化（DPO）微调。在560ms流式块下，词错误率从0.138降至0.123（相对改善10.9%），同时音质和说话人相似度略有提升。该工作打破了流式TSE的质量-可懂度瓶颈，为语音分离提供了新的优化范式。",
+      "tags": "query:deep-anc",
+      "abstract_en": "Generative streaming models for Target Speaker Extraction (TSE) commonly exhibit a quality--intelligibility trade-off, wherein naive optimization for perceptual audio quality tends to degrade speech intelligibility, and conversely. We reveal that this trade-off arises not from the constraints of streaming architectures, but from an inappropriate choice of optimization anchor. Directly optimizing against audio quality metrics induces catastrophic reward hacking, where content critical to pronunciation and intelligibility is systematically erased to maximize a proxy score. To break this bottleneck, we propose two complementary improvements: an enlarged Conformer convolution kernel for richer local spectro-temporal modeling, and WavLM-anchored Direct Preference Optimization (DPO) fine-tuning strategy. DPO preference pairs are ranked by WavLM cosine similarity, a deep acoustic feature encoding both phonetic structure and speaker identity, providing an optimization anchor that resists hacking. Under a 560 ms streaming chunk size, the proposed method achieves a 10.9% relative intelligibility improvement (word error rate: 0.138 to 0.123), with marginal simultaneous gains in audio quality and speaker similarity.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/14/2607.10142v1-cofi-lite-pushing-the-limits-of-ultra-lightweight-speech-enhancement",
+      "section": "quick",
+      "title_en": "CoFi-Lite: Pushing the Limits of Ultra-Lightweight Speech Enhancement",
+      "authors": "Leyan Yang, Dahan Wang, Xiaobin Rong, Jiadong Zhao, Jing Lu",
+      "date": "2026-07-11",
+      "pdf": "https://arxiv.org/pdf/2607.10142v1",
+      "score": "7.0",
+      "evidence": "深度学习语音增强用于声学降噪",
+      "tldr": "超轻量级语音增强模型对边缘设备部署至关重要，但现有模型在进一步降低计算复杂度方面受限。本文提出CoFi-Lite，将频谱建模解耦为粗粒度和细粒度流，通过两个并行编码器解码器路径分别提取全频带包络和低频细节，并引入跨路径融合模块促进特征交互。该模型仅需十二点八七兆次乘加每秒和八十三点一二千参数，性能优于超轻量基线GTCRN，计算复杂度仅为后者的百分之四十点二六。扩展版本性能与SOTA模型AdaptCRN相当，计算成本降低百分之十九点三四，为超轻量语音增强设立了新标杆。",
+      "tags": "query:deep-anc",
+      "abstract_en": "Ultra-lightweight models are essential for the deployment of deep learning-based speech enhancement algorithms on edge devices. Although recent approaches have achieved a certain balance between computational complexity and performance, pushing the complexity limits further demands more sophisticated designs. In this letter, we propose CoFi-Lite, a highly efficient model that decouples spectral modeling into coarse- and fine-grained streams. By leveraging two parallel and symmetric encoder-decoder paths, it simultaneously extracts full-band envelopes and low-frequency details for complementary enhancement. In addition, a novel Cross-Path Fusion (CPF) module is introduced to bridge the distinct paths, facilitating efficient feature interaction. Remarkably, CoFi-Lite requires extremely low computational resources, featuring only 12.87M MACs/s and 83.12k parameters. Experimental results demonstrate that our proposed model outperforms the ultra-lightweight baseline GTCRN while requiring only 40.26% of its computational complexity. Its scaled-up variant also delivers performance on par with that of the SOTA ultra-lightweight model AdaptCRN alongside a 19.34% reduction in computational cost. Audio examples are available at https://acceleration123.github.io/CoFiLite-demo/.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/14/2607.11473v1-towards-efficient-convolutional-neural-network-for-embedded-hardware-via-multi-dimensional-pruning",
+      "section": "quick",
+      "title_en": "Towards Efficient Convolutional Neural Network for Embedded Hardware via Multi-Dimensional Pruning",
+      "authors": "Hao Kong, Di Liu, Xiangzhong Luo, Shuo Huai, Ravi Subramaniam, Christian Makaya, Qian Lin, Weichen Liu",
+      "date": "2026-07-13",
+      "pdf": "https://arxiv.org/pdf/2607.11473v1",
+      "score": "6.0",
+      "evidence": "多维剪枝方法可应用于主动噪声控制的深度学习模型部署",
+      "tldr": "针对嵌入式硬件上卷积神经网络效率低的问题，提出TECO多维度剪枝框架。该框架协同剪枝深度、宽度和分辨率三个维度，通过两阶段重要性评估和启发式剪枝算法实现精度与效率的最佳权衡。在多个基准上TECO超越现有SOTA方法，代码已开源。",
+      "tags": "query:deep-anc",
+      "abstract_en": "In this paper, we propose TECO, a multi-dimensional pruning framework to collaboratively prune the three dimensions (depth, width, and resolution) of convolutional neural networks (CNNs) for better execution efficiency on embedded hardware. In TECO, we first introduce a two-stage importance evaluation framework, which efficiently and comprehensively evaluates each pruning unit according to both the local importance inside each dimension and the global importance across different dimensions. Based on the evaluation framework, we present a heuristic pruning algorithm to progressively prune the three dimensions of CNNs towards the optimal trade-off between accuracy and efficiency. Experiments on multiple benchmarks validate the advantages of TECO over existing state-of-the-art (SOTA) approaches. The code and pre-trained models are available at https://github.com/ntuliuteam/Teco.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
