@@ -1,0 +1,24 @@
+{
+  "label": "2026-07-15",
+  "date": "2026-07-15",
+  "generated_at": "2026-07-15T21:10:41",
+  "count": 1,
+  "papers": [
+    {
+      "paper_id": "202607/15/2607.12807v1-spatial-frequency-cued-generative-fixed-filter-active-noise-control-based-on-deep-learning-in-reverberant-environments",
+      "section": "deep",
+      "title_en": "Spatial-Frequency Cued Generative Fixed-Filter Active Noise Control Based on Deep Learning in Reverberant Environments",
+      "authors": "Boxiang Wang, Haowen Li, Dongyuan Shi, Junwei Ji, Ziyi Yang, Zhengding Luo, Woon-Seng Gan",
+      "date": "2026-07-14",
+      "pdf": "https://arxiv.org/pdf/2607.12807v1",
+      "score": "9.0",
+      "evidence": "基于深度学习的主动噪声控制",
+      "tldr": "针对生成式固定滤波器有源噪声控制在混响环境中未利用空间信息导致性能受限的问题，本文提出空间频率提示GFANC方法。该方法设计多任务卷积循环神经网络同时估计声源三维空间信息（距离、仰角、方位角）和频率信息（子滤波器权重），联合生成最优控制滤波器。理论分析证实了三维空间条件滤波的必要性，实验表明该方法对未见环境和噪声类型鲁棒，在混响环境中性能显著优于现有算法。",
+      "tags": "query:deep-anc",
+      "abstract_en": "Generative fixed-filter active noise control (GFANC) effectively attenuates noise with diverse frequency characteristics through the combination of sub control filters. However, it does not incorporate the spatial information of the noise source, which limits its performance, particularly in reverberant environments. To address this limitation, this paper proposes a novel spatial-frequency cued GFANC (SF-GFANC) method that exploits both three-dimensional (3D) spatial and frequency information of the noise source. Specifically, a multi-task convolutional recurrent neural network (CRNN) is designed to estimate the source distance, elevation angle, and azimuth angle as spatial cues, while predicting the combination weights of sub control filters as frequency cues. These spatial-frequency cues jointly guide the generation of the appropriate control filter. In addition, a theoretical analysis of the optimal control filter in reverberant environments is presented, highlighting the importance of 3D spatially conditioned control filter design. Evaluations using both simulated and measured acoustic paths demonstrate that the CRNN is robust to unseen acoustic environments and noise types. Furthermore, the results confirm that SF-GFANC outperforms representative ANC algorithms when handling noise sources across diverse 3D locations and frequency characteristics in reverberant environments.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
