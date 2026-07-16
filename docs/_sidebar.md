@@ -1,6 +1,9 @@
 * <a class="dpr-sidebar-root-link" href="#/">首页</a>
 * <a class="dpr-sidebar-root-link dpr-sidebar-noactive-link" href="javascript:void(0)" data-dpr-hash="#/tutorial/README">使用教程</a>
 * Daily Papers
+  * 2026-07-16 <!--dpr-date:20260716-->
+    * 精读区
+      * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202607/16/2607.12872v1-low-latency-neural-models-for-real-time-music-enhancement" data-sidebar-item="{&quot;title&quot;: &quot;Low-Latency Neural Models for Real-Time Music Enhancement&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2607.12872v1-low-latency-neural-models-for-real-time-music-enhancement&quot;, &quot;score&quot;: &quot;8.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;deep-anc&quot;}], &quot;evidence&quot;: &quot;使用神经网络进行实时音乐增强，涉及声学噪声降低&quot;}">Low-Latency Neural Models for Real-Time Music Enhancement</a>
   * 2026-07-15 <!--dpr-date:20260715-->
     * 精读区
       * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202607/15/2607.12807v1-spatial-frequency-cued-generative-fixed-filter-active-noise-control-based-on-deep-learning-in-reverberant-environments" data-sidebar-item="{&quot;title&quot;: &quot;Spatial-Frequency Cued Generative Fixed-Filter Active Noise Control Based on Deep Learning in Reverberant Environments&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2607.12807v1-spatial-frequency-cued-generative-fixed-filter-active-noise-control-based-on-deep-learning-in-reverberant-environments&quot;, &quot;score&quot;: &quot;9.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;deep-anc&quot;}], &quot;evidence&quot;: &quot;基于深度学习的主动噪声控制&quot;}">Spatial-Frequency Cued Generative Fixed-Filter Active Noise Control Based on Deep Learning in Reverberant Environments</a>
