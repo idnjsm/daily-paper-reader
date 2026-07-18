@@ -1,0 +1,55 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-18T21:14:45.015185+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2607.13387v1",
+      "source": "arxiv",
+      "title": "Change-Aware Self-Adaptive AI-Aided Kalman Filters With Neural Change Point Detection",
+      "abstract": "Reliable state estimation in dynamical systems is often challenged by model mismatches, unknown noise statistics, and temporal variations. While AI-aided Kalman filters such as KalmanNet leverage deep learning to enhance classical estimation, they remain vulnerable to distribution shifts and lack mechanisms for autonomous adaptation. This work introduces Change-Aware Self-Adaptive KalmanNet (CASA-KalmanNet), an online adaptation framework that integrates a dedicated neural module, termed CPDNet, to monitor the interpretable internal features of KalmanNet and provide soft indicators of reliability degradation. These indicators dynamically regulate an online learning process, enabling data-efficient and timely adaptation to both abrupt and gradual changes in the system without requiring additional state labels from the changed regime. Numerical experiments on linear and nonlinear state-space models show that CASA-KalmanNet consistently outperforms existing learning-based filters under model mismatch, while approaching the accuracy of optimal classical methods with full domain knowledge.",
+      "authors": [
+        "Wenyi Zhang",
+        "Xiaoyong Ni",
+        "Nir Shlezinger",
+        "Zengfu Wang"
+      ],
+      "primary_category": "eess.SY",
+      "categories": [
+        "eess.SY"
+      ],
+      "published": "2026-07-15T02:28:55+00:00",
+      "link": "https://arxiv.org/pdf/2607.13387v1",
+      "tags": [
+        "keyword:deep-anc",
+        "query:deep-anc"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "adaptive filtering with deep learning for state estimation in dynamical systems",
+      "llm_evidence_cn": "深度学习增强的自适应滤波用于动态系统状态估计",
+      "llm_evidence": "深度学习增强的自适应滤波用于动态系统状态估计",
+      "canonical_evidence": "深度学习增强的自适应滤波用于动态系统状态估计",
+      "llm_tldr_en": "Proposes CASA-KalmanNet, an online adaptation framework that integrates a neural change point detector to monitor KalmanNet internal features, enabling data-efficient adaptive filtering with deep learning.",
+      "llm_tldr_cn": "针对AI辅助卡尔曼滤波器在分布偏移下缺乏自适应能力的问题，本文提出CASA-KalmanNet框架，其核心是集成一个神经变化点检测模块CPDNet，实时监测卡尔曼滤波器的内部特征并触发在线学习。该方法能够数据高效地适应突发的和渐进的系统变化，显著提升了状态估计的鲁棒性。该工作展示了深度学习在自适应滤波优化中的巨大潜力，为主动噪声控制等实时自适应系统提供了方法论借鉴。",
+      "llm_tldr": "针对AI辅助卡尔曼滤波器在分布偏移下缺乏自适应能力的问题，本文提出CASA-KalmanNet框架，其核心是集成一个神经变化点检测模块CPDNet，实时监测卡尔曼滤波器的内部特征并触发在线学习。该方法能够数据高效地适应突发的和渐进的系统变化，显著提升了状态估计的鲁棒性。该工作展示了深度学习在自适应滤波优化中的巨大潜力，为主动噪声控制等实时自适应系统提供了方法论借鉴。",
+      "llm_tags": [
+        "query:deep-anc"
+      ],
+      "matched_query_tag": "query:deep-anc",
+      "matched_query_text": "adaptive filtering with deep learning",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}

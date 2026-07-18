@@ -6,22 +6,24 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-17
-- 运行时间：2026-07-17 21:20:08 UTC
+- 最新运行日期：2026-07-18
+- 运行时间：2026-07-18 21:15:21 UTC
 - 运行状态：成功
-- 本次总论文数：0
+- 本次总论文数：1
 - 精读区：0
-- 速读区：0
+- 速读区：1
 
 ### 今日简报（AI）
-> 今日无新推荐，系统未产出可展示论文。
-- 详情：[/202607/17/README](/202607/17/README)
+今日速读一篇评分7.0的论文，聚焦AI辅助卡尔曼滤波与神经变化点检测的融合。最值得关注的方向是自适应滤波器在变化感知场景中的应用，以及神经网络如何提升状态估计的鲁棒性。建议进一步探索该领域在实时系统或自动驾驶中的实验验证。
+- 详情：[/202607/18/README](/202607/18/README)
 
 ### 精读区论文标签
 - 本次无精读推荐。
 
 ### 速读区论文标签
-- 本次无速读推荐。
+1. [Change-Aware Self-Adaptive AI-Aided Kalman Filters With Neural Change Point Detection](/202607/18/2607.13387v1-change-aware-self-adaptive-ai-aided-kalman-filters-with-neural-change-point-detection)  
+   标签：评分：7.0/10、query:deep-anc
+   evidence：深度学习增强的自适应滤波用于动态系统状态估计
 
 
 <div class="dpr-home-promo-card">

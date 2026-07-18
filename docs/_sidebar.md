@@ -1,6 +1,9 @@
 * <a class="dpr-sidebar-root-link" href="#/">首页</a>
 * <a class="dpr-sidebar-root-link dpr-sidebar-noactive-link" href="javascript:void(0)" data-dpr-hash="#/tutorial/README">使用教程</a>
 * Daily Papers
+  * 2026-07-18 <!--dpr-date:20260718-->
+    * 速读区
+      * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202607/18/2607.13387v1-change-aware-self-adaptive-ai-aided-kalman-filters-with-neural-change-point-detection" data-sidebar-item="{&quot;title&quot;: &quot;Change-Aware Self-Adaptive AI-Aided Kalman Filters With Neural Change Point Detection&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2607.13387v1-change-aware-self-adaptive-ai-aided-kalman-filters-with-neural-change-point-detection&quot;, &quot;score&quot;: &quot;7.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;deep-anc&quot;}], &quot;evidence&quot;: &quot;深度学习增强的自适应滤波用于动态系统状态估计&quot;}">Change-Aware Self-Adaptive AI-Aided Kalman Filters With Neural Change Point Detection</a>
   * 2026-07-16 <!--dpr-date:20260716-->
     * 精读区
       * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202607/16/2607.12872v1-low-latency-neural-models-for-real-time-music-enhancement" data-sidebar-item="{&quot;title&quot;: &quot;Low-Latency Neural Models for Real-Time Music Enhancement&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2607.12872v1-low-latency-neural-models-for-real-time-music-enhancement&quot;, &quot;score&quot;: &quot;8.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;deep-anc&quot;}], &quot;evidence&quot;: &quot;使用神经网络进行实时音乐增强，涉及声学噪声降低&quot;}">Low-Latency Neural Models for Real-Time Music Enhancement</a>
