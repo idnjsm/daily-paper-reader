@@ -1,0 +1,56 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-21T20:24:24.096694+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 1,
+    "deep_cap": 6,
+    "deep_selected": 1,
+    "quick_candidates": 0,
+    "quick_skim_target": 11,
+    "quick_selected": 0
+  },
+  "deep_dive": [
+    {
+      "id": "2607.17165v1",
+      "source": "arxiv",
+      "title": "Adaptive Momentum Enhanced Distributed Multichannel Active Noise Control for Faster Convergence under Communication Delays",
+      "abstract": "Distributed multichannel active noise control (DMCANC) reduces the computational burden of centralized ANC systems by distributing processing tasks across multiple nodes, while requiring information exchange to achieve satisfactory global noise reduction. To improve robustness under communication delays, the auto-shrink step size mixed-gradients filtered reference LMS (ASSS-MGDFxLMS) algorithm has been proposed. However, the reduced step size inevitably slows convergence. In this work, an adaptive momentum term is introduced to accelerate convergence, where cosine similarity is used to evaluate the alignment between the instantaneous gradient and the momentum component and dynamically adjust the momentum parameter. This design accelerates convergence when the directions are consistent while preserving stability under delayed communication. Simulation results demonstrate that the proposed adaptive momentum ASSS-MGDFxLMS (AMAS-MGDFxLMS) algorithm achieves faster convergence than ASSS-MGDFxLMS while maintaining stable and effective noise reduction performance.",
+      "authors": [
+        "Junwei Ji",
+        "Woon-Seng Gan",
+        "Boxiang Wang",
+        "Ziyi Yang",
+        "Haowen Li"
+      ],
+      "primary_category": "eess.AS",
+      "categories": [
+        "eess.AS",
+        "eess.SP"
+      ],
+      "published": "2026-07-19T09:56:24+00:00",
+      "link": "https://arxiv.org/pdf/2607.17165v1",
+      "tags": [
+        "keyword:deep-anc",
+        "query:deep-anc"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Adaptive momentum for distributed multichannel active noise control",
+      "llm_evidence_cn": "针对分布式多通道主动噪声控制的自适应动量方法",
+      "llm_evidence": "针对分布式多通道主动噪声控制的自适应动量方法",
+      "canonical_evidence": "针对分布式多通道主动噪声控制的自适应动量方法",
+      "llm_tldr_en": "Improves distributed multichannel active noise control convergence under communication delays by introducing an adaptive momentum term using cosine similarity, accelerating convergence over baseline ASSS-MGDFxLMS.",
+      "llm_tldr_cn": "该论文针对分布式多通道主动噪声控制在通信延迟下收敛慢的问题，提出了一种自适应动量加速方法。通过余弦相似度动态调整动量项，该方法在保持鲁棒性的同时显著加快了收敛速度。实验表明，该方法在多种延迟条件下均优于现有基线算法，为实际部署提供了高效解决方案。",
+      "llm_tldr": "该论文针对分布式多通道主动噪声控制在通信延迟下收敛慢的问题，提出了一种自适应动量加速方法。通过余弦相似度动态调整动量项，该方法在保持鲁棒性的同时显著加快了收敛速度。实验表明，该方法在多种延迟条件下均优于现有基线算法，为实际部署提供了高效解决方案。",
+      "llm_tags": [
+        "query:deep-anc"
+      ],
+      "matched_query_tag": "query:deep-anc",
+      "matched_query_text": "active noise control",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": []
+}

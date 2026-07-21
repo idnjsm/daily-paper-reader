@@ -1,6 +1,9 @@
 * <a class="dpr-sidebar-root-link" href="#/">首页</a>
 * <a class="dpr-sidebar-root-link dpr-sidebar-noactive-link" href="javascript:void(0)" data-dpr-hash="#/tutorial/README">使用教程</a>
 * Daily Papers
+  * 2026-07-21 <!--dpr-date:20260721-->
+    * 精读区
+      * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202607/21/2607.17165v1-adaptive-momentum-enhanced-distributed-multichannel-active-noise-control-for-faster-convergence-under-communication-delays" data-sidebar-item="{&quot;title&quot;: &quot;Adaptive Momentum Enhanced Distributed Multichannel Active Noise Control for Faster Convergence under Communication Delays&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2607.17165v1-adaptive-momentum-enhanced-distributed-multichannel-active-noise-control-for-faster-convergence-under-communication-delays&quot;, &quot;score&quot;: &quot;9.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;deep-anc&quot;}], &quot;evidence&quot;: &quot;针对分布式多通道主动噪声控制的自适应动量方法&quot;}">Adaptive Momentum Enhanced Distributed Multichannel Active Noise Control for Faster Convergence under Communication Delays</a>
   * 2026-07-18 <!--dpr-date:20260718-->
     * 速读区
       * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202607/18/2607.13387v1-change-aware-self-adaptive-ai-aided-kalman-filters-with-neural-change-point-detection" data-sidebar-item="{&quot;title&quot;: &quot;Change-Aware Self-Adaptive AI-Aided Kalman Filters With Neural Change Point Detection&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2607.13387v1-change-aware-self-adaptive-ai-aided-kalman-filters-with-neural-change-point-detection&quot;, &quot;score&quot;: &quot;7.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;deep-anc&quot;}], &quot;evidence&quot;: &quot;深度学习增强的自适应滤波用于动态系统状态估计&quot;}">Change-Aware Self-Adaptive AI-Aided Kalman Filters With Neural Change Point Detection</a>

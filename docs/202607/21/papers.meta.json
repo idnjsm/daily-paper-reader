@@ -1,0 +1,24 @@
+{
+  "label": "2026-07-21",
+  "date": "2026-07-21",
+  "generated_at": "2026-07-21T20:25:20",
+  "count": 1,
+  "papers": [
+    {
+      "paper_id": "202607/21/2607.17165v1-adaptive-momentum-enhanced-distributed-multichannel-active-noise-control-for-faster-convergence-under-communication-delays",
+      "section": "deep",
+      "title_en": "Adaptive Momentum Enhanced Distributed Multichannel Active Noise Control for Faster Convergence under Communication Delays",
+      "authors": "Junwei Ji, Woon-Seng Gan, Boxiang Wang, Ziyi Yang, Haowen Li",
+      "date": "2026-07-19",
+      "pdf": "https://arxiv.org/pdf/2607.17165v1",
+      "score": "9.0",
+      "evidence": "针对分布式多通道主动噪声控制的自适应动量方法",
+      "tldr": "分布式多通道主动噪声控制（DMCANC）系统通过节点协作降低计算负担，但通信延迟使现有ASSS-MGDFxLMS算法因步长减小而收敛缓慢。本文提出自适应动量增强算法（AMAS-MGDFxLMS），利用余弦相似度动态调整动量参数，在梯度方向一致时加速收敛，并在延迟下保持稳定性。仿真显示，新算法收敛速度显著提升，且降噪效果稳定。该工作为延迟环境下的分布式ANC提供了高效且鲁棒的解决方案。",
+      "tags": "query:deep-anc",
+      "abstract_en": "Distributed multichannel active noise control (DMCANC) reduces the computational burden of centralized ANC systems by distributing processing tasks across multiple nodes, while requiring information exchange to achieve satisfactory global noise reduction. To improve robustness under communication delays, the auto-shrink step size mixed-gradients filtered reference LMS (ASSS-MGDFxLMS) algorithm has been proposed. However, the reduced step size inevitably slows convergence. In this work, an adaptive momentum term is introduced to accelerate convergence, where cosine similarity is used to evaluate the alignment between the instantaneous gradient and the momentum component and dynamically adjust the momentum parameter. This design accelerates convergence when the directions are consistent while preserving stability under delayed communication. Simulation results demonstrate that the proposed adaptive momentum ASSS-MGDFxLMS (AMAS-MGDFxLMS) algorithm achieves faster convergence than ASSS-MGDFxLMS while maintaining stable and effective noise reduction performance.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

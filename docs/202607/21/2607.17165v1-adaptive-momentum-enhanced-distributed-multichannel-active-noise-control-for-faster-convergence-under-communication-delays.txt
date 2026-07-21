@@ -1,0 +1,189 @@
+Title: Adaptive Momentum Enhanced Distributed Multichannel Active Noise Control for Faster Convergence under Communication Delays
+
+URL Source: https://arxiv.org/pdf/2607.17165v1
+
+Published Time: Tue, 21 Jul 2026 01:14:40 GMT
+
+Number of Pages: 5
+
+Markdown Content:
+# Adaptive Momentum Enhanced Distributed Multichannel Active Noise Control for Faster Convergence under Communication Delays 
+
+Junwei Ji, Woon-Seng Gan, Boxiang Wang, Ziyi Yang, Haowen Li 
+
+School of Electrical and Electronic Engineering, Nanyang Technological University, Singapore 
+
+Email: JUNWEI002@e.ntu.edu.sg, ewsgan@ntu.edu.sg 
+
+Abstract —Distributed multichannel active noise control (DM-CANC) reduces the computational burden of centralized ANC systems by distributing processing tasks across multiple nodes, while requiring information exchange to achieve satisfactory global noise reduction. To improve robustness under communi-cation delays, the auto-shrink step size mixed-gradients filtered reference LMS (ASSS-MGDFxLMS) algorithm has been pro-posed. However, the reduced step size inevitably slows conver-gence. In this work, an adaptive momentum term is introduced to accelerate convergence, where cosine similarity is used to evaluate the alignment between the instantaneous gradient and the momentum component and dynamically adjust the mo-mentum parameter. This design accelerates convergence when the directions are consistent while preserving stability under delayed communication. Simulation results demonstrate that the proposed adaptive momentum ASSS-MGDFxLMS (AMAS-MGDFxLMS) algorithm achieves faster convergence than ASSS-MGDFxLMS while maintaining stable and effective noise reduc-tion performance. 
+
+Index Terms —Multichannel Active Noise Control (MCANC), distributed control, adaptive momentum, mixed-gradients dis-tributed FxLMS (MGDFxLMS), auto-shrink step size (ASSS), communication restrictions 
+
+I. I NTRODUCTION 
+
+By employing multiple secondary sources and error sensors, multichannel active noise control (MCANC) systems enable global noise reduction over large spatial regions [1]. To achieve satisfactory performance and effectively track dynamic noise characteristics and acoustic environments, adaptive algorithms are widely employed. Among them, the filtered reference least mean square (FxLMS) algorithm [2] is one of the most classical approaches and has been extensively extended to multichannel configurations [3]. In recent years, a wide range of FxLMS variants have been developed to address practical challenges encountered in real-world implementations [4], such as output saturation [5], spatial reduction [6], [7], and virtual sensing [8], [9]. Recently, advances in artificial intelli-gence (AI) have further stimulated the development of deep-learning-based ANC algorithms [10]–[12], offering promising potential for enhanced robustness and adaptability in complex and highly dynamic acoustic environments [13]. Conventional MCANC algorithms, such as the multiple error FxLMS (MEFxLMS) approach [14], typically adopt a centralized architecture:in which a single processor performs multichannel adaptive processing using all reference and error 
+
+Fig. 1. A general DMCANC network, where each ANC node consists of a secondary source, an error sensor, and an ANC controller. 
+
+signals. Although effective, the computational load grows rapidly with the number of channels, leading to high hardware cost and limited real-time scalability [15], [16]. To reduce complexity, various efficient algorithms have been proposed, including partial-update schemes [17], mixed-error methods [18], and frequency-point selection techniques [19]. As an alternative, decentralized strategies distribute computations across multiple local controllers, each updating its control filter using only local error signal [20], [21]. However, decentral-ized methods can degrade global attenuation and may even compromise stability due to inter-channel interference [22]. Distributed MCANC (DMCANC) methods provide apromising alternative [23], where each node processes local signals while exchanging essential information to achieve global noise reduction [24]. A typical DMCANC network is shown in 1. The diffusion FxLMS (DFxLMS) algorithm was developed by employing topology-based combination rules [25], [26], but its spatial-smoothing nature limits performance under asymmetric acoustic paths [27]. To address this issue, the augmented DFxLMS (ADFxLMS) algorithm and a bidi-rectional communication strategy were proposed to improve robustness and reduce communication overhead [28], [29]. Recent experimental studies have further validated DMCANC using in-chip communication platforms [30]. However, these approaches are generally limited to ideal communication networks. Under communication latency, the-arXiv:2607.17165v1 [eess.AS] 19 Jul 2026 oretical analysis has shown that DMCANC systems may be-come unstable [31]. To address this issue, the auto-shrink step size mixed-gradients distributed FxLMS (ASSS-MGDFxLMS) algorithm was proposed, in which the step size at each node is automatically reduced according to the degree of communica-tion delay [31]. While this strategy enhances stability, the re-duced step size inevitably slows down the convergence speed. To address this limitation, a momentum term is introduced to accelerate convergence. To avoid instability caused by a fixed momentum factor, cosine similarity is used to evaluate the directional consistency between the mixed gradient and the momentum term [32], enabling adaptive adjustment of the momentum strength. Consequently, the proposed adaptive mo-mentum ASSS-MGDFxLMS (AMAS-MGDFxLMS) improves DMCANC performance under communication latency by rapidly achieving satisfactory noise reduction while preserving system stability, demonstrating strong practical significance. The remainder of this paper is organized as follows: Sec-tion II reviews the ASSS-MGDFxLMS algorithm. Section III presents the proposed adaptive momentum strategy to improve the convergence speed of ASSS-MGDFxLMS under commu-nication latency. Section IV reports numerical simulations that demonstrate the effectiveness of the proposed method. Finally, Section V concludes the paper. II. T HE ASSS-MGDF XLMS A LGORITHM 
+
+In practical deployments, DMCANC systems suffer from two critical challenges: inter-node acoustic crosstalk and non-ideal communication conditions, especially communication delays. The ASSS-MGDFxLMS algorithm was proposed to jointly address these issues and forms the basis of the present work. 
+
+A. Mixed-gradients distributed FxLMS 
+
+Consider a DMCANC system consisting of K ANC nodes that share a common reference microphone. The control signal generated by the kth node is given by 
+
+yk(n) = wT 
+
+> k
+
+(n)x(n), k = 1 , 2, ..., K, (1) where wk(n) = [wk, 0(n) wk, 1(n) · · · wk,L w −1(n)] T and 
+
+x(n) = [ x(n) x(n − 1) · · · x(n − Lw + 1)] T denote the kth control filter and reference signal vectors with the length of 
+
+Lw, and n is the discrete-time sample index. The control signal propagates through the secondary path to suppress the disturbance dk(n) at the error microphone. In addition to the anti-noise generated by the kth node, the error microphone also captures the anti-noise contributions from other nodes due to acoustic crosstalk. Consequently, the error signal at the kth node can be expressed as 
+
+ek(n) = dk(n) − yk(n) ∗ skk (n) −
+
+> K
+
+X
+
+> m=1 ,m ̸=k
+
+ym(n) ∗ skm (n),
+
+(2) where ∗ denotes linear convolution, skk (n) represents the self-secondary path of the kth node, and skm (n) denotes the cross-secondary path from the mth secondary source to the kth error microphone.     
+
+> Fig. 2. Block diagram of the ASSS-MGDFxLMS algorithm for the kth node, where γk(n)denotes the interference generated by other nodes.
+
+Based on the gradient descent method, the instantaneous gradient of the local cost function at node k with respect to the control filter wk(n) is given by 
+
+∇k(n) = −2[ x(n) ∗ ˆskk (n)] · ek(n). (3) where ˆskk (n) denotes the estimated self-secondary path. Sim-ilarly, the local gradients of other nodes can be computed following (3). Instead of transmitting the control filters as the conventional DMCANC algorithms, the local gradient of each node is shared. After receiving the gradients from other nodes, each node updates its global control filter as 
+
+wk(n + 1) = wk(n) − μ∇k(n) + 
+
+> K
+
+X
+
+> m=1 ,m ̸=k
+
+∇m(n) ∗ cmk (n),
+
+(4) where μ is the step size, and cmk (n) denotes the compensation filter introduced to approximate the mismatch between the self-secondary path and the cross-secondary path [33], thereby mitigating the crosstalk effect. Specifically, the relationship between the estimated secondary path and the compensation filter is given by 
+
+ˆsmk (n) = ˆ smm (n) ∗ cmk (n), (m̸ = k). (5) These formulations constitute the mixed-gradients distributed FxLMS (MGDFxLMS) algorithm [31]. By exchanging local gradient information rather than control filter coefficients, MGDFxLMS extends the conventional centralized MEFxLMS algorithm to a distributed framework, enabling effective sup-pression of inter-node crosstalk while maintaining perfor-mance comparable to centralized MCANC. 
+
+B. Auto-shrink step size (ASSS) 
+
+In practical distributed ANC systems, communication de-lays are unavoidable and can significantly degrade the stability of the algorithm. To account for this effect, the update rule is modified by incorporating the delayed gradient from the mth node, denoted by ∆m, leading to 
+
+wk(n + 1) = wk(n)
+
+− μ∇k(n) + 
+
+> K
+
+X
+
+> m=1 ,m ̸=k
+
+∇m(n − ∆m) ∗ cmk (n). (6) To mitigate the latency issue, an auto-shrink step size strategy is introduced, defined as 
+
+μk(n) = μ0 exp( −2∆ /f ), (7) where μ0 denotes the initial step size, f is the sampling frequency, and 
+
+∆ = max[ {∆m | m = 1 , 2, · · · , K and m̸ = k}], (8) represents the maximum communication delay among the received nodes. Consequently, the auto-shrink step size MGDFxLMS (ASSS-MGDFxLMS) algorithm is expressed as 
+
+wk(n + 1) = wk(n)
+
+− μk(n)∇k(n) + 
+
+> K
+
+X
+
+> m=1 ,m ̸=k
+
+∇m(n − ∆m) ∗ cmk (n). (9) The block diagram of ASSS-MGDFxLMS is illustrated in Fig. 2, where the local gradient of each node is transmitted and combined with the compensation filter to compute the global control filters and the auto-shrink step size strategy allows the step size value to be adaptive to communication delays to enhance the system’s robustness. III. A DAPTIVE MOMENTUM METHOD 
+
+Although the ASSS-MGDFxLMS algorithm significantly improves system stability under communication delays, this robustness is achieved at the expense of a reduced conver-gence speed. To alleviate this drawback, a momentum term is introduced to accelerate convergence. The mixed gradient at the kth node is defined as 
+
+gk(n) = −μk(n)∇k(n)+ 
+
+> K
+
+X
+
+> m=1 ,m ̸=k
+
+∇m(n−∆m)∗cmk (n),
+
+(10) and the corresponding momentum term is given by 
+
+vk(n) = wk(n) − wk(n − 1) . (11) By incorporating the momentum term, the general update equation in (9) can be modified as 
+
+wk(n + 1) = wk(n) + gk(n) + βvk(n), (12) where β denotes the momentum factor controlling the contri-bution of the momentum term. However, under communication latency, employing a fixed momentum factor may lead to instability, particularly in fluctuating networks. This motivates the adoption of an adaptive momentum strategy. To dynamically regulate the momentum contribution, the cosine similarity [32] is employed to evaluate the directional                                                                                               
+
+> TABLE I PSEUDO -CODE OF THE AMAS-MGDF XLMS ALGORITHM
+> Algorithm: the AMAS-MGDFxLMS algorithm for the kth ANC nodes.
+> Initialization: Obtain estimated self-secondary path, ˆskk (n),and compensation filters, cmk (n).
+> Input: The reference signal x(n); The error signal ek(n);Received gradients from other nodes ∇m(n−∆m), ( m̸=k).
+> Output: The control signal yk(n); The kth local gradients ∇k(n).
+> While True do
+> /*Combine gradients to obtain global control filter */
+> ∆←max[ {∆m|m̸=k}]
+> μk(n)←μ0e−2∆ /f
+> gk(n)← − μk(n)∇k(n) + PKm=1 ,m ̸=k∇m(n−∆m)∗cmk (n)
+> vk(n)←wk(n)−wk(n−1)
+> ρk(n)←gT
+> k(n)vk(n)
+> || gk(n)|| || vk(n)||
+> βk(n)←min (β0|ρk(n)|p, β 0)(0 < p < 1)
+> wk(n+ 1) ←wk(n) + gk(n) + βk(n)vk(n)
+> /*Output control signal for the secondary source*/
+> yk(n)←wT
+> k(n)x(n)
+> /*Calculate local gradient and send to other nodes*/
+> ∇k(n)←[x(n)∗ˆskk (n)] ·ek(n)▷Send to other nodes
+> end while
+
+consistency between the mixed gradient and the momentum term, defined as 
+
+ρk(n) = gT 
+
+> k
+
+(n)vk(n)
+
+|| gk(n)|| || vk(n)|| . (13) Since both gk(n) and vk(n) are high-dimensional vectors, the resulting cosine similarity values are typically small. To mitigate this issue, a power-law scaling is applied [34], leading to the following adaptive momentum factor: 
+
+βk(n) = min (β0|ρk(n)|p, β 0), (14) where 0 < p < 1 and β0 is the maximum momentum factor. The parameter β0 can be estimated under ideal network conditions [35], while p is selected according to the order of magnitude of ρk(n). When the gradient and momentum directions are well aligned, a larger momentum factor is applied to accelerate convergence; otherwise, the momentum contribution is attenuated to enhance stability. Therefore, the update rule for the proposed adaptive momentum ASSS-MGDFxLMS (AMAS-MGDFxLMS) is expressed as 
+
+wk(n + 1) = wk(n) + gk(n) + βk(n)vk(n). (15) The pseudo-code of the AMAS-MGDFxLMS algorithm is summarized in Table I. By adaptively adjusting the momen-tum factor based on the directional consistency between the mixed gradient and the momentum term, the proposed method effectively accelerates convergence while preserving stability. The additional computational cost is approximately 4Lw + 2 
+
+multiplications and 6Lw − 3 additions per node at each iteration, excluding a few scalar nonlinear operations. Con-sequently, the AMAS-MGDFxLMS algorithm achieves rapid and reliable noise reduction performance under fluctuating network conditions. Fig. 3. Noise reduction performance using different algorithms when com-munication delay suddenly changes at the 10s, 20s, and the 30s. 
+
+IV. N UMERICAL SIMULATIONS 
+
+In this section, numerical simulations are conducted to evaluate the performance of AMAS-MGDFxLMS algorithm. The primary and secondary acoustic paths are measured in a real noise chamber equipped with an ANC window. The system configuration follows the setup in [31], consisting of six ANC nodes. The lengths of the secondary paths, compen-sation filters, and control filters are set to 256 , 33 , and 512 ,respectively. The sampling frequency is 16 kHz. The primary noise is broadband noise ranging from 100 to 1, 000 Hz. The step size is chosen as 1 × 10 −7 and p is 0.25 for all the simulations. The proposed AMAS-MGDFxLMS is compared with MGDFxLMS, ASSS-MGDFxLMS and fixed momentum ASSS-MGDFxLMS (FMAS-MGDFxLMS). To quantitatively assess noise reduction performance, the average normalized squared error (ANSE) across all ANC nodes [31]. 
+
+A. Noise reduction performance under sudden changes in communication delay 
+
+In this simulation, the communication delay undergoes variations at the 10s (from the initial 4,000 delayed samples to 8,000 samples), the 20s (from 8,000 samples to 16,000 samples), and the 30s (from 16,000 samples to 8,000 sam-ples). As shown in Fig. 3, when the communication delay changes abruptly, the MGDFxLMS algorithm diverges due to the outdated gradient information. In contrast, the ASSS-MGDFxLMS algorithm preserves convergence stability at the cost of a reduced convergence speed, which motivates the introduction of a momentum term. However, the FMAS-MGDFxLMS algorithm is highly sensitive to the choice of the momentum factor. A large factor leads to over-acceleration and divergence, whereas a small factor fails to provide effective acceleration. To address this issue, the proposed AMAS-MGDFxLMS algorithm adaptively adjusts the acceleration rate according to the directional consistency between the mixed gradients and momentum terms, enabling the DMCANC sys-tem to achieve fast noise reduction with maximal acceleration while maintaining stability.  
+
+> Fig. 4. (a). Fluctuating network where communication delay gradually changes over 0-1 seconds; (b). Noise reduction performance using different algorithms under fluctuating network
+
+B. Noise reduction performance under fluctuating network 
+
+The network latency is subject to fluctuations in practice. In order to further illustrate the efficacy of the proposed algorithm, we presuppose that the network latency undergoes a gradual transition from 0 to 1 seconds, as shown in Fig. 4(a). It can be observed from Fig. 4(b) that the MGDFxLMS algorithm still exhibits instability under fluctuating network conditions. In contrast, the ASSS-MGDFxLMS effectively mitigates this issue and enables stable convergence of the DMCANC system. Although introducing a momentum term can accelerate convergence, an improperly chosen momen-tum factor may also introduce additional instability. Com-pared with the FMAS-MGDFxLMS approach, the proposed AMAS-MGDFxLMS dynamically adjusts the momentum fac-tor, achieving a favorable balance between convergence speed and robustness while avoiding the difficulty of manual mo-mentum factor tuning. As a result, the AMAS-MGDFxLMS attains faster and more stable noise reduction performance, demonstrating practical significance. V. C ONCLUSION 
+
+This paper introduces an adaptive momentum mechanism into the ASSS-MGDFxLMS algorithm, resulting in the pro-posed AMAS-MGDFxLMS algorithm. Building upon the in-herent stability of ASSS-MGDFxLMS under varying commu-nication delays and its ability to achieve satisfactory noise reduction, the proposed method further enhances performance by incorporating adaptive momentum. By evaluating the di-rectional consistency between the mixed-gradient updates and the momentum term, the momentum factor is dynamically ad-justed to provide maximal acceleration when beneficial while preserving system stability. Therefore, the proposed AMAS-MGDFxLMS achieves faster convergence and improved noise reduction performance under communication-constrained con-ditions, demonstrating strong practical significance for real-world DMCANC applications. ACKNOWLEDGMENT 
+
+This work was supported by the Ministry of Education, Singapore, through Academic Research Fund Tier 2 under Grant MOE-T2EP50122-0018. REFERENCES [1] S. J. Elliott, Signal processing for active control . San Diego, Calif.: Academic, 2001, includes bibliographical references and index. [2] D. Morgan, “An analysis of multiple correlation cancellation loops with a filter in the auxiliary path,” IEEE Transactions on acoustics, speech, and signal processing , vol. 28, no. 4, pp. 454–467, 1980. [Online]. Available: https://dx.doi.org/10.1109/tassp.1980.1163430 [3] S. M. Kuo and D. R. Morgan, “Active noise control: a tutorial review,” 
+
+Proceedings of the IEEE , vol. 87, no. 6, pp. 943–973, 1999. [4] B. Lam, W.-S. Gan, D. Shi, M. Nishimura, and S. Elliott, “Ten questions concerning active noise control in the built environment,” Building and Environment , vol. 200, p. 107928, 2021. [5] Y. Guo, D. Shi, X. Shen, J. Ji, and W.-S. Gan, “A survey on adaptive active noise control algorithms overcoming the output saturation effect,” 
+
+Signal Processing , vol. 222, p. 109525, 2024. [6] X. Su, D. Shi, B. Wu, L. Ye, and W.-S. Gan, “Co-forecasting of time-varying spatial-frequency map for selective fixed-filter multichannel anc based on dynamic factor graph,” IEEE Transactions on Audio, Speech and Language Processing , 2025. [7] H. Zhang, H. J. Sun, J. A. Zhang, P. Samarasinghe, and Y. A. Zhang, “A spherical-harmonic domain selective spatial active noise control system based on sound field reproduction,” in ICASSP 2025-2025 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP) . IEEE, 2025, pp. 1–5. [8] I. Tsuji, S. Toyooka, and Y. Kajikawa, “A novel hybrid active noise control with auxiliary filter-based virtual sensing for mixed unwanted noise reduction,” Applied Acoustics , vol. 239, p. 110808, 2025. [9] B. Wang, D. Shi, Z. Luo, X. Shen, J. Ji, and W.-S. Gan, “Transferable selective virtual sensing active noise control technique based on metric learning,” in ICASSP 2025-2025 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP) . IEEE, 2025, pp. 1–5. [10] H. Zhang and D. Wang, “Deep anc: A deep learning approach to active noise control,” Neural Networks , vol. 141, pp. 1–10, 2021. [11] R. Xie, A. Tu, C. Shi, S. Elliott, H. Li, and L. Zhang, “Cognitive virtual sensing technique for feedforward active noise control,” in ICASSP 2024-2024 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP) . IEEE, 2024, pp. 981–985. [12] X. Pike and J. Cheer, “Dynamic neural network switching for active control of nonlinear systems,” The Journal of the Acoustical Society of America , vol. 158, no. 1, pp. 154–163, 2025. [13] Z. Luo, D. Shi, X. Su, and W.-S. Gan, “Frequency-direction aware multichannel selective fixed-filter active noise control based on multi-task learning,” IEEE Transactions on Audio, Speech and Language Processing , 2025. [14] S. Elliott, I. Stothers, and P. Nelson, “A multiple error lms algorithm and its application to the active control of sound and vibration,” IEEE Transactions on Acoustics, Speech, and Signal Processing , vol. 35, no. 10, pp. 1423–1434, 1987. [Online]. Available: https://dx.doi.org/10.1109/tassp.1987.1165044 [15] S. C. Douglas, “Fast implementations of the filtered-x lms and lms algorithms for multichannel active noise control,” IEEE Transactions on speech and audio processing , vol. 7, no. 4, pp. 454–465, 1999. [16] D. Shi, B. Lam, J. Ji, X. Shen, C. K. Lai, and W.-S. Gan, “Computation-efficient solution for fully-connected active noise control window: Analysis and implementation of multichannel adjoint least mean square algorithm,” Mechanical Systems and Signal Processing , vol. 199, p. 110444, 2023. [17] C. Shi and Y. Kajikawa, “A partial-update minimax algorithm for prac-tical implementation of multi-channel feedforward active noise control,” in 2018 16th International Workshop on Acoustic Signal Enhancement (IWAENC) . IEEE, 2018, pp. 1–15. [18] T. Murao, C. Shi, W.-S. Gan, and M. Nishimura, “Mixed-error approach for multi-channel active noise control of open windows,” Applied Acoustics , vol. 127, pp. 305–315, 2017. [19] S. Lian, T. Li, S. Sun, S. Wang, and J. Lu, “A computational-efficient adaptive algorithm based on frequency point selection in multichannel active noise control systems,” Mechanical Systems and Signal Process-ing , vol. 238, p. 113176, 2025. [20] S. Pradhan, G. Zhang, S. Zhao, K. Niwa, and W. Bastiaan Kleijn, “On eigenvalue shaping for two-channel decentralized active noise control systems,” Applied Acoustics , vol. 205, p. 109260, 2023. [Online]. Available: https://www.sciencedirect.com/science/article/pii/S0003682X23000580 [21] G. Zhang, J. Tao, X. Qiu, and I. Burnett, “Decentralized two-channel active noise control for single frequency by shaping matrix eigenvalues,” IEEE/ACM Transactions on Audio, Speech, and Language Processing , vol. 27, no. 1, pp. 44–52, 2019. [Online]. Available: https://dx.doi.org/10.1109/taslp.2018.2869686 [22] S. J. Elliott and C. C. Boucher, “Interaction between multiple feedforward active control systems,” IEEE Transactions on speech and audio processing , vol. 2, no. 4, pp. 521–530, 1994. [Online]. Available: https://dx.doi.org/10.1109/89.326611 [23] M. Ferrer, M. de Diego, G. Pi˜ nero, and A. Gonzalez, “Active noise control over adaptive distributed networks,” Signal Processing , vol. 107, pp. 82–95, 2015. [24] C. Anto˜ nanzas, M. Ferrer, A. Gonzalez, M. de Diego, and G. Pi˜ nero, “Diffusion algorithm for active noise control in distributed networks,” in 22nd Int. Congr. Sound Vib. 2015 ICSV 2015 , 2015, Conference Proceedings, pp. 1–8. [25] Y. J. Chu, S. C. Chan, Y. Zhao, and M. Wu, “Performance analysis of diffusion filtered-x algorithms in multitask anc systems,” in 27th Eur. Signal Process. Conf (EUSIPCO) . IEEE, 2019, Conference Proceedings, pp. 1–5. [Online]. Available: https://dx.doi.org/10.23919/eusipco.2019.8903076 [26] Y. J. Chu, C. M. Mak, Y. Zhao, S. C. Chan, and M. Wu, “Performance analysis of a diffusion control method for anc systems and the network design,” Journal of Sound and Vibration , vol. 475, p. 115273, 2020. [27] Y. J. Chu, S. C. Chan, C. M. Mak, and M. Wu, “A diffusion fxlms algorithm for multi-channel active noise control and variable spatial smoothing,” in 2021 Proc. - ICASSP IEEE Int. Conf. Acoust. Speech Signal Process. IEEE, 2021, Conference Proceedings, pp. 4695–4699. [Online]. Available: https://dx.doi.org/10.1109/icassp39728.2021.9414609 [28] T. Li, S. Lian, S. Zhao, J. Lu, and I. S. Burnett, “Distributed active noise control based on an augmented diffusion f¡i¿x¡/i¿lms algorithm,” IEEE/ACM Transactions on Audio, Speech, and Language Processing , pp. 1–15, 2023. [Online]. Available: https://dx.doi.org/10.1109/taslp.2023.3261742 [29] T. Li, L. Rao, S. Zhao, H. Duan, J. Lu, and I. S. Burnett, “An augmented diffusion algorithm with bidirectional communication for a distributed active noise control system,” The Journal of the Acoustical Society of America , vol. 154, no. 6, pp. 3568–3579, 2023. [Online]. Available: https://dx.doi.org/10.1121/10.0022573 [30] T. Li, S. Zhao, L. Rao, H. Zou, K. Chen, J. Lu, and I. S. Burnett, “Experimental study of a distributed active noise control system with multi-device nodes based on augmented diffusion strategy,” The Journal of the Acoustical Society of America , vol. 156, no. 5, pp. 3246–3259, 2024. [31] J. Ji, D. Shi, and W.-S. Gan, “Mixed-gradients distributed filtered reference least mean square algorithm – a robust distributed multichannel active noise control algorithm,” IEEE Transactions on Audio, Speech and Language Processing , vol. 33, pp. 1563–1575, 2025. [Online]. Available: https://dx.doi.org/10.1109/taslpro.2025.3552932 [32] Z. Rashidi, K. Ahmadi KA, A. An, and X. Wang, “Adaptive momentum coefficient for neural network optimization,” in Joint European Con-ference on Machine Learning and Knowledge Discovery in Databases .Springer, 2020, pp. 35–51. [33] J. Ji, D. Shi, Z. Luo, X. Shen, and W.-S. Gan, “A practical distributed active noise control algorithm overcoming communication restrictions,” in 2023 Proc. - ICASSP IEEE Int. Conf. Acoust. Speech Signal Process. 
+
+IEEE, 2023, Conference Proceedings, pp. 1–5. [34] Y. Cao, X. Li, and Z. Song, “Grams: Gradient descent with adaptive momentum scaling,” in First Workshop on Scalable Optimization for Efficient and Adaptive Foundation Models , 2024. [35] X. Shen, Y. Guo, J. Ji, D. Shi, and W.-S. Gan, “Multi-channel adjoint least mean square algorithm with momentum factor applied on active noise control,” Mechanical Systems and Signal Processing , vol. 228, p. 112415, 2025.
