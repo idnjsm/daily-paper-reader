@@ -1,0 +1,24 @@
+{
+  "label": "2026-07-22",
+  "date": "2026-07-22",
+  "generated_at": "2026-07-22T21:33:45",
+  "count": 1,
+  "papers": [
+    {
+      "paper_id": "202607/22/2607.18658v1-towards-array-invariant-speech-enhancement-via-geometry-aware-dynamic-convolution",
+      "section": "quick",
+      "title_en": "Towards Array-Invariant Speech Enhancement via Geometry-Aware Dynamic Convolution",
+      "authors": "Zhenglong Liu, Wangyou Zhang, Chenda Li, Yanmin Qian",
+      "date": "2026-07-21",
+      "pdf": "https://arxiv.org/pdf/2607.18658v1",
+      "score": "6.0",
+      "evidence": "基于深度学习的阵列不变语音增强方法用于声学降噪",
+      "tldr": "多通道语音增强系统常受限于固定麦克风阵列配置，难以部署于不同阵列拓扑的设备。现有阵列无关方法能处理可变通道数，却未充分利用阵列几何先验这一关键信息。本文提出Geo-DConv框架，通过显式利用麦克风坐标动态卷积，将标准固定阵列模型转化为稳健的阵列不变系统。在真实录音数据集RealMAN上，该方法使两个经典固定模型成功适应多种阵列拓扑，性能持续优于基线，展现出良好的泛化能力。",
+      "tags": "query:deep-anc",
+      "abstract_en": "Multi-channel speech enhancement (SE) systems exhibit superior performance over single-channel methods but are constrained to fixed microphone array configurations. This restricts their real-world deployment across devices with diverse array geometries. While recent array-agnostic SE methods address variable microphone numbers and permutations, they largely fail to exploit explicit array geometry priors when available, missing a crucial cue for optimal spatial filtering. A Geometry-Aware Dynamic Convolution (Geo-DConv) framework is proposed, which explicitly leverages microphone coordinates to transform standard fixed-array SE models into robust array-invariant systems. Experiments are conducted on the recent real-recorded RealMAN multi-channel speech dataset. Results demonstrate that the proposed architecture enables two widely used fixed-array models to adapt to array-invariant settings, with consistent performance improvements across diverse array topologies.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

@@ -1,6 +1,9 @@
 * <a class="dpr-sidebar-root-link" href="#/">首页</a>
 * <a class="dpr-sidebar-root-link dpr-sidebar-noactive-link" href="javascript:void(0)" data-dpr-hash="#/tutorial/README">使用教程</a>
 * Daily Papers
+  * 2026-07-22 <!--dpr-date:20260722-->
+    * 速读区
+      * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202607/22/2607.18658v1-towards-array-invariant-speech-enhancement-via-geometry-aware-dynamic-convolution" data-sidebar-item="{&quot;title&quot;: &quot;Towards Array-Invariant Speech Enhancement via Geometry-Aware Dynamic Convolution&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2607.18658v1-towards-array-invariant-speech-enhancement-via-geometry-aware-dynamic-convolution&quot;, &quot;score&quot;: &quot;6.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;deep-anc&quot;}], &quot;evidence&quot;: &quot;基于深度学习的阵列不变语音增强方法用于声学降噪&quot;}">Towards Array-Invariant Speech Enhancement via Geometry-Aware Dynamic Convolution</a>
   * 2026-07-21 <!--dpr-date:20260721-->
     * 精读区
       * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202607/21/2607.17165v1-adaptive-momentum-enhanced-distributed-multichannel-active-noise-control-for-faster-convergence-under-communication-delays" data-sidebar-item="{&quot;title&quot;: &quot;Adaptive Momentum Enhanced Distributed Multichannel Active Noise Control for Faster Convergence under Communication Delays&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2607.17165v1-adaptive-momentum-enhanced-distributed-multichannel-active-noise-control-for-faster-convergence-under-communication-delays&quot;, &quot;score&quot;: &quot;9.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;deep-anc&quot;}], &quot;evidence&quot;: &quot;针对分布式多通道主动噪声控制的自适应动量方法&quot;}">Adaptive Momentum Enhanced Distributed Multichannel Active Noise Control for Faster Convergence under Communication Delays</a>

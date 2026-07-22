@@ -1,0 +1,56 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-22T21:33:07.335477+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2607.18658v1",
+      "source": "arxiv",
+      "title": "Towards Array-Invariant Speech Enhancement via Geometry-Aware Dynamic Convolution",
+      "abstract": "Multi-channel speech enhancement (SE) systems exhibit superior performance over single-channel methods but are constrained to fixed microphone array configurations. This restricts their real-world deployment across devices with diverse array geometries. While recent array-agnostic SE methods address variable microphone numbers and permutations, they largely fail to exploit explicit array geometry priors when available, missing a crucial cue for optimal spatial filtering. A Geometry-Aware Dynamic Convolution (Geo-DConv) framework is proposed, which explicitly leverages microphone coordinates to transform standard fixed-array SE models into robust array-invariant systems. Experiments are conducted on the recent real-recorded RealMAN multi-channel speech dataset. Results demonstrate that the proposed architecture enables two widely used fixed-array models to adapt to array-invariant settings, with consistent performance improvements across diverse array topologies.",
+      "authors": [
+        "Zhenglong Liu",
+        "Wangyou Zhang",
+        "Chenda Li",
+        "Yanmin Qian"
+      ],
+      "primary_category": "eess.AS",
+      "categories": [
+        "eess.AS",
+        "cs.SD"
+      ],
+      "published": "2026-07-21T03:02:57+00:00",
+      "link": "https://arxiv.org/pdf/2607.18658v1",
+      "tags": [
+        "keyword:deep-anc",
+        "query:deep-anc"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "deep learning for array-invariant speech enhancement addresses acoustic noise reduction",
+      "llm_evidence_cn": "基于深度学习的阵列不变语音增强方法用于声学降噪",
+      "llm_evidence": "基于深度学习的阵列不变语音增强方法用于声学降噪",
+      "canonical_evidence": "基于深度学习的阵列不变语音增强方法用于声学降噪",
+      "llm_tldr_en": "Proposes Geometry-Aware Dynamic Convolution to make multi-channel speech enhancement models invariant to microphone array geometry, enabling robust noise reduction across diverse devices, directly relevant to deep learning in acoustic noise reduction.",
+      "llm_tldr_cn": "针对多通道语音增强系统依赖固定麦克风阵列配置的问题，提出几何感知动态卷积框架，通过显式利用麦克风坐标将固定阵列模型转化为阵列不变系统。在真实录制数据集上的实验表明，该方法在不同阵列几何配置下均保持稳定的降噪性能，为深度学习方法在声学降噪中的实际部署提供了重要支撑。",
+      "llm_tldr": "针对多通道语音增强系统依赖固定麦克风阵列配置的问题，提出几何感知动态卷积框架，通过显式利用麦克风坐标将固定阵列模型转化为阵列不变系统。在真实录制数据集上的实验表明，该方法在不同阵列几何配置下均保持稳定的降噪性能，为深度学习方法在声学降噪中的实际部署提供了重要支撑。",
+      "llm_tags": [
+        "query:deep-anc"
+      ],
+      "matched_query_tag": "query:deep-anc",
+      "matched_query_text": "deep learning in acoustic noise reduction",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
