@@ -1,0 +1,55 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-23T20:59:24.864946+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2607.19902v1",
+      "source": "arxiv",
+      "title": "Nonlinear Bias-Compensated Adaptive Filter and Its Application for Time-Series Prediction",
+      "abstract": "Most existing nonlinear adaptive filtering algorithms only account for output noise, neglecting the fact that input noise is also prevalent in practice. Although the recently proposed bias-compensated kernel least mean square (BCKLMS) algorithm addresses input noise in the nonlinear errors-in-variables (EIV) model, it still suffers from two major limitations. First, the use of a fixed-size dictionary restricts network growth but also prevents it from fully capturing the characteristics of the input signal. Second, as an least mean square (LMS) based algorithm, it exhibits poor robustness in the presence of non-Gaussian noise in the output signal. To overcome these issues, this paper proposes the random Fourier bias-compensated filter under general adaptive function (RFFBCGA) algorithm. Within the random Fourier feature based bias-compensated (RFFBC) framework, the proposed algorithm not only maintains a fixed network structure and effectively mitigates input noise interference through the BC term, but also achieves improved characterization of the input signal. Moreover, by leveraging the flexible form of the general adaptive (GA) function, the algorithm's robustness across various noise scenarios is further enhanced. Extensive simulations, including real-world time series prediction tasks, demonstrate the superiority of the proposed method.",
+      "authors": [
+        "Yi Peng",
+        "Haiquan Zhao",
+        "Jinhui Hu"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "eess.AS"
+      ],
+      "published": "2026-07-22T08:37:02+00:00",
+      "link": "https://arxiv.org/pdf/2607.19902v1",
+      "tags": [
+        "keyword:deep-anc",
+        "query:deep-anc"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "nonlinear adaptive filter with bias compensation for time-series prediction",
+      "llm_evidence_cn": "非线性偏差补偿自适应滤波，可用于时间序列预测中的自适应学习",
+      "llm_evidence": "非线性偏差补偿自适应滤波，可用于时间序列预测中的自适应学习",
+      "canonical_evidence": "非线性偏差补偿自适应滤波，可用于时间序列预测中的自适应学习",
+      "llm_tldr_en": "Proposes a random Fourier bias-compensated adaptive filter that handles input and output noise, improving robustness for nonlinear time-series prediction.",
+      "llm_tldr_cn": "现有非线性自适应滤波算法忽略输入噪声，且基于LMS的算法对非高斯噪声鲁棒性差。本文提出基于随机傅里叶特征的偏差补偿自适应滤波器，同时处理输入和输出噪声，在非线性时间序列预测中表现出更好的鲁棒性和准确性。",
+      "llm_tldr": "现有非线性自适应滤波算法忽略输入噪声，且基于LMS的算法对非高斯噪声鲁棒性差。本文提出基于随机傅里叶特征的偏差补偿自适应滤波器，同时处理输入和输出噪声，在非线性时间序列预测中表现出更好的鲁棒性和准确性。",
+      "llm_tags": [
+        "query:deep-anc"
+      ],
+      "matched_query_tag": "query:deep-anc",
+      "matched_query_text": "adaptive filtering with deep learning",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
