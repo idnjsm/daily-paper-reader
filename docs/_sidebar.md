@@ -1,6 +1,9 @@
 * <a class="dpr-sidebar-root-link" href="#/">首页</a>
 * <a class="dpr-sidebar-root-link dpr-sidebar-noactive-link" href="javascript:void(0)" data-dpr-hash="#/tutorial/README">使用教程</a>
 * Daily Papers
+  * 2026-07-24 <!--dpr-date:20260724-->
+    * 速读区
+      * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202607/24/2607.16688v1-nabeats-noise-aware-audio-representation-learning" data-sidebar-item="{&quot;title&quot;: &quot;NABEATs: Noise-Aware Audio Representation Learning&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2607.16688v1-nabeats-noise-aware-audio-representation-learning&quot;, &quot;score&quot;: &quot;6.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;deep-anc&quot;}], &quot;evidence&quot;: &quot;噪声感知音频表示学习，用于声学噪声降低&quot;}">NABEATs: Noise-Aware Audio Representation Learning</a>
   * 2026-07-23 <!--dpr-date:20260723-->
     * 速读区
       * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202607/23/2607.19902v1-nonlinear-bias-compensated-adaptive-filter-and-its-application-for-time-series-prediction" data-sidebar-item="{&quot;title&quot;: &quot;Nonlinear Bias-Compensated Adaptive Filter and Its Application for Time-Series Prediction&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2607.19902v1-nonlinear-bias-compensated-adaptive-filter-and-its-application-for-time-series-prediction&quot;, &quot;score&quot;: &quot;6.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;deep-anc&quot;}], &quot;evidence&quot;: &quot;非线性偏差补偿自适应滤波，可用于时间序列预测中的自适应学习&quot;}">Nonlinear Bias-Compensated Adaptive Filter and Its Application for Time-Series Prediction</a>

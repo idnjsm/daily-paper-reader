@@ -1,0 +1,24 @@
+{
+  "label": "2026-07-24",
+  "date": "2026-07-24",
+  "generated_at": "2026-07-24T21:35:33",
+  "count": 1,
+  "papers": [
+    {
+      "paper_id": "202607/24/2607.16688v1-nabeats-noise-aware-audio-representation-learning",
+      "section": "quick",
+      "title_en": "NABEATs: Noise-Aware Audio Representation Learning",
+      "authors": "Takuya Fujimura, Yoshiki Masuyama, Gordon Wichern, Christoph Boeddeker, Julius Richter, Jonathan Le Roux",
+      "date": "2026-07-18",
+      "pdf": "https://arxiv.org/pdf/2607.16688v1",
+      "score": "6.0",
+      "evidence": "噪声感知音频表示学习，用于声学噪声降低",
+      "tldr": "现有音频自监督学习模型因缺乏显式噪声建模，在复杂噪声环境下难以聚焦目标任务相关声音，性能严重下降。为突破此局限，本文提出噪声感知的NABEATs，它基于BEATs并引入辅助参考噪声输入，专门训练模型从含噪信号中估计干净音频表示。大量实验证明，NABEATs在多种下游任务（如声音事件检测、声学场景分类）的噪声条件下性能大幅领先基线，且能泛化到未见噪声类型。这一噪声感知音频SSL框架首次将噪声因素纳入表示学习核心，显著增强了模型在真实场景中的鲁棒性和实用性。",
+      "tags": "query:deep-anc",
+      "abstract_en": "We propose the concept of noise-aware audio self-supervised learning (SSL), whose goal is to encode audio mixtures while suppressing undesired noise, and present Noise-Aware BEATs (NABEATs) as a BEATs-based realization of this framework. Audio SSL models are designed to handle a wide range of audio signals. Consequently, under noisy conditions, they cannot effectively focus on the target sounds relevant to a downstream task, resulting in degraded performance. To address this issue, NABEATs is trained to estimate clean BEATs representations from a noisy audio signal with an auxiliary reference noise input. This reference noise enables the model to account for specific noise characteristics at inference time, thereby achieving better generalization across operating environments. Our experimental evaluations demonstrate that NABEATs significantly improves performance of various downstream tasks under noisy conditions and also generalizes well to unseen noise types.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
