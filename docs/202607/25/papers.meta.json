@@ -1,0 +1,24 @@
+{
+  "label": "2026-07-25",
+  "date": "2026-07-25",
+  "generated_at": "2026-07-25T21:08:37",
+  "count": 1,
+  "papers": [
+    {
+      "paper_id": "202607/25/2607.20634v1-finding-fast-filters",
+      "section": "quick",
+      "title_en": "Finding Fast Filters",
+      "authors": "Karima Ma, Andrew Adams, Jonathan Ragan-Kelley",
+      "date": "2026-07-22",
+      "pdf": "https://arxiv.org/pdf/2607.20634v1",
+      "score": "7.0",
+      "evidence": "利用梯度下降拟合滤波器参数，适用于自适应滤波",
+      "tldr": "处理图像、视频和音频需要快速FIR滤波器，但现有近似方法局限于特定技术组合，缺乏统一框架。本文将这些技术统一为设计语言原语，包括多速率滤波、递归滤波、分解为和或级联，并通过梯度下降自动搜索程序空间，生成性能与质量权衡的帕累托前沿。系统在多个成像和音频滤波器上取得了相比先前更高品质和更快速的近似结果。此外，系统自动将设计空间中的程序编译为优化、向量化、并行的C++代码，融合数据局部性。该工作为快速滤波器近似提供了通用自动化方案，显著提升效果。",
+      "tags": "query:deep-anc",
+      "abstract_en": "Processing images, video, and audio often requires running large finite impulse response (FIR) filters with strict performance and latency requirements. Prior methods for fast filter approximations are special cases or combinations of a few key techniques: multi-rate and recurrent filtering, and decomposing filters into sums or cascades. We unify these techniques as primitives within a single design language for fast 1D and 2D filters. Given a target filter to approximate, we automatically search this program space, fitting continuous parameters with gradient descent, to generate a Pareto frontier of algorithms that trade off performance with quality. Our system produces substantially higher-quality and faster filter approximations than have been previously described for several popular imaging and audio filters. Furthermore we demonstrate how to automatically lower programs in this design space to optimized, vectorized, parallel, C++ code which is fused for data locality.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

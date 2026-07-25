@@ -1,6 +1,9 @@
 * <a class="dpr-sidebar-root-link" href="#/">首页</a>
 * <a class="dpr-sidebar-root-link dpr-sidebar-noactive-link" href="javascript:void(0)" data-dpr-hash="#/tutorial/README">使用教程</a>
 * Daily Papers
+  * 2026-07-25 <!--dpr-date:20260725-->
+    * 速读区
+      * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202607/25/2607.20634v1-finding-fast-filters" data-sidebar-item="{&quot;title&quot;: &quot;Finding Fast Filters&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2607.20634v1-finding-fast-filters&quot;, &quot;score&quot;: &quot;7.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;deep-anc&quot;}], &quot;evidence&quot;: &quot;利用梯度下降拟合滤波器参数，适用于自适应滤波&quot;}">Finding Fast Filters</a>
   * 2026-07-24 <!--dpr-date:20260724-->
     * 速读区
       * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202607/24/2607.16688v1-nabeats-noise-aware-audio-representation-learning" data-sidebar-item="{&quot;title&quot;: &quot;NABEATs: Noise-Aware Audio Representation Learning&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2607.16688v1-nabeats-noise-aware-audio-representation-learning&quot;, &quot;score&quot;: &quot;6.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;deep-anc&quot;}], &quot;evidence&quot;: &quot;噪声感知音频表示学习，用于声学噪声降低&quot;}">NABEATs: Noise-Aware Audio Representation Learning</a>
