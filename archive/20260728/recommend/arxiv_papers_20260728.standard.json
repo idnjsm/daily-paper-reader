@@ -1,0 +1,59 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-28T20:50:28.215145+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2607.23293v1",
+      "source": "arxiv",
+      "title": "PathRIR: Physics-Guided Acoustic Path Selection and Late-Tail Compensation for Fast Room Impulse Response Simulation",
+      "abstract": "Image-source-method (ISM)-based room impulse response (RIR) simulation is a useful and physically interpretable tool for acoustic scene modeling, but full-order ISM becomes computationally expensive as the reflection order and room complexity increase. We propose a physics-guided framework for fast RIR simulation that preserves the geometric structure of ISM while learning to retain only acoustically important image-source paths during online traversal. To recover energy removed by pruning, the proposed PathRIR uses a lightweight compensation multilayer perceptron to predict the missing late-tail energy envelope and generate a compensation tail whose energy follows that envelope. Experiments on irregular 3D rooms show that PathRIR reduces image-source computation and improves runtime efficiency over a full-order ISM simulator, while achieving low waveform- and decay-related errors. Ablation results show that adding the compensation tail improves waveform fidelity and reduces energy-decay-curve error, reverberation-time error, and direct-to-reverberant-ratio error, with modest runtime overhead.",
+      "authors": [
+        "Shaoheng Xu",
+        "Chunyi Sun",
+        "Jihui Zhang",
+        "Amy Bastine",
+        "Prasanga N. Samarasinghe",
+        "Thushara D. Abhayapala"
+      ],
+      "primary_category": "eess.AS",
+      "categories": [
+        "eess.AS",
+        "cs.LG",
+        "cs.SD"
+      ],
+      "published": "2026-07-25T17:05:04+00:00",
+      "link": "https://arxiv.org/pdf/2607.23293v1",
+      "tags": [
+        "keyword:deep-anc",
+        "query:deep-anc"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "acoustic path selection and late-tail compensation for RIR simulation, useful for ANC",
+      "llm_evidence_cn": "用于房间脉冲响应模拟的声学路径选择与尾迹补偿，可用于主动噪声控制",
+      "llm_evidence": "用于房间脉冲响应模拟的声学路径选择与尾迹补偿，可用于主动噪声控制",
+      "canonical_evidence": "用于房间脉冲响应模拟的声学路径选择与尾迹补偿，可用于主动噪声控制",
+      "llm_tldr_en": "Proposes a physics-guided framework that selects important acoustic paths online and compensates the missing late-tail energy with a lightweight MLP, enabling fast RIR simulation while preserving important geometric features.",
+      "llm_tldr_cn": "该工作针对传统镜像源法计算效率低的问题，提出了一种物理引导的快速房间脉冲响应模拟框架：在线遍历时仅保留声学上重要的路径，并用轻量级多层感知机预测并补偿被剪枝路径的晚期尾迹能量包络。实验表明该方法在显著降低计算开销的同时保持了良好的物理保真度，为主动噪声控制中的声学建模提供了高效工具。",
+      "llm_tldr": "该工作针对传统镜像源法计算效率低的问题，提出了一种物理引导的快速房间脉冲响应模拟框架：在线遍历时仅保留声学上重要的路径，并用轻量级多层感知机预测并补偿被剪枝路径的晚期尾迹能量包络。实验表明该方法在显著降低计算开销的同时保持了良好的物理保真度，为主动噪声控制中的声学建模提供了高效工具。",
+      "llm_tags": [
+        "query:deep-anc:composite"
+      ],
+      "matched_query_tag": "query:deep-anc:composite",
+      "matched_query_text": "Papers central to 基于深度学习的主动降噪方法, especially work that connects or combines: active noise control; active noise cancellation; deep neural network active noise control; adaptive filtering with deep learning; deep learning based optimizer for adaptive algorithms; deep learning methods for active noise control; neural network based active noise cancellation; deep learning in acoustic noise reduction; deep learning based adaptive algorithm optimization techniques.",
+      "matched_requirement_id": "req-composite-deep-anc",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}

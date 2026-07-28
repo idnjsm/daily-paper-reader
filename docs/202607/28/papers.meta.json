@@ -1,0 +1,24 @@
+{
+  "label": "2026-07-28",
+  "date": "2026-07-28",
+  "generated_at": "2026-07-28T20:51:06",
+  "count": 1,
+  "papers": [
+    {
+      "paper_id": "202607/28/2607.23293v1-pathrir-physics-guided-acoustic-path-selection-and-late-tail-compensation-for-fast-room-impulse-response-simulation",
+      "section": "quick",
+      "title_en": "PathRIR: Physics-Guided Acoustic Path Selection and Late-Tail Compensation for Fast Room Impulse Response Simulation",
+      "authors": "Shaoheng Xu, Chunyi Sun, Jihui Zhang, Amy Bastine, Prasanga N. Samarasinghe, Thushara D. Abhayapala",
+      "date": "2026-07-25",
+      "pdf": "https://arxiv.org/pdf/2607.23293v1",
+      "score": "7.0",
+      "evidence": "用于房间脉冲响应模拟的声学路径选择与尾迹补偿，可用于主动噪声控制",
+      "tldr": "基于图像源法（ISM）的房间脉冲响应（RIR）模拟计算成本高，尤其在高阶和复杂房间中。本文提出PathRIR框架，在在线遍历中物理引导地选择重要声学路径，修剪冗余路径，并利用轻量级MLP补偿被移除的后期尾能量。在非规则3D房间实验中，PathRIR显著减少计算量、提升运行效率，同时保持低波形误差和衰减误差。消融研究表明，添加补偿尾进一步改善波形保真度、降低能量衰减曲线误差、混响时间误差和直达混响比误差，且运行时开销适中。",
+      "tags": "query:deep-anc",
+      "abstract_en": "Image-source-method (ISM)-based room impulse response (RIR) simulation is a useful and physically interpretable tool for acoustic scene modeling, but full-order ISM becomes computationally expensive as the reflection order and room complexity increase. We propose a physics-guided framework for fast RIR simulation that preserves the geometric structure of ISM while learning to retain only acoustically important image-source paths during online traversal. To recover energy removed by pruning, the proposed PathRIR uses a lightweight compensation multilayer perceptron to predict the missing late-tail energy envelope and generate a compensation tail whose energy follows that envelope. Experiments on irregular 3D rooms show that PathRIR reduces image-source computation and improves runtime efficiency over a full-order ISM simulator, while achieving low waveform- and decay-related errors. Ablation results show that adding the compensation tail improves waveform fidelity and reduces energy-decay-curve error, reverberation-time error, and direct-to-reverberant-ratio error, with modest runtime overhead.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
