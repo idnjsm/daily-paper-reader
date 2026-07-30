@@ -1,0 +1,516 @@
+Title: Unfolded Recursive Expectation-Maximization Neural Network For Speaker Tracking
+
+URL Source: https://arxiv.org/pdf/2607.26575v1
+
+Published Time: Thu, 30 Jul 2026 00:33:47 GMT
+
+Number of Pages: 5
+
+Markdown Content:
+# UNFOLDED RECURSIVE EXPECTATION-MAXIMIZATION NEURAL NETWORK FOR SPEAKER TRACKING 
+
+# Rina Veler and Sharon Gannot 
+
+# Faculty of Engineering, Bar-Ilan University, Ramat-Gan, Israel {velerri,sharon.gannot}@biu.ac.il 
+
+ABSTRACT 
+
+We propose a deep unfolded Recursive EM (REM) network for robust tracking of a single moving speaker in mild reverberant environments. Unlike classical REM algorithms, which rely on fixed-step-size decay schedules, the proposed architecture learns an adaptive update policy by unfolding the iterative procedure into differentiable layers. We introduce a Step Size Network that leverages Feature-wise Linear Modulation (FiLM) and Positional Encoding (PE) to dynamically adjust the recursion weights based on temporal context and convergence state. Experimental results for tracking a single speaker under reverberant conditions demonstrate that the proposed unfolded network outperforms the classical Cappé and Moulines REM (CREM) baseline, which employs a spatial grid search to map the estimated centroids to physical positions. In the single-speaker tracking task, the proposed method achieves a lower Root Mean Square Error (RMSE) than the CREM baseline, highlighting its potential for dynamic acoustic scenarios. 
+
+Index Terms — Sound source tracking; Unfolding neural net-work; Recursive Expectation-Maximization; Pair-wise relative phase ratio. 
+
+1. INTRODUCTION 
+
+Sound Source Localization (SSL) is a fundamental task in modern audio applications, ranging from autonomous robots to smart-home consumer electronics. In realistic environments, estimating the spatial coordinates of a source is significantly complicated by rever-beration and ambient noise. Traditional methods, such as Steered Response Power with Phase Transform (SRP-PHAT), Multiple Signals Classification (MUSIC), and Maximum Likelihood Estima-tion (MLE) [1, 2], often struggle in these adverse conditions. This has motivated a shift toward Deep Neural Network (DNN)-based approaches, which offer superior robustness in complex acoustic scenes [3, 4]. However, purely data-driven DNNs are often criticized for their lack of interpretability. Algorithm unfolding (or unrolling) bridges this gap by casting the iterations of classical algorithms as differen-tiable network layers [5,6]. In our previous work [7], we successfully employed an unfolded network to estimate static multi-speaker posi-tions by integrating the batch Expectation-Maximization (EM) pro-cedure—previously used for Pair-Wise Relative Phase Ratio (PRP) clustering [8, 9]—into an unrolled architecture. While effective for static sources, batch-oriented methods lack the temporal consistency required for dynamic speaker tracking. To address moving-source scenarios, recursive variants of the EM algorithm, e.g., the algorithm proposed by Cappé and Moulines [10] (henceforth denoted the CREM algorithm), update parameters frame-by-frame using recursively accumulated sufficient statistics. Several studies have integrated EM iterations into unfolding frame-works for image segmentation and clustering [11, 12]. Although re-cursive, a major limitation in the application of CREM is the se-lection of the step-size parameter γt, which governs the trade-off between past information and current observations. In static scenar-ios, a fixed decay schedule should be used. However, in tracking scenarios, where the speaker position changes over time, the step size should adapt to the underlying dynamics and is therefore often chosen empirically. In this paper, we introduce a deep Unfolded CREM network em-bedded within an encoder-decoder architecture that learns an adap-tive, data-driven step-size policy. By incorporating a conditioning sub-network based on FiLM [13] and sinusoidal PE [14], our model dynamically adjusts the recursion weights based on the current track-ing state and temporal context. We demonstrate that this hybrid approach improves tracking accuracy and convergence speed com-pared to the classical recursive method. 
+
+2. PROBLEM FORMULATION 
+
+Consider a single speaker moving in a reverberant enclosure, whose activity is captured by an array of M microphone pairs. We assume the speaker moves at a constant velocity along either a linear or a circular path. The analysis is carried out in the Short-Time Fourier transform (STFT) domain. The signal captured at the jth micro-phone of the pair m, where j = 1 , 2 and m = 1 , . . . , M , at time-frame t and frequency bin k is modeled as: 
+
+zm,j (t, k ) = am,j (t, k ) · s(t, k ) + nm,j (t, k ) (1) where s(t, k ) is the source signal, nm,j (t, k ) is additive noise, and 
+
+am,j (t, k ) are the Acoustic Transfer Functions (ATFs) relating the source positions and the microphone positions. The ATFs vary over time as the speaker moves along its trajectory p(t). Similar to our previous work [7, 8], we employ the PRP as the localization feature to improve robustness to signal-power variations. The observed PRP for pair m is defined as: 
+
+ϕm(t, k ) ≜ zm, 2(t, k )
+
+zm, 1(t, k ) · |zm, 1(t, k )||zm, 2(t, k )| , (2) and the observation vector at each time-frequency bin is 
+
+ϕ(t, k ) = [ ϕ1(t, k ), . . . , ϕ M (t, k )] ⊤ . (3) To model the received PRP, we adopt a Complex Gaussian Mixture Model (CGMM) with two components ( C = 2 ): one associated with the moving speaker ( c = 1 ) and the other with noise or spurious estimates ( c = 2 ). The Probability Density Function (p.d.f.) for a single observation ϕ(t, k ) is given by: 
+
+f (ϕ(t, k )) = 
+
+> 2
+
+X
+
+> c=1
+
+ψc(t) · N c 
+
+ϕ(t, k ); ˜ϕk (pc(t)) , Σc
+
+
+
+(4) where ψc(t) is the prior probability of the c-th cluster. For the speaker cluster ( c = 1 ), the mean ˜ϕk (p(t)) should be the expected PRP analytically derived from the current position p(t), where each element m is calculated as: 
+
+˜ϕkm(p(t)) ≜ exp 
+
+
+
+−j 2πk K
+
+|p(t) − pm, 2| − | p(t) − pm, 1|
+
+v · Ts
+
+
+
+(5) arXiv:2607.26575v1 [eess.AS] 29 Jul 2026 where v represents the sound velocity, and Ts the sampling time of the continuous-time signal. For the noise cluster ( c = 2 ), the mean ˜ϕk (p(t)) does not originate from a specific point source, and hence, we expect this cluster to have a larger variance compared to the speaker’s variance. Following [8], we assume independence of the PRP features across microphone pairs. We further simplify each covariance ma-trix to a scaled identity matrix, i.e., Σc = σ2 
+
+> c
+
+IM . Finally, the p.d.f. of the entire observation set is given by 
+
+f (ϕ; θ(t)) = 
+
+Y
+
+> t,k
+
+" 2X
+
+> c=1
+
+ψc(t)
+
+> M
+
+Y
+
+> m=1
+
+N c 
+
+ϕm(t, k ); ˜ϕkm(pc(t)) , σ 2 
+
+> c
+
+(t)
+
+#
+
+, (6) where θ(t) denotes the set of time-varying parameters, comprising the Gaussian means, the priors, and variances. In the following sec-tion, we derive the REM algorithm, which updates ˆθ(t) by accu-mulating the score of the log-likelihood over time, and demonstrate how this procedure is unfolded into a deep neural network to learn optimal, time-adaptive update steps. 
+
+3. PROPOSED METHOD 
+
+For online tracking of a moving speaker, we develop a recursive framework based on the CREM algorithm, which we subsequently unfold into a deep neural network. 
+
+The EM Algorithm: The EM algorithm requires defining three components and their probability models: the observations ( ϕ), the target parameters ( θ), and the hidden data ( x). In our case, we define the hidden data x to be the association of each Time-Frequency (TF) bin with either the source at a particular location or the background noise. Given the hidden data, the probability log-likelihood function of the observations is given by: 
+
+f (x, ϕ; θ) = 
+
+Y
+
+> t,k
+
+X
+
+> c
+
+ψc · x(t, k, c ) Y
+
+> m
+
+N c 
+
+ϕm(t, k ); ˜ϕkm(pc), σ 2
+
+> c
+
+
+
+. (7) The E-step is therefore given by: 
+
+Q(θ|θ(ℓ−1) ) ≜ E
+
+n
+
+log f (x, ϕ; θ) ϕ; θ(ℓ−1) o
+
+. (8) For implementing the E-step, it is sufficient to evaluate 
+
+μ(ℓ−1) (t, k, c ) ≜ E{x(t, k, c )|ϕ(t, k ); θ(ℓ−1) }, given by: 
+
+ψ(ℓ−1) 
+
+> c
+
+Q 
+
+> m
+
+N c
+
+
+
+ϕm(t, k ); ˜ϕkm(pc)(ℓ−1) , (σ2 
+
+> c
+
+)(ℓ−1) 
+
+P 
+
+> c
+
+ψ(ℓ−1) 
+
+> c
+
+Q 
+
+> m
+
+N c
+
+
+
+ϕm(t, k ); ˜ϕkm(pc)(ℓ−1) , (σ2 
+
+> c
+
+)(ℓ−1) 
+
+ . (9) Maximizing (9) with respect to the parameters θ(ℓ) constitutes the M-step. We stress that this batch formulation assumes static speak-ers and operates entirely offline, making it unsuitable for real-time tracking in dynamic, time-varying environments. 
+
+The CREM Algorithm: The CREM algorithm adapts the batch EM procedure to an online scenario by substituting the iteration index with the time-frame index t. The core idea is to recursively esti-mate the auxiliary function, denoted QR(θ|θ(t)), using a stochastic approximation step: 
+
+QR(θ|θ(t)) = (1 − γt)QR(θ|θ(t−1) ) + γtQ(θ|θ(t)), (10) where γt is a time-varying smoothing coefficient (step-size) that de-termines the balance between past information and the current ob-servation. The complete data log-likelihood is given by: 
+
+log f (xt, ϕt; θ) = X
+
+> k,c
+
+x(t, k, c )·
+
+log ψc(t) + X
+
+> m
+
+log N c 
+
+ϕm(t, k ); ˜ϕkm(pc(t)) , σ 2 
+
+> c
+
+(t)
+
+!
+
+.
+
+(11) Given that our CGMM likelihood (11) belongs to the exponential family, the maximization of QR can be simplified by maintaining a recursive estimate of the sufficient statistics vector, ηR(t).1 The update rule for the sufficient statistics at frame t is: 
+
+ηR(t) = ηR(t − 1) + γt
+
+h
+
+¯η(t) − ηR(t − 1) 
+
+i
+
+, (12) where ¯η(t) is the expected sufficient statistics computed in the E-step, based on the posterior probability μ(t, k, c ) that the k-th fre-quency bin at time t belongs to cluster c. The term ⟨η(x(t+1) , ϕ(t+1)) , ϵ(θ)⟩, required for the E-step, 2 can be simplified by calculating: 
+
+μ(t + 1 , k, c ) = E{x(t + 1 , k, c )|ϕm(t + 1 , k ); θR(t)} (13) which is readily given by (9). Using this definition, the expected sufficient statistic ¯η(μ(t), ϕ(t)) can be written as: 
+
+¯η(μ(t), ϕ(t)) = 
+
+
+
+μ(t)
+
+μ(t) ⊙ | ϕ(t)|2
+
+μ(t) ⊙ ϕ∗(t)
+
+μ(t) ⊙ ϕ(t)
+
+ (14) where the Hadamard product ⊙ is applied with implicit broadcast-ing; specifically, when a dimension is absent in one of the tensors, it is replicated along that dimension to match the size of the other, followed by element-wise multiplication. The recursive sufficient statistic ηR(μ(t + 1) , ϕ(t + 1)) is defined as: 
+
+ηR(μ(t + 1) , ϕ(t + 1)) ≜
+
+
+
+ηR 
+
+> 1
+
+(t + 1) 
+
+ηR 
+
+> 2
+
+(t + 1) 
+
+ηR 
+
+> 3
+
+(t + 1) 
+
+ηR 
+
+> 4
+
+(t + 1) 
+
+ (15) where the updates are: 
+
+ηR 
+
+> 1
+
+(t + 1) = ηR 
+
+> 1
+
+(t) + γt+1 (μ(t + 1) − ηR 
+
+> 1
+
+(t)) (16a) 
+
+ηR 
+
+> 2
+
+(t + 1) = ηR 
+
+> 2
+
+(t) + γt+1 (μ(t + 1) ⊙ | ϕ(t)|2 − ηR 
+
+> 2
+
+(t)) (16b) 
+
+ηR 
+
+> 3
+
+(t + 1) = ηR 
+
+> 3
+
+(t) + γt+1 (μ(t + 1) ⊙ ϕ∗(t) − ηR 
+
+> 3
+
+(t)) (16c) 
+
+ηR 
+
+> 4
+
+(t + 1) = ηR 
+
+> 4
+
+(t) + γt+1 (μ(t + 1) ⊙ ϕ(t) − ηR 
+
+> 4
+
+(t)) . (16d) The maximization step in the REM is similar to the maxi-mization step in the batch EM. The M-step θc,R (t + 1) =arg max θc ⟨ηR(μ(t + 1) , ϕ(t + 1)) , ϵ(θc)⟩ yields the following pa-rameter updates: 
+
+ψc(t + 1) = 1
+
+K
+
+X
+
+> k
+
+μ(t + 1 , k, c ). (17) The M-step and the E-step can be merged into one recursion: 
+
+ψR(t) = 1
+
+K
+
+X
+
+> k
+
+ηR 
+
+> 1
+
+(t) (18a)  
+
+> 1Due to space constraints, the derivation is significantly shortened.
+> 2ϵ(θ)is related to the definition of the exponential family.
+
+and for the other parameters: 
+
+˜ϕR(p(t)) = ηR 
+
+> 4
+
+(t) ⊘ ηR 
+
+> 1
+
+(t) (18b) 
+
+σ2
+
+> R
+
+(t) = 1
+
+M · P 
+
+> k
+
+ηR 
+
+> 1
+
+(t, k )
+
+X
+
+> k,m
+
+
+
+ηR 
+
+> 1
+
+(t, k ) ⊙ | ˜ϕkm(p(t)) |2
+
++ ηR 
+
+> 2
+
+(t, k, m ) − ηR 
+
+> 3
+
+(t, k, m ) · ˜ϕkm(p(t)) 
+
+− ηR 
+
+> 4
+
+(t, k, m ) · ˜ϕ∗km(p(t)) 
+
+
+
+,
+
+(18c) with ⊘ is an element-wise division operation. To infer the speaker’s physical 2D position in Cartesian coordinates, denoted as ˆp(t), from the recursively updated parameters, a spatial grid search is per-formed at each time step. The estimated position is obtained by minimizing the squared error between the estimated PRP and the theoretical PRP: 
+
+ˆp(t) = arg min 
+
+> p
+
+X
+
+> k,m
+
+˜ϕkR,m (p(t)) − ˜ϕkm(p) 2
+
+, (19) where ˜ϕkm(p) is the theoretical value for a candidate location p as defined in (5). The performance of the CREM algorithm is highly dependent on the choice of the step size γt. Classic stochastic approxima-tion results guarantee convergence to a (static) local optimum given P γt = ∞ and P γ2 
+
+> t
+
+< ∞. A common schedule is γt = ( t+2) −α,where 0.5 < α ≤ 1 balances the trade-off between convergence speed (smaller α) and estimation stability (larger α). To further en-hance stability, we can adopt a mini-batch approach of size B, which interpolates between pure online ( B = 1 ) and batch ( B = T ) esti-mation [15]. However, since fixed schedules struggle with dynamic trajectories, we propose an unfolded architecture that learns an adap-tive, data-driven step size, as described in the next section. 
+
+Unfolding CREM Neural Network: Building upon the inter-pretable Batch-EM unfolding framework presented in our previous work [7], we propose a deep unfolded architecture for the CREM algorithm. The network embeds the recursive EM steps within an encoder-decoder structure and introduces a data-driven mechanism to learn the optimal time-varying step size γt (Figure 1). 
+
+a) Encoder-decoder framework: The core of the architecture con-sists of an encoder and decoder. The encoder, implemented as a Fully Connected (FC) network, maps candidate spatial positions to an initial PRP vector. The decoder performs the inverse mapping, translating the refined PRP estimates back to spatial coordinates 
+
+ˆp(t). By using the decoder at each time step, the network provides online tracking of the speaker’s trajectory. To enhance stability, each layer processes mini-batches of size B by interpolating between the online and batch regimes. 
+
+b) Dynamic step-size learning via FiLM and PE: The primary in-novation in this architecture is the Step-Size Network, which re-places the heuristic schedules of γt with a learned, adaptive func-tion. Since the optimal update step depends on both the current con-vergence state and the temporal context, we employ FiLM [13] and PE [14]. To provide the network with information about the current iteration, we use a sinusoidal positional encoding, PE (t).The step-size network receives a conditioning vector vt = [ PE (t), ψ(t −
+
+1) , σ2(t − 1) , ϕ(t − 1)] ⊤, which is processed through a Layer-Normalized Multi-Layer Perceptron (MLP) to generate the FiLM parameters, α (scaling) and β (shifting). The intermediate fea-tures are extracted from the concatenation of the current observation 
+
+ϕ(t) and the temporal difference between successive observations 
+
+∆ϕ(t) = ϕ(t) − ϕ(t − 1) . Then, the FiLM parameters modulate the intermediate features to produce the scalar step size γt used in (12). The architecture of the step-size network is shown in Figure 1. 
+
+c) Weighted loss: The network is trained using a time-weighted com-posite loss function. To account for the initial convergence period of 
+
+> (a) Full Unfolded CREM Architecture
+> (b) Step-Size Network
+
+Fig. 1 : Overview of the proposed tracking framework: (a) shows the unrolled EM layers within the encoder-decoder structure, and (b) details the FiLM-based adaptive step-size generation. the REM, we introduce a warmup weight w(t) that scales the loss at each time step. The spatial accuracy is governed by a logarith-mic distance error, which provides a sub-linear penalty to stabilize gradients against large initial offsets: 
+
+L = 1
+
+T 
+
+> T−1
+
+X
+
+> t=0
+
+w(t)
+
+h
+
+(1 − λ) log(1 + |ˆp(t) − ptrue (t)|2)+ λ · (1 − CosSim ( ˜ϕ(p(t)) , ˜ϕ(ptrue (t))) 
+
+i (20) where CosSim (·, ·) denotes the cosine similarity operator. 
+
+4. EXPERIMENTAL STUDY Data Generation and Setup: We evaluated the proposed unfolded network using a synthetic dataset derived from the Wall Street Jour-nal (WSJ) corpus [16]. The simulations were implemented in Python using the image-method-based signal generator [17]. We simulated a single moving speaker in rectangular rooms with random dimen-sions (height: 2.2–2.6 m; width/length: 5–7 m) with eight micro-phone pairs (intra-pair distance: 0.2 m). The speaker moves at a constant velocity of 0.5 m/s, following either a linear trajectory or a circular path with a radius ranging from 1 to 3 m. Acoustic conditions include either anechoic or reverberant environments with RT 60 = 0 .3 s and additive white noise at SNR = 30 dB. The dataset consists of 8,000 training and 2,000 validation samples. Signal Processing and Data Flow: The input signals, sampled at 16 kHz, feature durations of 5 seconds in anechoic scenarios and 9 seconds in reverberant conditions. Transformed into the TF domain using an STFT (window size of 1024 , hop size of 512 
+
+samples), these configurations yield 157 and 282 time frames, re-spectively. To optimize efficiency, only frequency bins within the 
+
+500 − 1500 Hz range are considered. Tracking is performed with a mini-batch size of B = 10 consecutive time frames at each step, employing a sliding window with a step size of 3 frames between consecutive CREM updates to maintain temporal continuity. 
+
+Encoder and Decoder Architectures: The FC encoder serves as the initialization block, mapping random room coordinates to the initial PRP vector through 7 layers with increasing widths: 
+
+[6 , 48 , 192 , 384 , 768 , 1536 , 2080] . Each layer is followed by Lay-erNorm and Rectified Linear Unit (ReLU) activation, while the fi-nal output uses a tanh activation to ensure the stability of the PRP values. The decoder, which maps the refined PRP back to spa-tial coordinates, comprises 6 layers with decreasing dimensions: 
+
+[1040 , 512 , 256 , 128 , 64 , 2] . All layers utilize ReLU activation, ex-cept for the final output layer, which provides the continuous 2Dcoordinates. 
+
+Step-Size Network with FiLM: The adaptive step size γt is es-timated using a multi-branch conditioning network. (i) Parame-ter Branch: ψ(t) and σ2(t) are mapped to a 16 -dimensional fea-ture; (ii) Manifold Branch: The estimated ˜ϕ(p(t)) passes through 
+
+4 layers ( [512 , 256 , 128 , 64] ) with ReLU; (iii) Temporal Branch: 
+
+The time index t is encoded via a 32 -dimensional PE. These three branches are concatenated and passed through LayerNorm to gener-ate the FiLM parameters ( α, β ). Two separate generators are used: a 3-layer FC ( [256 , 512 , 1024] ) for a 512 -dim modulation, and a 2-layer FC ( [164 , 256] ) for a 128 -dimensional modulation. The main step-size estimation path concatenates the current ob-servation ϕ(t) and the temporal difference ∆ϕ(t). This input is processed through a 512 -dimensional FC layer, followed by the first FiLM block, two FC layers ( [256 , 128] ), the second FiLM block, and finally 3 FC layers ( [64 , 32 , 1] ). A sigmoid activation is applied to the final scalar output to bound the learned step size γt ∈ [0 , 1] .
+
+Training and Stability: Training was performed using the compos-ite loss in (20) with λ = 0 .5. To handle the initial convergence period, we employed a linear warmup schedule for the loss weights 
+
+w(t), increasing from 0.1 to 1.0 over the first 20 time steps and remaining constant thereafter. To ensure numerical stability during the unfolding of recursive updates, we applied several regularization techniques: (i) gradient clipping with a threshold of 1.5; (ii) weight decay of 10 −4; (iii) a clamp value of 50 on the estimated variances 
+
+σ2; and (iv) a small epsilon ϵ = 10 −8 added to all denominators in the CREM update rules. The network was optimized using Adam with an initial learning rate of 10 −3.
+
+Results and Discussion: We evaluated the proposed approach against the CREM baseline using 100 unseen speech signals. To demonstrate the impact of our learned model, the baseline perfor-mance was tested across multiple fixed step sizes, specifically evalu-ating γt ∈ { 0.25 , 0.5, 0.75 } ∀ t, coupled with a spatial grid search. These evaluation scenarios incorporated diverse room sizes and varying trajectory locations to assess localization accuracy, track-ing adaptability, and robustness across different acoustic conditions. autoreftab:results summarizes the results. We report the warmup-weighted average RMSE between the estimated and ground-truth speaker positions, along with the percentage of test trajectories for which the time-averaged positional error exceeds 0.5 m. Under ane-
+
+Table 1 : Average Localization Performance: Unfolded Network vs. CREM Baseline.                     
+
+> Rever. Level Unfolded CREM Network CREM Baseline ( γ= [0 .25 ,0.5,0.75] )RMSE (m) >0.5 m (%) RMSE (m) >0.5 m (%)
+> T60 = 0 s0.25 3[0.28, 0.67, 1.44] [1, 29, 61]
+> T60 = 0 .3s0.55 56 [0.74, 0.81, 0.86] [87, 93, 97]
+
+Fig. 2 : Comparison of localization RMSE distribution between the unfolded network and the CREM baseline ( γt = 0 .5). The proposed method’s error distribution is more concentrated at lower values; me-dian (solid) and mean (dashed) lines are provided to illustrate the performance gap. choic conditions, the unfolded network outperforms the baselines with larger fixed step sizes while achieving performance compara-ble to the γ = 0 .25 baseline. This is consistent with the learned step size dynamically converging to a similar low value. In the more chal-lenging reverberant scenario ( T60 = 0 .3 s), the proposed method continues to outperform all fixed-step baselines, although its perfor-mance degrades relative to the anechoic case. The advantage over the γ = 0 .5 baseline is further illustrated by the error distribution in Fig. 2, where the unfolded network (blue) exhibits a substantially higher concentration of trajectories with low RMSE than the base-line (orange). The network’s tracking capabilities are further qual-       
+
+> (a) Speaker tracking in an anechoic room (RT 60 = 0 s). Average RMSE
+> = 0 .09 m
+> (b) Speaker tracking in a reverber-ant room (RT 60 = 0 .3s). Average RMSE = 0 .57 m
+
+Fig. 3 : Trajectory estimation examples from test data. True positions are marked by dots, and network estimates by ‘x‘ markers. The color gradient represents the progression of time and the accompanying plot displays the corresponding learned step-size values. itatively illustrated in Fig. 3, which shows the estimated trajectories under both anechoic and reverberant conditions. 
+
+5. CONCLUSION 
+
+We presented an unfolded REM network for speaker tracking that replaces fixed step-size schedules with a learned, adaptive update policy. Experimental results demonstrate that the proposed model outperforms the classical CREM baseline, achieving lower RMSE and improved stability in both anechoic and reverberant environ-ments. Analysis of the learned parameters shows that the step size γt
+
+converges to a distinct range for each acoustic setting. In anechoic scenarios, γt fluctuates around 0.25 (peaking at 0.55 ), whereas in re-verberant conditions it decreases to 0.02 –0.1. The network learns to stabilize the step size, likely because the speaker velocity remains constant. Future work will focus on improving robustness under highly reverberant conditions and extending the model to more com-plex scenarios with variable speaker velocities and trajectories. 6. REFERENCES 
+
+[1] Charles H. Knapp and G. Clifford Carter, “The generalized correlation method for estimation of time delay,” IEEE Trans-actions on Acoustics Speech and Signal Processing , vol. 24, no. 4, pp. 320–327, 1976. [2] Ralph Schmidt, “Multiple emitter location and signal parame-ter estimation,” IEEE Transactions on Antennas and Propaga-tion , vol. 34, no. 3, pp. 276–280, 1986. [3] Soumitro Chakrabarty and Emanuel A. Habets, “Multi-speaker DOA estimation using deep convolutional networks trained with noise signals,” IEEE Journal of Selected Topics in Sig-nal Processing , vol. 13, no. 1, pp. 8–21, 2019. [4] Pierre-Amaury Grumiaux, Sr ¯ dan Kiti´ c, Laurent Girin, and Alexandre Guérin, “A survey of sound source localization with deep learning methods,” J. Acoust. Soc. Am. , vol. 152, no. 1, pp. 107–151, July 2022. [5] Karol Gregor and Yann LeCun, “Learning fast approximations of sparse coding,” in Proceedings of the International Confer-ence on Machine Learning (ICML) . 2010, pp. 399–406, ACM. [6] V. Monga, Y. Li, and Y. C. Eldar, “Algorithm unrolling: Inter-pretable, efficient deep learning for signal and image process-ing,” IEEE Signal Processing Magazine , vol. 38, no. 2, pp. 18–44, 2021. [7] Veler Rina and Gannot Sharon, “Speakers localization us-ing batch EM in unfolding neural network,” arXiv preprint arXiv:2603.16278 , 2026. [8] Ofer Schwartz and Sharon Gannot, “Speaker tracking using recursive EM algorithms,” IEEE/ACM Transactions on Audio, Speech, and Language Processing , vol. 22, no. 2, pp. 392–402, Feb. 2014. [9] Michael Mandel, Daniel Ellis, and Tony Jebara, “An EM al-gorithm for localizing multiple sound sources in reverberant environments,” in Advances in Neural Information Processing Systems , 2007, vol. 19, p. 953. [10] Olivier Cappé and Eric Moulines, “On-line expectation-maximization algorithm for latent data models,” J. R. Statist. Soc.: Ser. B (Statist. Methodol.) , vol. 71, no. 3, pp. 593–613, 2009. [11] Klaus Greff, Sjoerd van Steenkiste, and Juergen Schmidhu-ber, “Neural expectation maximization,” in Proceedings of the 31st Conference on Neural Information Processing Systems (NeurIPS) , 2017, pp. 6694–6704. [12] Yannan Pu Pu, Jian Sun, Niansheng Tang, and Zongben Xu, “Deep expectation-maximization network for unsuper-vised image segmentation and clustering,” Image and Vision Computing , vol. 135, pp. 104717, 2023. [13] Ethan Perez, Florian Strub, Harm De Vries, Vincent Dumoulin, and Aaron Courville, “FiLM: Visual reasoning with a general conditioning layer,” in Proceedings of the AAAI Conference on Artificial Intelligence , April 2018, vol. 32. [14] Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N Gomez, Łukasz Kaiser, and Illia Polo-sukhin, “Attention is all you need,” in Advances in Neural In-formation Processing Systems , 2017, vol. 30, pp. 5998–6008. [15] Percy Liang and Dan Klein, “Online EM for unsupervised models,” in Proceedings of Human Language Technologies: The 2009 Annual Conference of the North American Chap-ter of the Association for Computational Linguistics , Boulder, Colorado, 2009, pp. 611–619. [16] Douglas B. Paul and Janet M. Baker, “The design for the wall street journal-based csr corpus,” in Proceedings of the work-shop on Speech and Natural Language . ACL, 1992, pp. 357– 362, Association for Computational Linguistics. [17] Emanuel A. P. Habets, “Room impulse response gen-erator,” Tech. Rep., Technische Universiteit Eind-hoven, 2006, [Online]. Available: https://www.audiolabs-erlangen.de/fau/professor/habets/software/rir-generator.

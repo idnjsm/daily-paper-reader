@@ -1,0 +1,24 @@
+{
+  "label": "2026-07-30",
+  "date": "2026-07-30",
+  "generated_at": "2026-07-30T21:48:38",
+  "count": 1,
+  "papers": [
+    {
+      "paper_id": "202607/30/2607.26575v1-unfolded-recursive-expectation-maximization-neural-network-for-speaker-tracking",
+      "section": "deep",
+      "title_en": "Unfolded Recursive Expectation-Maximization Neural Network For Speaker Tracking",
+      "authors": "Rina Veler, Sharon Gannot",
+      "date": "2026-07-29",
+      "pdf": "https://arxiv.org/pdf/2607.26575v1",
+      "score": "9.0",
+      "evidence": "深度展开REM网络学习自适应更新策略用于说话人跟踪，直接对应基于深度学习的优化器方法",
+      "tldr": "针对经典REM算法依赖固定步长衰减限制说话人跟踪性能的问题，本文提出一种深度展开的REM网络，通过将迭代过程展开为可微层并引入步长网络（基于FiLM和位置编码）动态调整递归权重，实现自适应更新策略。在轻度混响环境下单说话人跟踪实验中，该方法相比使用空间网格搜索的CREM基线取得更低的均方根误差，证明了其鲁棒性。该工作展示了深度展开技术解决动态声学场景跟踪问题的潜力，为自适应迭代优化提供了新范式。",
+      "tags": "query:deep-anc",
+      "abstract_en": "We propose a deep unfolded REM network for robust tracking of a single moving speaker in mild reverberant environments. Unlike classical REM algorithms, which rely on fixed-step-size decay schedules, the proposed architecture learns an adaptive update policy by unfolding the iterative procedure into differentiable layers. We introduce a Step Size Network that leverages FiLM and PE to dynamically adjust the recursion weights based on temporal context and convergence state. Experimental results for tracking a single speaker under reverberant conditions demonstrate that the proposed unfolded network outperforms the classical CREM baseline, which employs a spatial grid search to map the estimated centroids to physical positions. In the single-speaker tracking task, the proposed method achieves a lower RMSE than the CREM baseline, highlighting its potential for dynamic acoustic scenarios.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

@@ -1,6 +1,9 @@
 * <a class="dpr-sidebar-root-link" href="#/">首页</a>
 * <a class="dpr-sidebar-root-link dpr-sidebar-noactive-link" href="javascript:void(0)" data-dpr-hash="#/tutorial/README">使用教程</a>
 * Daily Papers
+  * 2026-07-30 <!--dpr-date:20260730-->
+    * 精读区
+      * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202607/30/2607.26575v1-unfolded-recursive-expectation-maximization-neural-network-for-speaker-tracking" data-sidebar-item="{&quot;title&quot;: &quot;Unfolded Recursive Expectation-Maximization Neural Network For Speaker Tracking&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2607.26575v1-unfolded-recursive-expectation-maximization-neural-network-for-speaker-tracking&quot;, &quot;score&quot;: &quot;9.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;deep-anc&quot;}], &quot;evidence&quot;: &quot;深度展开REM网络学习自适应更新策略用于说话人跟踪，直接对应基于深度学习的优化器方法&quot;}">Unfolded Recursive Expectation-Maximization Neural Network For Speaker Tracking</a>
   * 2026-07-28 <!--dpr-date:20260728-->
     * 速读区
       * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202607/28/2607.23293v1-pathrir-physics-guided-acoustic-path-selection-and-late-tail-compensation-for-fast-room-impulse-response-simulation" data-sidebar-item="{&quot;title&quot;: &quot;PathRIR: Physics-Guided Acoustic Path Selection and Late-Tail Compensation for Fast Room Impulse Response Simulation&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2607.23293v1-pathrir-physics-guided-acoustic-path-selection-and-late-tail-compensation-for-fast-room-impulse-response-simulation&quot;, &quot;score&quot;: &quot;7.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;deep-anc&quot;}], &quot;evidence&quot;: &quot;用于房间脉冲响应模拟的声学路径选择与尾迹补偿，可用于主动噪声控制&quot;}">PathRIR: Physics-Guided Acoustic Path Selection and Late-Tail Compensation for Fast Room Impulse Response Simulation</a>
