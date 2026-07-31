@@ -1,0 +1,518 @@
+Title: Neural Network-Assisted CLEAN for Channel Modeling in Low-SNR Regimes
+
+URL Source: https://arxiv.org/pdf/2607.27450v1
+
+Published Time: Fri, 31 Jul 2026 00:12:36 GMT
+
+Number of Pages: 6
+
+Markdown Content:
+# Neural Network-Assisted CLEAN for Channel Modeling in Low-SNR Regimes 
+
+Chaofan Deng, Linyu Sun, Jaeho Lee, Arijit Raychowdhury 
+
+School of Electrical and Computer Engineering, Georgia Institute of Technology, Atlanta, GA, USA Emails: {cdeng63, lsun327, jlee3941 }@gatech.edu, arijit.raychowdhury@ece.gatech.edu 
+
+Abstract —Accurate multipath parameter estimation is critical for modern wireless communication systems, particularly in chal-lenging low-SNR environments. Traditional Maximum Likelihood Estimation algorithms, such as CLEAN, provide high-resolution parameter extraction but suffer from prohibitive computational complexity due to exhaustive grid search. Conversely, purely data-driven deep learning approaches lack physical grounding and struggle to generalize across variable multipath densities and off-grid parameters. To address these limitations, this paper proposes Neural Network-Assisted CLEAN (NN-CLEAN), a hybrid frame-work that embeds a multi-head residual network directly into the iterative CLEAN extraction loop. By replacing the exhaustive grid search with rapid, parallelizable forward passes while delegating residual subtraction to exact mathematical models, NN-CLEAN isolates physical multipath parameters without accumulating non-physical errors. Extensive Monte Carlo simulations demonstrate that NN-CLEAN achieves estimation accuracy exceeding 96 % at 
+
+5 dB SNR, matching the traditional Grid-Search CLEAN (GS-CLEAN) baseline, while providing a massive reduction in com-putational complexity and substantially outperforming subspace methods and standalone one-shot neural networks. Crucially, NN-CLEAN exhibits a near-flat scaling in execution runtime and memory consumption as batch sizes increase. This highly efficient parallelization establishes NN-CLEAN as a robust, real-time solution for channel estimation in MIMO systems. 
+
+Index Terms —Neural Network, Deep Learning, CLEAN, Chan-nel Sounding, DOA Estimation, Low-SNR 
+
+I. I NTRODUCTION 
+
+Accurate channel sounding and Direction of Arrival (DOA) estimation are fundamental to modern wireless systems, par-ticularly for emerging applications such as Integrated Sensing and Communication (ISAC) and advanced spatial multiplexing. While these technologies offer transformative potential, they face severe practical constraints in complex, dynamic electro-magnetic environments where signals are heavily influenced by severe noise and multipath interference. Consequently, the practical utility of these systems hinges on ensuring robust parameter extraction, specifically within the low Signal-to-Noise Ratio (SNR) regime [1], [2]. Conventional high-resolution parameter estimation re-lies heavily on model-driven signal processing algorithms. Subspace-based methods, such as MUSIC [3], [4] and ESPRIT [5], [6], offer high accuracy but are fundamentally limited by the requirement for uncorrelated and non-coherent sources [7]. Furthermore, their performance degrades sharply in low-SNR environments due to the subspace swap phenomenon, where noise eigenvectors become indistinguishable from signal eigenvectors, leading to catastrophic estimation failures [8]. In contrast, Maximum Likelihood Estimation (MLE) meth-ods, such as CLEAN [9], [10], bypass these coherence restric-tions and offer improved robustness against source correlation [11]. However, these algorithms typically require exhaustive grid searches across the spatial spectrum, leading to exorbitant computational overhead and memory usage that fail to scale efficiently [12]. Moreover, even MLE methods struggle under low-SNR conditions, as heavy noise increases the probability of the algorithm converging to local optima or dominant sidelobes rather than the true global maximum [13]. Recent studies have increasingly applied Deep Learning (DL) to address these computational bottlenecks by treating DOA estimation as a data-driven regression or classification task [14]–[19]. While pure DL models offer rapid inference, their reliability is inherently constrained by their training as-sumptions. Most existing architectures simplify the estimation problem by assuming incoming signals align perfectly with a predefined discrete spatial grid. Consequently, when deployed in continuous real-world environments, they suffer from severe performance degradation due to grid mismatch , where off-grid signals lead to significant estimation bias and spectral leakage [18], [20]. Furthermore, these one-shot architectures struggle in dynamic environments where the number of multipath com-ponents (MPCs), denoted as NMPC , fluctuates. Because their output layers have fixed dimensions, they cannot naturally adapt to variable MPC densities [19] —a fundamental Out-of-Distribution (OOD) failure. Without a mathematically rigorous physical model to anchor their predictions, purely data-driven approaches remain highly sensitive to noise. This lack of physical grounding frequently results in the identification of spurious signal peaks in low-SNR regimes or a complete failure to resolve weak MPCs that deviate from the training distribution. These limitations underscore a fundamental gap: traditional mathematical estimators suffer from prohibitive computational costs and susceptibility to noise-induced local optima, while purely data-driven DL methods lack the physical robustness required for OOD scenarios, such as variable NMPC and con-tinuous off-grid parameters. To bridge this gap, we propose Neural Network-Assisted CLEAN (NN-CLEAN), a hybrid framework that modernizes the traditional CLEAN algorithm by embedding a highly efficient residual network directly into its iterative extraction loop. Rather than predicting all MPCs simultaneously, NN-CLEAN utilizes a rapid, parallelizable forward pass solely to isolate the spatial parameters of the arXiv:2607.27450v1 [cs.LG] 29 Jul 2026 dominant path at each iteration. Crucially, it explicitly addresses the physical limitations of pure DL architectures by delegating the subsequent complex path gain calculation and residual sub-traction to exact mathematical models governed by theoretical array manifolds and wave propagation physics. Because the extracted signal is evaluated and subtracted using true physical constraints, the iterative loop prevents the network from halluci-nating spurious peaks or accumulating non-physical errors. By combining the pattern-recognition speed of deep learning with the mathematically grounded structure of MLE, NN-CLEAN ensures robust generalization to off-grid MPCs and variable 
+
+NMPC . This physically anchored framework provides a highly scalable solution that outperforms both traditional subspace methods and standalone one-shot neural networks. The main contributions of this paper are summarized as follows: 1) NN-Assisted MLE Framework for Low-SNR Robust-ness: By leveraging a NN to guide the iterative pa-rameter extraction, the proposed framework successfully bypasses the spurious sidelobe artifacts and local optima that frequently trap exhaustive grid-search algorithms. Furthermore, by delegating the residual subtraction to ex-act mathematical models, NN-CLEAN curtails the error propagation inherent to pure DL methods, yielding better estimation accuracy in challenging low-SNR regimes. 2) High Scalability and Fast Inference: NN-CLEAN resolves the severe computational bottlenecks inherent to multi-dimensional grid searches. By isolating spatial parameters through highly parallelizable forward passes, the framework maintains a remarkably flat computational runtime and memory footprint even as batch sizes scale. This amortized efficiency establishes NN-CLEAN as an ideal, real-time solution for demanding, large-scale deployments such as ISAC and centralized baseband processing. 3) Robust Generalization to OOD and Off-Grid Scenar-ios: Unlike standalone one-shot DL models whose reli-ability is strictly bounded by their training assumptions, NN-CLEAN explicitly generalizes to Out-of-Distribution scenarios. Because the NN operates locally within a dynamic, iterative loop, the framework seamlessly re-solves an unknown and variable number of multipath components ( NMPC ), maintaining high-fidelity estimation even for continuous, strictly off-grid spatial parameters. II. S YSTEM DESCRIPTION AND CLEAN A LGORITHM 
+
+A. System Model 
+
+Consider a quasi-static double-directional radio channel be-tween transmitting (Tx) and receiving (Rx) Uniform Linear Arrays (ULAs), with the propagation geometry modeled as in Fig. 1. The channel comprises a line-of-sight (LOS) path and multiple scattered paths, each forming a distinct MPC. The channel transfer function matrix H(fk), evaluated at frequency 
+
+fk, is modeled as the superposition of these discrete MPCs. Based on the framework in [9], let bT (ϕ) and bR(ϕ) represent the NT × 1 and 1 × NR calibrated, vertically polarized beam 
+
+Fig. 1: Channel Model Visualization patterns of the transmit and receive arrays, respectively, for a given azimuth angle ϕ. The NT × NR channel matrix H(fk)
+
+is formulated as: 
+
+H(fk) = 
+
+> NMPC
+
+X
+
+> l=1
+
+αlbT (ϕT,l )bR(ϕR,l ) exp 
+
+
+
+−j2πf k
+
+dl
+
+c
+
+
+
++N (fk),
+
+(1) where ϕT,l and ϕR,l denote the Azimuth of Departure (AoD) and Azimuth of Arrival (AoA) for the lth MPC, respectively. The variables dl and αl represent the physical travel distance and complex path gain of the lth path, while c is the speed of light. Finally, N (fk) denotes the additive white Gaussian noise (AWGN) matrix. 
+
+B. MPC Estimation based on the CLEAN Algorithm 
+
+Jointly estimating the parameters of all MPCs simultane-ously requires a multi-dimensional estimation over a discrete parameter space, which is computationally intractable. To avoid this complexity, the CLEAN algorithm [21] is employed as an iterative greedy matching pursuit technique that decouples the problem by extracting one dominant MPC at a time. During the ith iteration, CLEAN isolates the dominant MPC through a discrete search over a three-dimensional parameter space Θ = Θ AoA × ΘAoD × Θdist . This finite grid is constructed by quantizing the azimuth dimensions into Na angular bins and the propagation distance into Nd distance bins. The optimal parameter tuple { ˆdi, ˆϕT,i , ˆϕR,i } ∈ ˆΘ is then extracted by maximizing the squared spatial-distance correlation: 
+
+{ ˆdi, ˆϕT,i , ˆϕR,i } = arg max  
+
+> d,ϕ T,ϕ R
+> Nf
+
+X
+
+> k=1
+
+exp 
+
+
+
+−j2πf k
+
+dc
+
+
+
+× bR(ϕR)
+
+
+
+H(i)
+
+> rem
+
+(fk)
+
+†
+
+bT (ϕT )
+
+> 2
+
+,
+
+(2) where H(i)
+
+> rem
+
+(fk) denotes the residual channel transfer matrix at iteration i, initialized as H(1) 
+
+> rem
+
+(fk) = H(fk).Once identified, the complex path gain ˆαi of this dominant MPC is computed via a least squares projection onto the residual channel: 
+
+ˆαi =
+
+PNf 
+
+> k=1
+
+exp 
+
+
+
+j2πf k
+
+> ˆdi
+> c
+
+
+
+b† 
+
+> T
+
+( ˆϕT,i )H(i)
+
+> rem
+
+(fk)b†
+
+> R
+
+( ˆϕR,i )
+
+Nf bT ( ˆϕT,i ) 2
+
+bR( ˆϕR,i ) 2 . (3) The contribution of this dominant MPC is then synthesized and subtracted from the current residual transfer function to form the updated residual for the next iteration: 
+
+H(i+1)  
+
+> rem
+
+(fk) = H(i)
+
+> rem
+
+(fk)
+
+− ˆαibT ( ˆϕT,i )bR( ˆϕR,i ) exp −j2πf k
+
+ˆdi
+
+c
+
+!
+
+.
+
+(4) This iterative extraction and subtraction process repeats until the absolute path gain of the newly extracted MPC falls below a pre-determined energy threshold or a maximum number of paths is reached. 
+
+Algorithm Bottlenecks: The computational efficacy of tra-ditional Grid-Search CLEAN (GS-CLEAN) is fundamentally constrained by its reliance on exhaustive parameter evalua-tion. For each candidate grid point, evaluating the spatial-distance correlation in (2) requires O(Nf NT NR) operations. Quantizing our three-parameter search space ( d, ϕ T , ϕ R) into 
+
+G bins per dimension inflates the per-iteration complexity to 
+
+O(G3Nf NT NR), while incurring substantial memory over-head for precomputed array manifold dictionaries. This bur-den is further compounded by the curse of dimensionality; extending the framework to fully 3D spatial environments (incorporating elevation angles) or high-mobility scenarios (in-cluding Doppler shifts) expands the search domain to five or more dimensions, driving complexity to an intractable 
+
+O(G5Nf NT NR). This cubic-to-quintic scaling renders exhaus-tive grid-search paradigms fundamentally impractical for real-time, low-latency applications, thereby necessitating a shift toward efficient, learning-based estimation frameworks. III. P ROPOSED NN-CLEAN A LGORITHM 
+
+To overcome the severe computational bottlenecks of multi-dimensional grid searches, we propose NN-CLEAN. As illus-trated in Fig. 2, this hybrid framework embeds a NN directly into the CLEAN iterative extraction loop, replacing exhaustive parameter evaluations with a rapid, direct inference. During the ith iteration, the complex residual channel matrix H(i)
+
+> rem
+
+(fk)
+
+is decoupled into its real and imaginary components to form the input tensor. A single forward pass maps this observation directly to the dominant MPC, yielding the parameter tuple 
+
+ˆΘi = { ˆdi, ˆϕT,i , ˆϕR,i }. This streamlined approach maintains high-fidelity extraction while incurring only a fraction of the traditional memory and computational overhead. 
+
+Fig. 2: NN-assisted CLEAN System Overview As depicted in Fig. 3, the NN is structured as a multi-head residual classification architecture that evaluates the channel against pre-defined parameter grids. A cascaded backbone of MaxPooling and Residual Network (ResNet) efficiently com-presses the frequency domain while preserving critical spatial-frequency features. The extracted latent features are then routed to independent fully connected (FC) heads, which output raw logits representing the spatial probability distributions for the AoA and AoD. Because the physical distance of a multipath component is inherently coupled with its spatial trajectory, an FC gating mechanism explicitly conditions the final distance head on these resolved angular probabilities to enforce struc-tural consistency. Finally, an arg max operation is applied to the output logits to select the discrete grid indices with the highest probabilities, mapping them directly to the estimated physical parameters of ˆΘi.
+
+Fig. 3: NN Structure Overview IV. S IMULATION RESULTS 
+
+A. Simulation Setup 1) Channel Model Setup: The proposed system is imple-mented and evaluated with a synthesized 4 × 4 MIMO commu-nication system operating across Nf = 512 uniformly spaced subcarriers in the 2–3 GHz range. Both the TX and RX employ ULAs with half-wavelength antenna spacing evaluated at a center frequency of fc = 2 .5
+
+GHz. To isolate algorithmic performance from hardware im-perfections while aligning with the co-polarized system model, we assume ideal vertically polarized omnidirectional elements (e.g., ideal dipoles) with negligible mutual coupling. Conse-quently, the array’s amplitude response is uniform across the azimuth plane, and its spatial response is governed entirely by frequency-dependent geometric phase differences. For an N -element array, the theoretical far-field steering vector at spatial angle ϕ and subcarrier fk is defined as: 
+
+b(ϕ, f k) = 1
+
+√N
+
+h
+
+1, e −jπ fkfc sin( ϕ), . . . , e −jπ (N −1) fkfc sin( ϕ)iT
+
+.
+
+(5) For the grid-based evaluations and the generation of synthetic data, the parameter space Θ is discretized as follows:  
+
+> •
+
+AoD ( ϕT ) and AoA ( ϕR): Ranging from −90 ◦ to 90 ◦
+
+with a 1◦ resolution ( Na = 181 bins).  
+
+> •
+
+Distance ( d): Ranging from 5 m to 15 m with a 0.05 mresolution ( Nd = 201 bins). 2) Training Setup: The training procedure for the proposed NN-assisted CLEAN framework is detailed in Algorithm 1. The network is optimized using the Adam optimizer (learning rate 10 −3, batch size 128 ). To ensure robust generalization, training samples are dynamically synthesized on the fly. In each training step, a channel comprising NMPC = 4 MPCs is generated, with ground-truth parameters ( ϕR, ϕT , d) drawn strictly from their respective on-grid discrete sets. The complex path gains undergo simulated Rayleigh fading ( α ∼ CN (0 , 2) ), and additive white Gaussian noise (AWGN) is injected at an SNR ∈ [−5, 10] dB. To capture the topological correlation between adjacent dis-crete bins, we apply Gaussian Label Smoothing (GLS) [22] to the ground-truth labels. For a true on-grid parameter index μ,the smoothed target probability tj at grid index j is formulated as a normalized Gaussian distribution: 
+
+tj =exp 
+
+
+
+− 12
+
+  j−μσ
+
+2P 
+
+> k
+
+exp 
+
+
+
+− 12
+
+ k−μσ
+
+2 , (6) where the spread parameter is empirically set to σ = 2 .0.Because the network extracts multipath components sequen-tially, a distinct loss is computed at each extraction iteration i.The iteration loss is defined as the weighted Categorical Cross-Entropy (CCE) between the network’s logits ( ˆy(i)) and the GLS targets ( t(i)): 
+
+L(i) 
+
+> iter
+
+= CCE 
+
+
+
+t(i) 
+
+> ϕR
+
+, ˆy(i)
+
+> ϕR
+
+
+
++CCE 
+
+
+
+t(i) 
+
+> ϕT
+
+, ˆy(i)
+
+> ϕT
+
+
+
++3 ·CCE 
+
+
+
+t(i) 
+
+> d
+
+, ˆy(i)
+
+> d
+
+
+
+,
+
+(7) A weight of 3 is applied exclusively to the distance loss. Because precise distance estimation is critical for achieving accurate phase alignment during residual cancellation, this penalty ensures the network prioritizes resolving the distance dimension. Finally, to mitigate error propagation inherent in iterative subtraction, the network is trained over 1, 000 , 000 steps using a three-phase curriculum. The final backpropagated loss, Lfinal ,adapts dynamically:  
+
+> •
+
+Phase 1 (0%–50%): Focuses solely on dominant path detection ( Lfinal = L(1)  
+
+> iter
+
+), learning fundamental feature representations without subtraction noise.  
+
+> •
+
+Phase 2 (50%–75%): Extracts all NMPC paths itera-tively. Perfect residual subtraction (teacher forcing) is employed using ground-truth parameters to compute the subtracted interference, yielding an averaged loss Lfinal =
+
+> 1
+> NMPC
+
+PNMPC  
+
+> i=1
+
+L(i)
+
+> iter
+
+. 
+
+> •
+
+Phase 3 (75%–100%): Full autoregressive inference. The network subtracts its own predicted components to learn resilience against accumulated errors, utilizing the same averaged loss Lfinal = 1
+
+> NMPC
+
+PNMPC  
+
+> i=1
+
+L(i)
+
+> iter
+
+.
+
+B. Results and Analysis 
+
+The proposed NN-CLEAN framework is evaluated via Monte Carlo simulations, comprising 10 , 000 independent channel realizations per test configuration. To rigorously assess gen-eralization against real-world propagation complexities, the 
+
+Algorithm 1 Training Procedures for NN-assisted CLEAN  
+
+> 1:
+
+Initialize: Model weights, Adam optimizer (lr = 10 −3) 
+
+> 2:
+
+for each training step t = 1 to 1, 000 , 000 do  
+
+> 3:
+
+Sample SNR ∼ U (−5, 10) dB  
+
+> 4:
+
+Generate NMPC = 4 MPCs: {ϕR,l , ϕ T,l , d l}NMPC  
+
+> l=1
+
+∈ Θ 
+
+> 5:
+
+Sample complex path gains α ∼ CN (0 , 2)  
+
+> 6:
+
+Synthesize channel H and add AWGN  
+
+> 7:
+
+Generate GLS targets t(i) 
+
+> ϕR
+
+, t(i) 
+
+> ϕT
+
+, t(i) 
+
+> d
+
+using (6)  
+
+> 8:
+
+if t ≤ 500 , 000 then  
+
+> 9:
+
+// Phase 1 (0–50%): Dominant path detection  
+
+> 10:
+
+Extract 1st path only; compute Lfinal = L(1)  
+
+> iter
+> 11:
+
+else if t ≤ 750 , 000 then  
+
+> 12:
+
+// Phase 2 (50–75%): Teacher forcing  
+
+> 13:
+
+Extract NMPC paths iteratively using ground-truth 
+
+subtraction;  
+
+> 14:
+
+Compute Lfinal = 1
+
+> NMPC
+
+PNMPC  
+
+> i=1
+
+L(i) 
+
+> iter
+> 15:
+
+else  
+
+> 16:
+
+// Phase 3 (75–100%): Autoregressive inference  
+
+> 17:
+
+Extract NMPC paths iteratively using predicted sub-traction;  
+
+> 18:
+
+Compute Lfinal = 1
+
+> NMPC
+
+PNMPC  
+
+> i=1
+
+L(i) 
+
+> iter
+> 19:
+
+end if  
+
+> 20:
+
+Backpropagate Lfinal and update model weights  
+
+> 21:
+
+end for 
+
+Fig. 4: Estimation Accuracy Comparison Between Different Methods testing data is synthesized entirely off-grid . Drawing the ground-truth parameters ( ϕR, ϕ T , d ) from continuous uniform distributions—rather than discrete training bins—intentionally introduces realistic grid mismatch and spectral leakage to challenge the framework’s robustness. Under these stringent conditions, Fig. 4 evaluates the mul-tipath resolvability of NN-CLEAN against four established baselines: traditional GS-CLEAN [9], 3D-MUSIC [4], 3D-ESPRIT [6], and a standalone NN one-shot approach. Perfor-mance is benchmarked across varying MPC densities ( NMPC ∈{1, 2, 3, 4}) at an SNR of 5 dB. Due to the spatial subspace limitations inherent to the simulated antenna configuration, evaluations for the subspace methods are strictly capped at 
+
+NMPC = 3. Estimation accuracy is defined as the ratio of (a) Spatial MCD ηang (b) Distance MCD ηd (c) Energy Captured Ratio 
+
+Fig. 5: CDF comparisons for spatial MCD, distance MCD, and energy captured ratio across different SNR ( NMPC = 2 ). 
+
+Fig. 6: Runtime and Memory Comparison Between NN-CLEAN and GS-CLEAN correctly identified MPCs to the total number of simulated paths. Specifically, an extracted MPC is considered a correct match if its predicted AoA, AoD, and distance simultaneously fall within a ±2 grid index tolerance of the ground truth. To explicitly isolate the efficacy of the proposed iterative framework, the one-shot baseline utilizes the identical NN architecture as NN-CLEAN but is trained to regress all NMPC 
+
+components simultaneously in a single forward pass, assuming ideal heuristic pairing. As shown in Fig. 4, the empirical results demonstrate that NN-CLEAN achieves peak estimation accuracy in sparse multipath scenarios ( NMPC ∈ { 1, 2}), successfully bypassing the severe side-lobe artifacts that frequently limit traditional subspace and grid-search algorithms. As multipath density increases, both CLEAN-based approaches exhibit a linear decay in accuracy. Although GS-CLEAN degrades at a slightly slower rate—eventually surpassing NN-CLEAN in dense environments (NMPC ∈ { 3, 4}) due to cumulative error propagation within the NN’s sequential extraction loop—the proposed framework maintains a substantial performance margin over the subspace methods. Crucially, NN-CLEAN consistently outperforms the standalone one-shot baseline across all tested densities. The severe degradation of the one-shot model explicitly highlights that embedding the NN within the iterative CLEAN loop is vital for mitigating accuracy loss as NMPC grows. Ultimately, because the dominant 1–2 paths capture the overwhelming majority of channel energy in practical deployments, NN-CLEAN’s superior resolvability in these primary scenarios establishes it as a highly favorable framework for real-time systems. Beyond resolving the existence of MPCs, it is critical to evaluate the absolute parameter precision of the identified paths. Fig. 5 evaluates the estimation precision for a NMPC = 2
+
+scenario across a sweep of SNR ∈ [−5, 10] dB. Performance is explicitly quantified via three metrics: the Cumulative Distribu-tion Function (CDF) of the Root Mean Square Error (RMSE) for the angular Multipath Component Distance (MCD) [23] (ηang ), the distance MCD RMSE ( ηd), and the overall energy captured ratio ( ϵ). To prevent angular wrap-around discontinuities, the angular MCD between a ground-truth path and its estimate is formu-lated as: 
+
+ηang = 12
+
+r
+
+ejϕ R − ej ˆϕR
+
+> 2
+
++ ejϕ T − ej ˆϕT
+
+> 2
+
+. (8) Correspondingly, the normalized distance MCD is defined as: 
+
+ηd =
+
+vuut |d − ˆd|
+
+∆dmax 
+
+· dstd 
+
+∆dmax 
+
+!2
+
+. (9) The overall angular and distance RMSEs are then com-puted from these individual path errors across all successfully matched components. Finally, the fidelity of the overall chan-nel reconstruction is measured by the energy captured ratio 
+
+ϵ = PNMPC  
+
+> i=1
+
+ˆHi 
+
+> 2
+
+∥H∥2, where ˆHi represents the channel matrix reconstructed from the i-th estimated MPC. As depicted in Fig. 5, the empirical CDFs for the angular MCD (Fig. 5a), distance MCD (Fig. 5b), and energy captured ratio (Fig. 5c) demonstrate a shared trend: estimation fidelity predictably degrades as the SNR decreases. Specifically, the absolute error scales remain exceptionally small for both al-gorithms. Although the exhaustive GS-CLEAN method yields strictly superior precision across all evaluated metrics, the performance gap is remarkably narrow. The curves for NN-CLEAN closely align with the grid-search baseline, maintain-ing nearly identical distributions despite the tight scale of the plots. This confirms that while the NN sacrifices a marginal degree of precision due to the discretization of its output layer, it still provides highly accurate parameter estimations and reliable signal reconstruction. Ultimately, this marginal precision trade-off is justified by a massive reduction in computational complexity. To isolate the fundamental per-iteration processing cost, Fig. 6 evaluates execution runtime and memory consumption for NMPC = 1 
+
+across a sweep of batch sizes. Both NN-CLEAN and GS-CLEAN are GPU-parallelized and evaluated on an NVIDIA GeForce RTX 4070 GPU with 12 GB of memory, with peak GPU memory recorded using TensorFlow statistics after warm-up. Here, the batch size denotes the number of independent channel realizations processed concurrently by a centralized processor, such as observations from multiple users or ve-hicles in an ISAC or multi-user MIMO system. The results reveal a stark divergence in scalability: at a minimal workload (Batch = 1 ), both algorithms exhibit comparable execution times due to the fixed overhead of NN kernel initialization. However, even at this baseline, NN-CLEAN demonstrates superior architectural efficiency, consuming approximately half the memory of GS-CLEAN. As the batch size increases, the computational burden of GS-CLEAN escalates linearly, driven by the repetitive requirement to allocate high-resolution cost volumes and perform exhaustive 3D searches for every channel realization. In contrast, NN-CLEAN leverages the massive parallelization capabilities of the GPU to process multiple realizations in a single forward pass, maintaining a near-flat trend for both runtime and memory footprint. This significant amortized efficiency establishes NN-CLEAN as a highly scal-able solution for high-throughput, real-time channel estimation in MIMO systems. V. C ONCLUSION 
+
+In this paper, we introduced NN-CLEAN, a novel hybrid framework that resolves the critical computational bottlenecks of the traditional CLEAN algorithm. By embedding a multi-head residual neural network directly into the iterative CLEAN extraction loop, the proposed method replaces exhaustive multi-dimensional grid searches with highly efficient, parallelizable inference. Evaluated under stringent off-grid conditions across varying multipath component ( NMPC ) counts and SNR regimes, NN-CLEAN demonstrated superior resolvability compared to traditional subspace methods and standalone one-shot learning models. While the discretization of the network’s output layer results in a marginal sacrifice in absolute precision compared to the exhaustive GS-CLEAN baseline, NN-CLEAN maintains exceptionally tight alignment in both parameter accuracy and signal reconstruction fidelity. Most importantly, this minor pre-cision trade-off yields profound computational benefits. Unlike traditional methods whose processing and memory demands scale linearly with batch size, NN-CLEAN leverages GPU parallelization to achieve near-constant runtime and memory footprint. Ultimately, by anchoring the iterative subtraction of predicted MPCs to exact wave propagation physics, NN-CLEAN provides a highly robust, scalable, and physically grounded solution for real-time channel estimation in next-generation MIMO and ISAC systems. REFERENCES [1] F. Liu, Y. Cui, C. Masouros, J. Xu, T. X. Han, Y. C. Eldar, and S. Buzzi, “Integrated sensing and communications: Toward dual-functional wire-less networks for 6g and beyond,” IEEE journal on selected areas in communications , vol. 40, no. 6, pp. 1728–1767, 2022. [2] A. Sams and B. Smida, “On the reliability of estimation bounds in low-snr bistatic isac,” in GLOBECOM 2025-2025 IEEE Global Communications Conference . IEEE, 2025, pp. 1440–1445. [3] R. Schmidt, “Multiple emitter location and signal parameter estimation,” 
+
+IEEE Trans. Antennas Propag , vol. 34, no. 3, pp. 276–280, 1986. [4] M. C. Vanderveen, C. B. Papadias, and A. Paulraj, “Joint angle and delay estimation (jade) for multipath signals arriving at an antenna array,” IEEE Communications letters , vol. 1, no. 1, pp. 12–14, 2002. [5] R. Roy and T. Kailath, “Esprit-estimation of signal parameters via ro-tational invariance techniques,” IEEE Transactions on acoustics, speech, and signal processing , vol. 37, no. 7, pp. 984–995, 2002. [6] M. C. Vanderveen, A.-J. Van der Veen, and A. Paulraj, “Estimation of multipath parameters in wireless communications,” IEEE transactions on signal processing , vol. 46, no. 3, pp. 682–690, 2002. [7] A. A. Hussain, N. Tayem, and A.-H. Soliman, “Low complexity doa esti-mation of multiple coherent sources using a single direct data snapshot,” 
+
+IEEE Access , vol. 12, pp. 2371–2388, 2023. [8] K. Xu, M. Xing, R. Zhang, M. Sha, W. Nie, Y. Quan et al. , “High-accuracy doa estimation algorithm at low snr through exploiting asupervised index,” IEEE Trans. Aerosp. Electron. Syst , vol. 58, no. 4, pp. 3658–3665, 2022. [9] V. Kristem, S. Sangodoyin, C. U. Bas, M. K¨ aske, J. Lee, C. Schneider, G. Sommerkorn, C. J. Zhang, R. S. Thom¨ a, and A. F. Molisch, “3d mimo outdoor-to-indoor propagation channel measurement,” IEEE Transactions on Wireless Communications , vol. 16, no. 7, pp. 4600–4613, 2017. [10] L. Sun, C. Deng, J.-S. Hsu, and S. Sangodoyin, “Guided random search algorithm for offline high resolution terahertz radar sensing,” IEEE Transactions on Terahertz Science and Technology , 2026. [11] Z. Yang, X. Chen, and X. Wu, “A robust and statistically efficient maximum-likelihood method for doa estimation using sparse linear ar-rays,” IEEE Trans. Aerosp. Electron. Syst , vol. 59, no. 5, pp. 6798–6812, 2023. [12] C. Qian, L. Huang, M. Cao, J. Xie, and H. C. So, “Puma: An improved realization of mode for doa estimation,” IEEE Trans. Aerosp. Electron. Syst , vol. 53, no. 5, pp. 2128–2139, 2017. [13] F. Athley, “Threshold region performance of maximum likelihood di-rection of arrival estimators,” IEEE Transactions on Signal Processing ,vol. 53, no. 4, pp. 1359–1373, 2005. [14] T. Luo, P. Chen, Z. Yang, L. Zheng, Y. Zhang, and J. Liu, “A robust deep learning-based doa super-resolution estimation method with single snapshot,” IEEE Trans. Veh. Technol , 2025. [15] H. Huang, J. Yang, H. Huang, Y. Song, and G. Gui, “Deep learning for super-resolution channel estimation and doa estimation based massive mimo system,” IEEE Trans. Veh. Technol , vol. 67, no. 9, pp. 8549–8560, 2018. [16] Q. Xu, Y. Gao, R. Zhang, J. Kong, and C. Yuen, “Deep learning-based doa estimation via grid search approach for unknown and variable number of signals,” IEEE Trans. Cogn. Commun. Netw , 2025. [17] A. M. Elbir, “Deepmusic: Multiple signal classification via deep learning,” 
+
+IEEE Sensors Letters , vol. 4, no. 4, pp. 1–4, 2020. [18] S. Zheng, Z. Yang, W. Shen, L. Zhang, J. Zhu, Z. Zhao, and X. Yang, “Deep learning-based doa estimation,” IEEE Trans. Cogn. Commun. Netw , vol. 10, no. 3, pp. 819–835, 2024. [19] S. Xu, Z. Wang, W. Zhang, and Z. He, “End-to-end regression neural network for coherent doa estimation with dual-branch outputs,” IEEE Sensors Journal , vol. 24, no. 3, pp. 4047–4056, 2023. [20] Y. Peng, Q. Shen, W. Liu, and Y. Wang, “Three-dimensional off-grid source localization based on distributed linear array networks,” in 2026 IEEE International Symposium on Circuits and Systems (ISCAS) . IEEE, 2026, pp. 887–891. [21] J. A. H¨ ogbom, “Aperture synthesis with a non-regular distribution of interferometer baselines,” Astronomy and Astrophysics Supplement, Vol. 15, p. 417 , vol. 15, p. 417, 1974. [22] B. Shaybet, V. Tourbabin, and B. Rafaely, “Srp-phat-net: A reliability-driven dnn for reverberant speaker localization,” arXiv preprint arXiv:2510.22682 , 2025. [23] N. Czink, P. Cera, J. Salo, E. Bonek, J.-P. Nuutinen, and J. Ylitalo, “Improving clustering performance using multipath component distance,” 
+
+Electronics Letters , vol. 42, no. 1, pp. 33–35, 2006.

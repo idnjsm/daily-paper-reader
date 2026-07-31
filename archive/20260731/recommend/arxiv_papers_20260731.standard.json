@@ -1,0 +1,169 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-31T21:43:40.916307+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 4,
+    "quick_skim_target": 11,
+    "quick_selected": 4
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2607.26623v1",
+      "source": "arxiv",
+      "title": "A Study on Online Mask-based Beamforming Using Per-channel Masking for Spatially Distributed Microphones",
+      "abstract": "Mask-based beamforming is a popular geometry-agnostic approach for speech enhancement, typically applying a single mask across all microphones to estimate the required covariance matrices. While effective for compact arrays, this strategy may be suboptimal for spatially distributed microphones, where signal characteristics may vary strongly across microphones. To effectively capture the spatial diversity across microphones, we extend the mask-based beamformer to a multi-channel formulation, where each microphone is pre-filtered by a separate mask before covariance estimation. To address time-varying acoustic scenes, caused by spectro-temporal nonstationarity, we adopt a frame-causal online implementation with a sliding window. Experiments with simulated compact arrays and distributed microphones show that multi-channel masking yields a benefit over using a single mask when microphone signals differ substantially, while retaining similar performance in compact arrays. We further demonstrate the robustness of the multi-channel masking approach by comparing oracle ideal ratio masks to blind DNN-based mask estimation.",
+      "authors": [
+        "Wiebke Middelberg",
+        "Svantje Voit",
+        "Simon Doclo",
+        "Ryan Corey"
+      ],
+      "primary_category": "eess.AS",
+      "categories": [
+        "eess.AS"
+      ],
+      "published": "2026-07-29T08:49:22+00:00",
+      "link": "https://arxiv.org/pdf/2607.26623v1",
+      "tags": [
+        "keyword:deep-anc",
+        "query:deep-anc"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Online mask-based beamforming uses per-channel masks for adaptive filtering with deep learning",
+      "llm_evidence_cn": "在线掩码波束形成利用逐通道掩码进行基于深度学习的自适应滤波",
+      "llm_evidence": "在线掩码波束形成利用逐通道掩码进行基于深度学习的自适应滤波",
+      "canonical_evidence": "在线掩码波束形成利用逐通道掩码进行基于深度学习的自适应滤波",
+      "llm_tldr_en": "Extends mask-based beamforming to per-channel masking for spatially distributed microphones, adopting a frame-causal online implementation to handle time-varying acoustic scenes for speech enhancement.",
+      "llm_tldr_cn": "针对空间分布式麦克风场景，本文提出在掩码波束形成中对每个麦克风使用独立掩码后再估计协方差矩阵，以更好地捕捉空间分集。为应对时变声学场景，进一步采用帧因果的在线实现。这种逐通道掩码的在线处理方式可提升分布式麦克风下的语音增强效果，对空间自适应滤波方法的研究具有参考价值。",
+      "llm_tldr": "针对空间分布式麦克风场景，本文提出在掩码波束形成中对每个麦克风使用独立掩码后再估计协方差矩阵，以更好地捕捉空间分集。为应对时变声学场景，进一步采用帧因果的在线实现。这种逐通道掩码的在线处理方式可提升分布式麦克风下的语音增强效果，对空间自适应滤波方法的研究具有参考价值。",
+      "llm_tags": [
+        "query:deep-anc"
+      ],
+      "matched_query_tag": "query:deep-anc",
+      "matched_query_text": "adaptive filtering with deep learning",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.21128v1",
+      "source": "arxiv",
+      "title": "TF-MossFormer: Integrating Convolution Gated Local-Global Attentions for Enhanced Time-Frequency Domain Monaural Speech Separation",
+      "abstract": "Transformers with global attention capture long-range dependencies but can miss the fine-grained local continuity crucial for speech separation. We propose TF-MossFormer, a time-frequency transformer that combines local and global attention to jointly model short- and long-range contexts for monaural speech separation. At its core is a content-aware sliding-window attention mechanism that dynamically adapts receptive fields for stronger local interactions, avoiding the rigidity of static convolutions. Unlike time-domain chunk-based methods, TF-MossFormer leverages the 2D spectrogram to model structure along both time and frequency axes. Convolutional gating between attention layers further improves feature selection and information flow. TF-MossFormer achieves SI-SDRi of 22.6, 24.0, and 24.4 dB on WSJ0-2Mix with 5.9M, 16.9M, and 25.4M parameters, respectively, outperforming prior approaches.",
+      "authors": [
+        "Shengkui Zhao",
+        "Zexu Pan",
+        "Haoxu Wang",
+        "Biao Tian",
+        "Bin Ma",
+        "Xiangang Li"
+      ],
+      "primary_category": "cs.SD",
+      "categories": [
+        "cs.SD"
+      ],
+      "published": "2026-07-23T10:02:25+00:00",
+      "link": "https://arxiv.org/pdf/2607.21128v1",
+      "tags": [
+        "keyword:deep-anc",
+        "query:deep-anc"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Deep learning time-frequency domain speech separation for acoustic noise and interference reduction",
+      "llm_evidence_cn": "深度学习的时频域语音分离方法，用于声学噪声与干扰抑制",
+      "llm_evidence": "深度学习的时频域语音分离方法，用于声学噪声与干扰抑制",
+      "canonical_evidence": "深度学习的时频域语音分离方法，用于声学噪声与干扰抑制",
+      "llm_tldr_en": "TF-MossFormer combines local and global attention with convolutional gating on 2D spectrograms for monaural speech separation, achieving strong separation by modeling time and frequency structure.",
+      "llm_tldr_cn": "针对Transformer全局注意力忽视局部连续性的问题，论文提出TF-MossFormer，在时频域上结合卷积门控与局部-全局注意力，联合建模短程和长程上下文。该方法利用二维语谱图沿时间和频率轴建模结构，避免静态卷积的刚性。实验表明在单声道语音分离任务上性能优于基线，证明了内容自适应滑动窗口注意力对局部交互建模的有效性。该工作为深度学习的声学噪声抑制提供了新架构。",
+      "llm_tldr": "针对Transformer全局注意力忽视局部连续性的问题，论文提出TF-MossFormer，在时频域上结合卷积门控与局部-全局注意力，联合建模短程和长程上下文。该方法利用二维语谱图沿时间和频率轴建模结构，避免静态卷积的刚性。实验表明在单声道语音分离任务上性能优于基线，证明了内容自适应滑动窗口注意力对局部交互建模的有效性。该工作为深度学习的声学噪声抑制提供了新架构。",
+      "llm_tags": [
+        "query:deep-anc"
+      ],
+      "matched_query_tag": "query:deep-anc",
+      "matched_query_text": "deep learning in acoustic noise reduction",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.21855v1",
+      "source": "arxiv",
+      "title": "Searching the Space of Feed-Forward Neural-Network Weight-Update Rules with Fixed Depth Symbolic Regression",
+      "abstract": "We investigate whether symbolic regression can discover explicit neural network weight-update rules that outperform standard hand-designed optimizers on small symbolic regression benchmarks. Candidate update rules are represented as fixed-depth symbolic expressions over operands derived from common optimizers, including gradient, momentum, adaptive-gradient, and moment-estimate quantities. Across 30 benchmark/neural network combinations, the symbolic regression procedure found an update rule outperforming the best hyperparameter-tuned established optimizer in 25 cases, with an aggregate MSE reduction of 44.47\\% over the improved cases. The discovered rules do not all share a single common symbolic form, but many combine adaptive normalization, momentum-like quantities, nonlinear transformations, and rational expressions. These results suggest that symbolic regression can serve as a lightweight mechanism for discovering compact optimizer variants, while also highlighting the need for larger-scale validation.",
+      "authors": [
+        "Charles Brum",
+        "Edward Finkelstein"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-07-23T22:49:51+00:00",
+      "link": "https://arxiv.org/pdf/2607.21855v1",
+      "tags": [
+        "keyword:deep-anc",
+        "query:deep-anc"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Symbolic regression discovers weight-update rules that improve on hand-designed optimizers",
+      "llm_evidence_cn": "符号回归发现的权重更新规则优于手工优化器",
+      "llm_evidence": "符号回归发现的权重更新规则优于手工优化器",
+      "canonical_evidence": "符号回归发现的权重更新规则优于手工优化器",
+      "llm_tldr_en": "This paper uses fixed-depth symbolic regression to search for explicit neural network weight-update rules, outperforming tuned optimizers on 25 of 30 benchmarks with a 44.47 percent aggregate MSE reduction.",
+      "llm_tldr_cn": "针对手工设计的优化器在多样任务上难以通用的问题，本文用固定深度的符号回归在由梯度、动量等算子构成的表达空间中自动搜索神经网络权重更新规则。在30个基准/网络组合上，搜索到的规则有25个优于调优过的既有优化器，平均MSE下降44.47%。这些规则形态多样但有共性，说明符号回归有望成为自适应算法优化的一条新途径。",
+      "llm_tldr": "针对手工设计的优化器在多样任务上难以通用的问题，本文用固定深度的符号回归在由梯度、动量等算子构成的表达空间中自动搜索神经网络权重更新规则。在30个基准/网络组合上，搜索到的规则有25个优于调优过的既有优化器，平均MSE下降44.47%。这些规则形态多样但有共性，说明符号回归有望成为自适应算法优化的一条新途径。",
+      "llm_tags": [
+        "query:deep-anc"
+      ],
+      "matched_query_tag": "query:deep-anc",
+      "matched_query_text": "deep learning based adaptive algorithm optimization techniques",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.27450v1",
+      "source": "arxiv",
+      "title": "Neural Network-Assisted CLEAN for Channel Modeling in Low-SNR Regimes",
+      "abstract": "Accurate multipath parameter estimation is critical for modern wireless communication systems, particularly in challenging low-SNR environments. Traditional Maximum Likelihood Estimation algorithms, such as CLEAN, provide high-resolution parameter extraction but suffer from prohibitive computational complexity due to exhaustive grid search. Conversely, purely data-driven deep learning approaches lack physical grounding and struggle to generalize across variable multipath densities and off-grid parameters. To address these limitations, this paper proposes Neural Network-Assisted CLEAN (NN-CLEAN), a hybrid framework that embeds a multi-head residual network directly into the iterative CLEAN extraction loop. By replacing the exhaustive grid search with rapid, parallelizable forward passes while delegating residual subtraction to exact mathematical models, NN-CLEAN isolates physical multipath parameters without accumulating non- physical errors. Extensive Monte Carlo simulations demonstrate that NN-CLEAN achieves estimation accuracy exceeding 96% at 5 dB SNR, matching the traditional Grid-Search CLEAN (GS- CLEAN) baseline, while providing a massive reduction in computational complexity and substantially outperforming subspace methods and standalone one-shot neural networks. Crucially, NN-CLEAN exhibits a near-flat scaling in execution runtime and memory consumption as batch sizes increase. This highly efficient parallelization establishes NN-CLEAN as a robust, real- time solution for channel estimation in MIMO systems.",
+      "authors": [
+        "Chaofan Deng",
+        "Linyu Sun",
+        "Jaeho Lee",
+        "Arijit Raychowdhury"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-07-29T20:32:42+00:00",
+      "link": "https://arxiv.org/pdf/2607.27450v1",
+      "tags": [
+        "keyword:deep-anc",
+        "query:deep-anc"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Neural network embedded in CLEAN iteration replaces exhaustive search, a deep learning based optimization technique for iterative estimation algorithms",
+      "llm_evidence_cn": "将神经网络嵌入迭代CLEAN算法替代穷举搜索，是基于深度学习的迭代估计算法优化技术",
+      "llm_evidence": "将神经网络嵌入迭代CLEAN算法替代穷举搜索，是基于深度学习的迭代估计算法优化技术",
+      "canonical_evidence": "将神经网络嵌入迭代CLEAN算法替代穷举搜索，是基于深度学习的迭代估计算法优化技术",
+      "llm_tldr_en": "NN-CLEAN embeds a multi-head residual network inside the CLEAN loop to replace exhaustive grid search for multipath parameter estimation, improving low-SNR channel modeling with better generalization.",
+      "llm_tldr_cn": "针对传统CLEAN算法低信噪比下穷举网格搜索复杂度高、纯数据驱动方法缺乏物理根基的问题，论文提出NN-CLEAN混合框架。该方法将多头残差网络直接嵌入迭代CLEAN提取循环，用快速预测替代穷举搜索，同时保留算法的物理可解释性。实验表明NN-CLEAN在不同多径密度和离网格参数下相比传统方法与纯深度学习方法有更好的泛化性能。该混合优化思路可启发基于深度学习的自适应算法优化研究。",
+      "llm_tldr": "针对传统CLEAN算法低信噪比下穷举网格搜索复杂度高、纯数据驱动方法缺乏物理根基的问题，论文提出NN-CLEAN混合框架。该方法将多头残差网络直接嵌入迭代CLEAN提取循环，用快速预测替代穷举搜索，同时保留算法的物理可解释性。实验表明NN-CLEAN在不同多径密度和离网格参数下相比传统方法与纯深度学习方法有更好的泛化性能。该混合优化思路可启发基于深度学习的自适应算法优化研究。",
+      "llm_tags": [
+        "query:deep-anc"
+      ],
+      "matched_query_tag": "query:deep-anc",
+      "matched_query_text": "deep learning based adaptive algorithm optimization techniques",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

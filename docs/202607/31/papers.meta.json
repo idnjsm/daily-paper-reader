@@ -1,0 +1,69 @@
+{
+  "label": "2026-07-31",
+  "date": "2026-07-31",
+  "generated_at": "2026-07-31T21:44:56",
+  "count": 4,
+  "papers": [
+    {
+      "paper_id": "202607/31/2607.26623v1-a-study-on-online-mask-based-beamforming-using-per-channel-masking-for-spatially-distributed-microphones",
+      "section": "quick",
+      "title_en": "A Study on Online Mask-based Beamforming Using Per-channel Masking for Spatially Distributed Microphones",
+      "authors": "Wiebke Middelberg, Svantje Voit, Simon Doclo, Ryan Corey",
+      "date": "2026-07-29",
+      "pdf": "https://arxiv.org/pdf/2607.26623v1",
+      "score": "7.0",
+      "evidence": "在线掩码波束形成利用逐通道掩码进行基于深度学习的自适应滤波",
+      "tldr": "掩码波束形成通常对所有麦克风使用单一掩码估计协方差，在紧凑阵列中有效，但难以应对空间分布式麦克风信号差异大的场景。本文提出逐通道掩码方案，为每个麦克风单独估计掩码并预滤波，再结合滑窗帧因果在线实现以处理时变声学场景。实验表明，当麦克风信号差异显著时，逐通道掩码显著优于单一掩码，且在紧凑阵列中性能相当。通过对比oracle掩码与DNN盲估计，进一步验证了该方法的鲁棒性，为分布式麦克风阵列的在线语音增强提供了有效方案。",
+      "tags": "query:deep-anc",
+      "abstract_en": "Mask-based beamforming is a popular geometry-agnostic approach for speech enhancement, typically applying a single mask across all microphones to estimate the required covariance matrices. While effective for compact arrays, this strategy may be suboptimal for spatially distributed microphones, where signal characteristics may vary strongly across microphones. To effectively capture the spatial diversity across microphones, we extend the mask-based beamformer to a multi-channel formulation, where each microphone is pre-filtered by a separate mask before covariance estimation. To address time-varying acoustic scenes, caused by spectro-temporal nonstationarity, we adopt a frame-causal online implementation with a sliding window. Experiments with simulated compact arrays and distributed microphones show that multi-channel masking yields a benefit over using a single mask when microphone signals differ substantially, while retaining similar performance in compact arrays. We further demonstrate the robustness of the multi-channel masking approach by comparing oracle ideal ratio masks to blind DNN-based mask estimation.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/31/2607.21128v1-tf-mossformer-integrating-convolution-gated-local-global-attentions-for-enhanced-time-frequency-domain-monaural-speech-separation",
+      "section": "quick",
+      "title_en": "TF-MossFormer: Integrating Convolution Gated Local-Global Attentions for Enhanced Time-Frequency Domain Monaural Speech Separation",
+      "authors": "Shengkui Zhao, Zexu Pan, Haoxu Wang, Biao Tian, Bin Ma, Xiangang Li",
+      "date": "2026-07-23",
+      "pdf": "https://arxiv.org/pdf/2607.21128v1",
+      "score": "6.0",
+      "evidence": "深度学习的时频域语音分离方法，用于声学噪声与干扰抑制",
+      "tldr": "语音分离中，Transformer全局注意力能捕捉长程依赖，却可能丢失语音的细粒度局部连续性。为此提出TF-MossFormer，一种时频域Transformer，将内容感知的滑动窗口局部注意力与全局注意力结合，实现短长程上下文联合建模；窗口注意力动态调整感受野，避免静态卷积的刚性，卷积门控进一步改善特征选择。在WSJ0-2Mix上以5.9M至25.4M参数取得22.6-24.4 dB SI-SDRi，超越先前方法。该方法有效提升单声道语音分离性能。",
+      "tags": "query:deep-anc",
+      "abstract_en": "Transformers with global attention capture long-range dependencies but can miss the fine-grained local continuity crucial for speech separation. We propose TF-MossFormer, a time-frequency transformer that combines local and global attention to jointly model short- and long-range contexts for monaural speech separation. At its core is a content-aware sliding-window attention mechanism that dynamically adapts receptive fields for stronger local interactions, avoiding the rigidity of static convolutions. Unlike time-domain chunk-based methods, TF-MossFormer leverages the 2D spectrogram to model structure along both time and frequency axes. Convolutional gating between attention layers further improves feature selection and information flow. TF-MossFormer achieves SI-SDRi of 22.6, 24.0, and 24.4 dB on WSJ0-2Mix with 5.9M, 16.9M, and 25.4M parameters, respectively, outperforming prior approaches.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/31/2607.21855v1-searching-the-space-of-feed-forward-neural-network-weight-update-rules-with-fixed-depth-symbolic-regression",
+      "section": "quick",
+      "title_en": "Searching the Space of Feed-Forward Neural-Network Weight-Update Rules with Fixed Depth Symbolic Regression",
+      "authors": "Charles Brum, Edward Finkelstein",
+      "date": "2026-07-23",
+      "pdf": "https://arxiv.org/pdf/2607.21855v1",
+      "score": "6.0",
+      "evidence": "符号回归发现的权重更新规则优于手工优化器",
+      "tldr": "符号回归常用于寻找数学表达式，但能否发现更好的神经网络优化器更新规则尚待研究。本文提出用固定深度符号回归搜索权重更新规则，在30个基准与网络组合中，25个超过调参后的现有优化器，平均MSE降低44.47%。发现规则形态多样，常含自适应归一化、动量项和非线性变换，表明这是发现紧凑优化器变体的轻量方法。",
+      "tags": "query:deep-anc",
+      "abstract_en": "We investigate whether symbolic regression can discover explicit neural network weight-update rules that outperform standard hand-designed optimizers on small symbolic regression benchmarks. Candidate update rules are represented as fixed-depth symbolic expressions over operands derived from common optimizers, including gradient, momentum, adaptive-gradient, and moment-estimate quantities. Across 30 benchmark/neural network combinations, the symbolic regression procedure found an update rule outperforming the best hyperparameter-tuned established optimizer in 25 cases, with an aggregate MSE reduction of 44.47\\% over the improved cases. The discovered rules do not all share a single common symbolic form, but many combine adaptive normalization, momentum-like quantities, nonlinear transformations, and rational expressions. These results suggest that symbolic regression can serve as a lightweight mechanism for discovering compact optimizer variants, while also highlighting the need for larger-scale validation.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/31/2607.27450v1-neural-network-assisted-clean-for-channel-modeling-in-low-snr-regimes",
+      "section": "quick",
+      "title_en": "Neural Network-Assisted CLEAN for Channel Modeling in Low-SNR Regimes",
+      "authors": "Chaofan Deng, Linyu Sun, Jaeho Lee, Arijit Raychowdhury",
+      "date": "2026-07-29",
+      "pdf": "https://arxiv.org/pdf/2607.27450v1",
+      "score": "6.0",
+      "evidence": "将神经网络嵌入迭代CLEAN算法替代穷举搜索，是基于深度学习的迭代估计算法优化技术",
+      "tldr": "低信噪比下传统CLEAN算法因穷举网格搜索导致计算复杂度过高，而纯数据驱动深度学习方法缺乏物理可解释性且泛化能力有限。为此提出神经网络辅助CLEAN（NN-CLEAN）混合框架，将多头残差网络嵌入迭代CLEAN循环，以快速并行前向传播替代网格搜索，并利用精确数学模型执行残差相减，避免非物理误差累积。蒙特卡洛仿真表明，在5 dB SNR下估计精度超过96%，与网格搜索CLEAN相当，同时大幅降低计算复杂度，并显著优于子空间方法和单次神经网络。该方法在批处理规模增大时运行时间和内存消耗近乎恒定，展现出高效并行化能力，为MIMO系统提供鲁棒实时信道估计方案。",
+      "tags": "query:deep-anc",
+      "abstract_en": "Accurate multipath parameter estimation is critical for modern wireless communication systems, particularly in challenging low-SNR environments. Traditional Maximum Likelihood Estimation algorithms, such as CLEAN, provide high-resolution parameter extraction but suffer from prohibitive computational complexity due to exhaustive grid search. Conversely, purely data-driven deep learning approaches lack physical grounding and struggle to generalize across variable multipath densities and off-grid parameters. To address these limitations, this paper proposes Neural Network-Assisted CLEAN (NN-CLEAN), a hybrid framework that embeds a multi-head residual network directly into the iterative CLEAN extraction loop. By replacing the exhaustive grid search with rapid, parallelizable forward passes while delegating residual subtraction to exact mathematical models, NN-CLEAN isolates physical multipath parameters without accumulating non- physical errors. Extensive Monte Carlo simulations demonstrate that NN-CLEAN achieves estimation accuracy exceeding 96% at 5 dB SNR, matching the traditional Grid-Search CLEAN (GS- CLEAN) baseline, while providing a massive reduction in computational complexity and substantially outperforming subspace methods and standalone one-shot neural networks. Crucially, NN-CLEAN exhibits a near-flat scaling in execution runtime and memory consumption as batch sizes increase. This highly efficient parallelization establishes NN-CLEAN as a robust, real- time solution for channel estimation in MIMO systems.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
