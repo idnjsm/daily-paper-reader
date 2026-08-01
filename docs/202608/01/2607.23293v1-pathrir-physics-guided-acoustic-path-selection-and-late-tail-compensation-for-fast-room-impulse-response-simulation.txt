@@ -1,0 +1,447 @@
+Title: PathRIR: Physics-Guided Acoustic Path Selection and Late-Tail Compensation for Fast Room Impulse Response Simulation
+
+URL Source: https://arxiv.org/pdf/2607.23293v1
+
+Published Time: Tue, 28 Jul 2026 00:41:44 GMT
+
+Number of Pages: 5
+
+Markdown Content:
+# PATHRIR: PHYSICS-GUIDED ACOUSTIC PATH SELECTION AND LATE-TAIL COMPENSATION FOR FAST ROOM IMPULSE RESPONSE SIMULATION 
+
+# Shaoheng Xu 1,∗,†, Chunyi Sun 1,∗, Jihui (Aimee) Zhang 2,1, Amy Bastine 1,Prasanga N. Samarasinghe 1, Thushara D. Abhayapala 11The Australian National University, Australia 
+
+2The University of Queensland, Australia 
+
+ABSTRACT 
+
+Image-source-method (ISM)-based room impulse response (RIR) simulation is a useful and physically interpretable tool for acoustic scene modeling, but full-order ISM becomes computationally ex-pensive as the reflection order and room complexity increase. We propose a physics-guided framework for fast RIR simulation that preserves the geometric structure of ISM while learning to retain only acoustically important image-source paths during online traver-sal. To recover energy removed by pruning, the proposed PathRIR 
+
+uses a lightweight compensation multilayer perceptron to predict the missing late-tail energy envelope and generate a compensation tail whose energy follows that envelope. Experiments on irregular 3D rooms show that PathRIR reduces image-source computation and improves runtime efficiency over a full-order ISM simulator, while achieving low waveform- and decay-related errors. Ablation results show that adding the compensation tail improves waveform fidelity and reduces energy-decay-curve error, reverberation-time error, and direct-to-reverberant-ratio error, with modest runtime overhead. 
+
+Index Terms — Room impulse response simulation, image source method, acoustic path pruning, neural acceleration, room acoustics. 
+
+1. INTRODUCTION 
+
+Room impulse responses (RIRs) are fundamental descriptors of in-door acoustic propagation and provide controlled acoustic data for speech and audio systems. An RIR captures the transfer path be-tween a sound source and a receiver, including the direct sound, early reflections, and late reverberation, and is widely used in speech en-hancement, dereverberation, source localization, spatial audio, and data augmentation [1–6]. As speech and audio models continue to advance, the demand for large, diverse, and controllable acoustic datasets is increasing, while dense real-world RIR measurements re-main costly, time-consuming, and environment-specific [7, 8]. Existing approaches to RIR simulation include wave-based solvers, geometric acoustics methods, and hybrid systems. Wave-based solvers can accurately model acoustic wave phenomena, but are computationally demanding [9, 10]. Geometric methods, such as the image source method (ISM), ray tracing, and diffuse acoustic simulation [10–15], are widely used because they offer efficient and physically interpretable approximations of acoustic propagation. In particular, ISM represents sound propagation as image-source paths, making delay, attenuation, and direction of arrival explicit or directly derivable. It is used in tools such as Habets’ RIR Generator [13], Pyroomacoustics [14], and gpuRIR [16], and has been extended to 
+
+> ∗
+
+These authors contributed equally. †The corresponding author. Code and data: https://github.com/ShaoHenry/PathRIR 
+
+directional-transducer simulation using spherical harmonics [17]. However, this path-level interpretability comes with a cost: in shoe-box rooms, the number of image sources grows cubically with reflection order, and high-order simulation requires many reflected contributions to reproduce the late reverberant tail. Although GPU implementations [16], ray/path-tracing simulators [10, 14], and hy-brid systems such as Treble [18] improve efficiency or late-field modeling, large-scale high-order RIR generation can still be expen-sive for online training and rendering. Several recent methods improve efficiency or realism by ap-proximating, transforming, or learning the RIR generation process. FRA-RIR [19] and FRAM-RIR [20] accelerate ISM-style simulation by approximating virtual-source propagation structure, while neural generators and translation-based methods such as FAST-RIR [21], MESH2IR [22], IR-GAN [23], TS-RIR [24], and audio-visual or neural-field approaches [25–27] learn to synthesize or transform RIRs from room parameters, meshes, visual cues, spatial coor-dinates, acoustic parameters, or existing synthetic RIRs. These methods enable fast or more realistic RIR generation, but they usu-ally generate the final RIR directly, which can reduce waveform fidelity and weaken the path-level structure of geometric simula-tion: individual reflections are not explicitly selected, evaluated, or exposed as controllable physical components. This paper explores a different trade-off from direct neural RIR generation. Rather than replacing the geometric simulator, we propose PathRIR , a physics-guided neural acceleration framework that learns to prune ISM traversal and compensate for the resulting late-tail energy loss. Many candidate paths contribute little individ-ually, especially at high reflection orders, but discarded high-order paths can still collectively shape the late reverberant decay. There-fore, effective acceleration should prune negligible branches while preserving the aggregate late-tail energy that would otherwise be lost. In PathRIR , a lightweight Pruning-MLP predicts whether each image-source subtree should continue to be expanded, while re-tained paths are still computed by ISM so their delays, attenuation, and reflection orders remain physically interpretable. A lightweight Compensation-MLP predicts the missing late-tail energy envelope used to shape a stochastic compensation tail [28]. Our contributions are threefold: (1) a neural image-source path-selection framework that accelerates geometric RIR simulation while retaining explicit, physically interpretable path contributions; (2) subtree-level super-vision that estimates the aggregate importance of an image-source branch rather than only an individual reflection; and (3) residual late-tail compensation that restores energy decay after aggressive pruning. We evaluate the resulting speed–accuracy trade-off against full-order ISM simulation and neural RIR generation across irregular 3D room geometries. 
+
+> © 2026 IEEE. Personal use of this material is permitted. Permission from IEEE must be obtained for all other uses, in any current or future media, including reprinting/republishing this material for advertising or promotional purposes, creating new collective works, for resale or redistribution to servers or lists, or reuse of any copyrighted component of this work in other works. Accepted for publication in the Proceedings of the 19th International Workshop on Acoustic Signal Enhancement (IWAENC 2026). arXiv:2607.23293v1 [eess.AS] 25 Jul 2026
+
+2. PROBLEM FORMULATION 
+
+We consider RIR simulation in a known room geometry, including irregular room shapes, with one fixed source and M microphones, indexed by m = 1 , . . . , M . Given this source–room configuration, ISM constructs a set of image-source nodes V, where each node v ∈V represents one possible direct or reflected sound path. The set V
+
+includes the order-zero direct path and all image-source nodes up to a chosen maximum reflection order Omax . The full-order RIR at microphone m is written as 
+
+hm(t) = X
+
+> v∈V
+
+hv,m (t), (1) where hv,m (t) denotes the delayed and attenuated contribution of node v to microphone m. Our goal is to accelerate ISM by com-puting only the image-source paths that are acoustically important. During ISM traversal, removing one node also removes all paths that would be generated from it. Therefore, the pruning decision should consider the total contribution of the whole subtree, rather than only the energy of a single node. Let T (v) denote the subtree rooted at node v. We define the normalized subtree importance as 
+
+I(v) = 
+
+PMm=1 
+
+P  
+
+> u∈T (v)
+
+hu,m (t) 22
+
+PMm=1 ∥hm(t)∥22
+
+. (2) This quantity measures how much acoustic energy would be lost if node v and its descendants were pruned. A learned pruning policy selects a retained node set Aθ ⊆ V 
+
+during online image-source expansion. Using only these retained nodes, the pruned ISM response is 
+
+ehm(t) = X
+
+> v∈A θ
+
+hv,m (t). (3) This keeps the analytic image-source contributions for the selected paths, while reducing the number of nodes that need to be expanded and accumulated. However, aggressive pruning can remove many weak high-order paths that collectively shape the late reverberant tail. To compensate for this missing energy, we add a statistical residual term ηm(t),generated from a predicted residual energy envelope: 
+
+bhm(t) = ehm(t) + ηm(t). (4) The objective is to reduce simulation cost while keeping the com-pensated response bhm(t) close to the full-order response hm(t) in terms of both waveform shape and energy-decay properties. 
+
+3. PROPOSED METHOD 
+
+PathRIR combines an analytic ISM simulator with two lightweight learned modules, as shown in Fig. 1: an image-source branch selector, or Pruning-MLP, and a statistical late-tail compensator, or Compensation-MLP. The Pruning-MLP keeps only important image-source branches during simulation, while the Compensation-MLP estimates and restores the missing late reverberant energy caused by pruning. 
+
+3.1. Pruning-MLP label generation 
+
+For each training room, we run a full-order ISM simulation to ob-tain the image-source tree. For each node v in the tree, we compute its subtree importance I(v) using Eq. (2) and assign the binary keep target yv = 1[I(v) ≥ ϵimp ] ∈ { 0, 1}, where ϵimp is a predefined importance threshold. A node is labeled important if the aggregate contribution of its subtree is significant. This subtree-level supervi-sion encourages the Pruning-MLP to keep branches that are acousti-cally important as a whole, rather than judging each node only by its individual energy. 
+
+3.2. Pruning-MLP training 
+
+For each node v, we construct a feature vector fv using physical information about the node and the room, such as reflection or-der, image-source location, parent node, accumulated attenuation, source–microphone distance and delay, and simple room-geometry features. The Pruning-MLP predicts a keep probability and a subtree-importance score: (bpv , bsv ) = fθ (fv ), where bpv ∈ [0 , 1] 
+
+is the predicted probability that node v should be kept, and bsv
+
+is the predicted subtree-importance score. The target score is 
+
+sv = log 10 (I(v) + ϵ), where ϵ > 0 is a small constant used to avoid log(0) . Overall, the Pruning-MLP is trained with 
+
+Lprune = LWBCE (bpv , y v ) + λreg Lreg (bsv , s v ), (5) where LWBCE is a weighted binary cross-entropy loss with a larger penalty for wrongly pruning important nodes. The second term is a smooth-ℓ1 regression loss for predicting the importance score sv .
+
+3.3. Pruning-MLP inference 
+
+During inference, the ISM tree is expanded iteratively, order by or-der. At each reflection order, the Pruning-MLP evaluates each can-didate image-source node using bpv and bsv . If a node is pruned, its descendants are not generated, reducing both image-source tree ex-pansion and RIR accumulation cost. Let ov be the reflection order of node v, and let Co be the candi-date nodes with ov = o. We first select nodes whose predicted keep probability exceeds a threshold τ : Kraw  
+
+> o
+
+= {v ∈ C o : bpv ≥ τ }.
+
+A fixed threshold may prune too many high-order nodes and make the late reverberant tail decay too quickly. We therefore use an order-wise budget: all early nodes with o ≤ Oearly are kept, while for later orders o > O early ,
+
+bmin  
+
+> o
+
+= max( ⌈rmin × |C o|⌉ , n min ) ,bmax  
+
+> o
+
+= max 
+
+
+
+bmin  
+
+> o
+
+, ⌈rmax × |C o|⌉ 
+
+
+
+,qo = min 
+
+
+
+max 
+
+
+
+|K raw  
+
+> o
+
+|, b min 
+
+> o
+
+
+
+, b max 
+
+> o
+
+
+
+.
+
+(6) Here, |C o| is the number of candidate nodes at reflection order o,
+
+rmin and rmax are predefined minimum and maximum keep rates, 
+
+nmin is the predefined minimum number of nodes to keep, and ⌈·⌉ 
+
+denotes rounding up to the nearest integer. The final retained set Ko
+
+contains the top-qo candidate nodes ranked by the predicted impor-tance score bsv . Repeating this process up to order Omax gives the final retained node set Aθ = SOmax  
+
+> o=0
+
+Ko, from which the pruned RIR ehm(t) is computed as in Eq. (3). 
+
+3.4. Compensation-MLP training and inference 
+
+Pruning can remove many weak high-order reflections that are small individually but important in total for late reverberant decay. The Compensation-MLP restores this missing energy by predicting the energy envelope of the residual left out by pruning. For microphone 21. Pruning -MLP – Node -level keep / prune decision 2. Compensation -MLP – Residual energy envelope prediction 
+
+Inference Pipeline (ISM Pruning + Compensation) 
+
+1 ISM tree expansion  
+
+> (order by order)
+
+2 Per -node pruning 
+
+> with Pruning -MLP
+> Pruning -MLP
+> Iterates
+> per node,
+> per order
+
+3 Pruned ISM tree 4 Compute pruned ISM 
+
+> response from retained nodes
+
+5 Compensation -MLP    
+
+> Compensation
+> -MLP Timebins
+> Energy
+> 0
+> 0.5
+> 1
+> Order 0
+> Order 1
+> Order 2
+> Order n
+> …
+> Keep Prune
+> • Reflection order
+> • Wall coeff.
+> • Room geometry
+> • Source position
+> • Mic positions
+> • Pruned RIR energy
+> • Per -order pruning details
+> • …
+> Linear
+> Dropout
+> SiLU
+> LayerNorm
+
+128 → 128 
+
+> Linear
+> Dropout
+> SiLU
+> LayerNorm
+
+128 → 128 
+
+> Linear
+> Dropout
+> SiLU
+> LayerNorm
+
+128 → 128 
+
+> Linear
+> Dropout
+> SiLU
+> LayerNorm
+
+input_dim → 128       
+
+> Linear
+> Input (per mic)
+> Scene -level features
+> Input (per node)
+> 29 Features Keep Probability
+> 𝑝 !"∈0,1
+> Predicted Subtree
+> Importance 𝑠 !(
+> Linear
+> Dropout
+> SiLU
+> LayerNorm
+> Linear
+> Dropout
+> SiLU
+> LayerNorm
+
+64 → 64 
+
+> Linear
+> Dropout
+> SiLU
+> LayerNorm
+
+64 → 64 
+
+> Linear
+> Dropout
+> SiLU
+> LayerNorm
+
+29 → 64   
+
+> • Reflection order
+> • Wall coeff.
+> • Image source
+> positions
+> • Room geometry
+> • Source position
+> • Mic positions
+> • …
+> Linear
+> Sigmoid
+> Linear
+> Timebins
+> Energy
+> 0
+> 0.5
+> 1
+> Predicted
+> residual
+> energy 𝐄 *"
+> #$%
+
+# +
+
+6 Form compensation tail    
+
+> and add to pruned RIR
+> 𝜂 ̃"𝑡
+> Output:
+> .𝜂 "𝑡
+
+Fig. 1 . Overview of the proposed PathRIR pipeline. During order-wise ISM expansion, the Pruning-MLP makes a keep/prune decision for each candidate image-source node. After reaching Omax , the pruned RIR is synthesized from the retained nodes, while the Compensation-MLP predicts the missing residual-energy envelope used to scale zero-mean Gaussian noise. The absolute value of the scaled noise forms the compensation tail, which is added to the pruned RIR to produce the final PathRIR output. 
+
+m, we define the residual signal as em(t) = hm(t) − ehm(t). To represent its energy envelope, we divide the residual into B time bins. Let Bb denote samples in bin b; the target residual energy is 
+
+Eres  
+
+> m,b
+
+= X
+
+> t∈B b
+
+e2
+
+> m
+
+(t), b = 1 , . . . , B. (7) The vector Eres  
+
+> m
+
+= [ Eres 
+
+> m, 1
+
+, . . . , E res  
+
+> m,B
+
+] is the target envelope pre-dicted by the Compensation-MLP. Given an input vector zm con-taining room geometry, source–microphone configuration, pruning information, and pruned-RIR energy features, the Compensation-MLP predicts bEres  
+
+> m
+
+= gψ (zm). It is trained with 
+
+Lcomp = Lbin ( bEres  
+
+> m
+
+, Eres  
+
+> m
+
+) + λedc LEDC ( bEres  
+
+> m
+
+, Eres  
+
+> m
+
+), (8) where Lbin measures bin-wise residual-energy error, and LEDC 
+
+measures the corresponding energy-decay-curve error. During inference, after a compensation start time tcomp , we gen-erate zero-mean Gaussian noise [28] and scale it within each time bin to match bEres  
+
+> m
+
+, obtaining eηm(t). We then take its absolute value to form the compensation tail, ηm(t) = |eηm(t)|, without changing the energy assigned to each time bin. The compensation tail is added to the pruned RIR as in Eq. (4), restoring the missing late-tail energy decay rather than the exact residual waveform, while the retained paths remain analytic ISM contributions. 
+
+4. EXPERIMENTS 4.1. Experiment setup 
+
+We evaluate PathRIR (Fig. 1) on Monte Carlo-generated 3D irregu-lar rooms. Each room is obtained by extruding a random 2D poly-gon with 5–10 vertices [14, 15]. The floor-plan width and length are sampled in [3 , 12] m, and the height is sampled in [2 .2, 4.5] m. Wall, floor, and ceiling absorption coefficients are randomly sam-pled within [0 .03 , 0.70] , producing rooms with T60 values in the range [0 .109 , 0.645] s. For each room, one source and two mi-crophones are randomly placed inside the room with a minimum source–microphone distance of 0.75 m. We generate 1000 rooms for training and 20 held-out rooms for testing. All RIRs are simulated up to Omax = 10 , sampled at fs = 8 kHz, and truncated to 0.5 s. The Pruning-MLP is trained with λreg = 0 .25 and ϵimp = 10 −4.The Compensation-MLP is trained with λedc = 0 .5. During infer-ence, PathRIR uses threshold τ = 0 .5, keeps all nodes up to order 
+
+Oearly = 1 , and limits the number of retained nodes at each later order using rmin = 0 .2, rmax = 0 .5, and nmin = 48 , ranking can-didates by bsv . The Compensation-MLP predicts 64 residual-energy bins, and the resulting compensation tail starts at tcomp = 40 ms. Training and evaluation used an Intel Xeon Gold 6342 CPU, an NVIDIA A100 GPU, and 512 GB of RAM. 
+
+4.2. Comparison methods 
+
+We compare PathRIR with three baselines: Pyroomacoustics (Py-room) [14], our self-implemented full-order ISM simulator (Full-ISM), and MESH2IR [22]. Full-ISM uses the same image-source representation and RIR accumulation backend as PathRIR , but with-out pruning or compensation; it verifies that our implementation matches Pyroom under identical settings and provides a controlled full-order baseline for runtime and image-source-reduction analysis. MESH2IR is evaluated on the same test rooms. 
+
+4.3. Acoustic accuracy evaluation 
+
+For acoustic accuracy, we compare each simulated RIR against the Pyroomacoustics [14] reference. We report cosine distance (CD) and normalized mean squared error (NMSE) [7, 29], which measure waveform shape similarity and waveform error, respec-tively. To evaluate decay-related properties, we also report energy-decay-curve error (EDC-Err) computed from Schroeder integra-tion [30], direct-to-reverberant-ratio absolute error (DRR-Err) [31], and reverberation-time absolute error (RT60-Err). RT60 is estimated from the EDC using a T20 fit [30]. All acoustic metrics are averaged 3Table 1 . Acoustic accuracy using Pyroom as the reference at maxi-mum reflection order Omax = 10 . Lower is better for all metrics. 
+
+Method CD 
+
+↓ NMSE 
+
+↓ dB EDC-Err 
+
+↓ dB RT60-Err 
+
+↓ ms DRR-Err 
+
+↓ dB MESH2IR 0.999 0.51 19.59 235.67 9.80 Full-ISM 3.40 ×10 −7 -60.64 0.002 0.05 0.003 
+
+PathRIR 0.141 -5.69 4.69 36.84 0.54 
+
+PathRIR w/o Comp. MLP 0.181 -5.09 18.60 121.12 2.88 
+
+Table 2 . Image-source-node reduction rate Rimg and runtime speedup Srt of PathRIR for Omax = 1 –10 .
+
+Omax Rimg Srt ↑↑ % PathRIR 
+
+vs. Pyroom PathRIR 
+
+vs. Full-ISM w/o Comp. MLP 
+
+vs. Full-ISM 1 0.0 1.28 0.32 0.66 2 0.0 0.60 0.62 0.83 3 7.9 0.22 1.14 1.25 4 30.8 0.16 3.75 3.96 5 52.0 0.19 15.57 16.22 6 67.2 0.51 73.18 75.62 7 77.0 2.16 340.42 349.37 8 83.4 10.52 1,767.16 1,807.33 9 87.6 53.57 6,889.78 7,020.47 10 90.5 279.39 42,133.45 43,173.95 over microphones and test rooms, and lower values are better. Table 1 reports acoustic accuracy against Pyroom. Full-ISM closely matches Pyroom, confirming that our Full-ISM accumula-tion reproduces the reference RIRs under matched image-source settings. Compared with MESH2IR [22], PathRIR achieves lower errors across all five metrics, indicating better waveform and decay-related accuracy. The representative examples in Figs. 2 and 3 are consistent with these quantitative results: PathRIR more closely follows the Pyroom time-domain response and EDC decay trend, whereas MESH2IR exhibits larger temporal and decay deviations. This advantage is consistent with the design of PathRIR : neural net-works are used only for path selection and late-tail compensation, while the retained reflections are accumulated using an explicit ge-ometric simulator. In contrast, mesh-conditioned neural generation in MESH2IR does not explicitly preserve individual image-source paths or enforce the corresponding geometric constraints. 
+
+4.4. Simulation efficiency evaluation 
+
+For computational efficiency, we report image-source-node reduc-tion rate Rimg and runtime speedup Srt . The reduction rate Rimg 
+
+measures the fraction of image-source nodes removed relative to Full-ISM. The speedup Srt is measured separately relative to Py-room and Full-ISM and includes Pruning-MLP inference, retained-path accumulation, and Compensation-MLP generation. As shown in Table 2, PathRIR becomes faster than Full-ISM at 
+
+Omax = 3 and remains faster thereafter. It is consistently faster than Pyroom from Omax = 7 onward. From Omax = 4 onward, both Rimg and Srt increase with the maximum order. At Omax =10 , PathRIR removes 90 .5% of image-source nodes and achieves speedups of 279 .39 × over Pyroom and 42 ,133 .45 × over Full-ISM, demonstrating its increasing computational benefit for high-order simulation. At lower orders, however, the smaller number of image-source computations provides less opportunity for pruning to offset the MLP inference and compensation overhead. Time (ms)      
+
+> 050 100 150 200 250
+> Normalized Amplitude
+> 0
+> 0.5
+> 1
+
+Pyroom 
+
+PathRIR 
+
+MESH2IR 
+
+Fig. 2 . Example time-domain RIRs from Pyroom, PathRIR , and MESH2IR for the same configuration at Omax = 10 .Time (ms)      
+
+> 050 100 150 200 250
+> Energy Decay (dB)
+> -60
+> -40
+> -20
+> 0
+> −60 dB
+
+Pyroom 
+
+PathRIR 
+
+MESH2IR 
+
+PathRIR 
+
+Ablation 
+
+Fig. 3 . Example EDCs from Pyroom, MESH2IR, and PathRIR with and without the Compensation-MLP at Omax = 10 .
+
+4.5. Ablation study 
+
+We evaluate PathRIR without the Compensation-MLP, as reported in the last row of Table 1 and the last column of Table 2. The pruning-only variant is faster at every tested order, but its advan-tage generally narrows as Omax increases. At Omax = 10 , it is approximately 2.5% faster than the full PathRIR (43 ,173 .95 × ver-sus 42 ,133 .45 × over Full-ISM). Removing the Compensation-MLP, however, degrades all five acoustic metrics. CD increases from 0.141 to 0.181, while NMSE worsens from -5.69 dB to -5.09 dB. The degradation is greater for decay-related metrics: EDC-Err increases from 4.69 dB to 18.60 dB, RT60-Err from 36.84 ms to 121.12 ms, and DRR-Err from 0.54 dB to 2.88 dB. Figure 3 shows that the pruning-only EDC decays much faster than Pyroom because prun-ing removes many late-tail image sources. The Compensation-MLP mitigates this by adding an envelope-matched compensation tail to the pruned RIR. Although this tail does not recover the exact resid-ual waveform, it helps PathRIR follow the Pyroom decay trend and reduces waveform- and decay-related errors at modest runtime cost. 
+
+5. CONCLUSION 
+
+We presented PathRIR , a physics-guided framework for accelerat-ing ISM-based RIR simulation while preserving the image-source structure of geometric acoustics. Instead of replacing the RIR simu-lator with a neural generator, PathRIR uses a Pruning-MLP to retain acoustically important paths and a lightweight Compensation-MLP to restore the missing late-tail energy envelope. Experiments on irregular 3D rooms show that its computational gains grow rapidly with Omax . At Omax = 10 , PathRIR removes 90 .5% of image-source nodes and achieves speedups of 279 .39 × over Pyroom and 42 ,133 .45 × over Full-ISM, while yielding lower errors than MESH2IR across all five acoustic metrics. The ablation shows that the Compensation-MLP improves all five metrics, with particularly large gains in decay-related accuracy, at modest runtime cost. Future work will explore ray-tracing or hybrid ISM/ray-tracing backends to better capture mid-to-late reverberation. 46. REFERENCES 
+
+[1] T. Ko, V. Peddinti, D. Povey, M. L. Seltzer, and S. Khudanpur, “A study on data augmentation of reverberant speech for robust speech recognition,” in Proc. IEEE Int. Conf. Acoust., Speech Signal Process. (ICASSP) , 2017, pp. 5220–5224. [2] L. Remaggi, P. J. B. Jackson, P. Coleman, and W. Wang, “Acoustic reflector localization: Novel image source reversion and direct localization methods,” IEEE/ACM Trans. Audio, Speech, Lang. Process. , vol. 25, no. 2, pp. 296–309, 2017. [3] T. Nakatani, T. Yoshioka, K. Kinoshita, M. Miyoshi, and B.-H. Juang, “Speech dereverberation based on variance-normalized delayed linear prediction,” IEEE Trans. Audio, Speech, Lang. Process. , vol. 18, no. 7, pp. 1717–1731, 2010. [4] J. S. Bradley, “Review of objective room acoustics measures and future needs,” Appl. Acoust. , vol. 72, no. 10, pp. 713–720, 2011. [5] C. Chen, C. Schissler, S. Garg, P. Kobernik, A. Clegg, P. Calamia, D. Batra, P. W. Robinson, and K. Grauman, “SoundSpaces 2.0: A simulation platform for visual-acoustic learning,” in Adv. Neural Inf. Process. Syst. , 2022, vol. 35, pp. 8896–8911. [6] M. Vorl¨ ander, Auralization: Fundamentals of Acoustics, Mod-elling, Simulation, Algorithms and Acoustic Virtual Reality ,Springer, Berlin, Heidelberg, 2008. [7] S. Xu, C. Sun, J. A. Zhang, P. N. Samarasinghe, and T. D. Abhayapala, “RIR-Former: Coordinate-guided transformer for continuous reconstruction of room impulse responses,” in Proc. IEEE Int. Conf. Acoust., Speech Signal Process. (ICASSP) , 2026, pp. 15312–15316. [8] S. Della Torre, M. Pezzoli, F. Antonacci, and S. Gannot, “Dif-fusionRIR: Room impulse response interpolation using diffu-sion models,” in Proc. Forum Acusticum / Euronoise , 2025, pp. 4079–4086. [9] N. Raghuvanshi, R. Narain, and M. C. Lin, “Efficient and ac-curate sound propagation using adaptive rectangular decompo-sition,” IEEE Trans. Vis. Comput. Graph. , vol. 15, no. 5, pp. 789–801, 2009. [10] Z. Tang, L. Chen, B. Wu, D. Yu, and D. Manocha, “Improv-ing reverberant speech training using diffuse acoustic simula-tion,” in Proc. IEEE Int. Conf. Acoust., Speech Signal Process. (ICASSP) , 2020, pp. 6969–6973. [11] L. Savioja and U. P. Svensson, “Overview of geometrical room acoustic modeling techniques,” J. Acoust. Soc. Am. , vol. 138, no. 2, pp. 708–730, 2015. [12] J. B. Allen and D. A. Berkley, “Image method for efficiently simulating small-room acoustics,” J. Acoust. Soc. Am. , vol. 65, no. 4, pp. 943–950, 1979. [13] E. A. P. Habets, “Room impulse response generator,” Tech. Rep. 2.4, Technische Universiteit Eindhoven, 2006. [14] R. Scheibler, E. Bezzam, and I. Dokmanic, “Pyroomacoustics: A Python package for audio room simulation and array pro-cessing algorithms,” in Proc. IEEE Int. Conf. Acoust., Speech Signal Process. (ICASSP) , 2018, pp. 351–355. [15] J. Borish, “Extension of the image model to arbitrary polyhe-dra,” J. Acoust. Soc. Am. , vol. 75, no. 6, pp. 1827–1836, 1984. [16] D. Diaz-Guerra, A. Miguel, and J. R. Beltran, “gpuRIR: A Python library for room impulse response simulation with GPU acceleration,” Multimedia Tools Appl. , vol. 80, no. 4, pp. 5653– 5671, 2021. [17] P. N. Samarasinghe, T. D. Abhayapala, Y. Lu, H. Chen, and G. Dickins, “Spherical harmonics based generalized image source method for simulating room acoustics,” J. Acoust. Soc. Am. , vol. 144, no. 3, pp. 1381–1391, 2018. [18] G. G¨ otz, D. G. Nielsen, S. Gudjonsson, and F. Pind, “Room-acoustic simulations as an alternative to measurements for audio-algorithm evaluation,” IEEE Access , vol. 13, pp. 214000–214008, 2025. [19] Y. Luo and J. Yu, “FRA-RIR: Fast random approximation of the image-source method,” in Proc. Interspeech , 2023, pp. 3884–3888. [20] Y. Luo and R. Gu, “Fast random approximation of multi-channel room impulse response,” in Proc. IEEE Int. Conf. Acoust., Speech Signal Process. Workshops (ICASSPW) , 2024, pp. 449–454. [21] A. Ratnarajah, S.-X. Zhang, M. Yu, Z. Tang, D. Manocha, and D. Yu, “FAST-RIR: Fast neural diffuse room impulse response generator,” in Proc. IEEE Int. Conf. Acoust., Speech Signal Process. (ICASSP) , 2022, pp. 571–575. [22] A. Ratnarajah, Z. Tang, R. Aralikatti, and D. Manocha, “MESH2IR: Neural acoustic impulse response generator for complex 3D scenes,” in Proc. 30th ACM Int. Conf. Multimedia (MM) , 2022, pp. 924–933. [23] A. Ratnarajah, Z. Tang, and D. Manocha, “IR-GAN: Room impulse response generator for far-field speech recognition,” in Proc. Interspeech , 2021, pp. 286–290. [24] A. Ratnarajah, Z. Tang, and D. Manocha, “TS-RIR: Translated synthetic room impulse responses for speech augmentation,” in 
+
+Proc. IEEE Autom. Speech Recognit. Understanding Workshop (ASRU) , 2021, pp. 259–266. [25] A. Ratnarajah, S. Ghosh, S. Kumar, P. Chiniya, and D. Manocha, “AV-RIR: Audio-visual room impulse response estimation,” in Proc. IEEE/CVF Conf. Comput. Vis. Pattern Recognit. (CVPR) , 2024, pp. 27164–27175. [26] S. Liang, C. Huang, Y. Tian, A. Kumar, and C. Xu, “Neu-ral Acoustic Context Field: Rendering realistic room impulse response with neural fields,” in Proc. ICCV Workshop Visual Learn. Sounds Spaces (AV4D) , 2023. [27] A. Brunetto, S. Hornauer, and F. Moutarde, “NeRAF: 3D scene infused neural radiance and acoustic fields,” in Proc. Int. Conf. Learn. Represent. (ICLR) , 2025. [28] E. A. Lehmann and A. M. Johansson, “Diffuse reverberation model for efficient image-source simulation of room impulse responses,” IEEE Trans. Audio, Speech, Lang. Process. , vol. 18, no. 6, pp. 1429–1439, 2010. [29] D. R. Morgan, J. Benesty, and M. M. Sondhi, “On the evalu-ation of estimated impulse responses,” IEEE Signal Process. Lett. , vol. 5, no. 7, pp. 174–176, 1998. [30] M. R. Schroeder, “New method of measuring reverberation time,” J. Acoust. Soc. Am. , vol. 37, no. 3, pp. 409–412, 1965. [31] P. Zahorik, “Direct-to-reverberant energy ratio sensitivity,” J. Acoust. Soc. Am. , vol. 112, no. 5, pp. 2110–2117, 2002. 5
