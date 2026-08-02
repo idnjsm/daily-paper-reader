@@ -6,26 +6,22 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-08-01
-- 运行时间：2026-08-01 21:10:00 UTC
+- 最新运行日期：2026-08-02
+- 运行时间：2026-08-02 20:01:05 UTC
 - 运行状态：成功
-- 本次总论文数：1
+- 本次总论文数：0
 - 精读区：0
-- 速读区：1
+- 速读区：0
 
 ### 今日简报（AI）
-今日速读1篇论文，聚焦快速房间脉冲响应模拟。  
-值得关注的是《PathRIR》提出的物理引导声学路径选择与晚期尾部补偿方法，兼顾速度与精度。  
-普通读者可留意该方法如何在硬件受限场景下提升声学模拟效率。
-- 详情：[/202608/01/README](/202608/01/README)
+> 今日无新推荐，系统未产出可展示论文。
+- 详情：[/202608/02/README](/202608/02/README)
 
 ### 精读区论文标签
 - 本次无精读推荐。
 
 ### 速读区论文标签
-1. [PathRIR: Physics-Guided Acoustic Path Selection and Late-Tail Compensation for Fast Room Impulse Response Simulation](/202608/01/2607.23293v1-pathrir-physics-guided-acoustic-path-selection-and-late-tail-compensation-for-fast-room-impulse-response-simulation)  
-   标签：评分：6.0/10、query:deep-anc
-   evidence：物理引导的声学路径选择与补偿网络用于快速房间冲激响应模拟，有助于主动降噪的声学建模
+- 本次无速读推荐。
 
 
 <div class="dpr-home-promo-card">
