@@ -6,19 +6,21 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-08-02
-- 运行时间：2026-08-02 20:01:05 UTC
+- 最新运行日期：2026-08-03
+- 运行时间：2026-08-03 21:47:55 UTC
 - 运行状态：成功
-- 本次总论文数：0
-- 精读区：0
+- 本次总论文数：1
+- 精读区：1
 - 速读区：0
 
 ### 今日简报（AI）
-> 今日无新推荐，系统未产出可展示论文。
-- 详情：[/202608/02/README](/202608/02/README)
+今日精读1篇高分论文，聚焦AI驱动的分布式多通道主动噪声控制。值得关注的方向是“模型无关元学习初始化”，可显著提升多设备协同降噪的适应效率。建议普通读者留意该技术未来在智能耳机、车载降噪等场景的落地应用。
+- 详情：[/202608/03/README](/202608/03/README)
 
 ### 精读区论文标签
-- 本次无精读推荐。
+1. [Model-Agnostic Meta-Learning Initialization for Distributed Multichannel Active Noise Control](/202608/03/2607.29117v1-model-agnostic-meta-learning-initialization-for-distributed-multichannel-active-noise-control)  
+   标签：评分：9.0/10、query:deep-anc
+   evidence：利用深度元学习实现主动噪声控制的网络初始化
 
 ### 速读区论文标签
 - 本次无速读推荐。

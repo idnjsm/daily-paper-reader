@@ -1,0 +1,24 @@
+{
+  "label": "2026-08-03",
+  "date": "2026-08-03",
+  "generated_at": "2026-08-03T21:48:00",
+  "count": 1,
+  "papers": [
+    {
+      "paper_id": "202608/03/2607.29117v1-model-agnostic-meta-learning-initialization-for-distributed-multichannel-active-noise-control",
+      "section": "deep",
+      "title_en": "Model-Agnostic Meta-Learning Initialization for Distributed Multichannel Active Noise Control",
+      "authors": "Xiaoyi Shen, Junwei Ji, Woon-Seng Gan, Dongyuan Shi, Jun Yang",
+      "date": "2026-07-31",
+      "pdf": "https://arxiv.org/pdf/2607.29117v1",
+      "score": "9.0",
+      "evidence": "利用深度元学习实现主动噪声控制的网络初始化",
+      "tldr": "分布式多通道主动噪声控制（DMCANC）依赖零或随机初始化，导致自适应滤波器收敛慢且节点协作效率低。本文提出基于模型无关元学习（MAML）的初始化策略，聚合各节点主/次路径的异构声学特性，训练出可泛化的初始参数。部署后显著加快稳态与时变噪声下的收敛速度，数值仿真表明较传统方法降噪性能更优，为大规模ANC提供有效方案。",
+      "tags": "query:deep-anc",
+      "abstract_en": "Distributed multichannel active noise control (DMCANC) has emerged as a scalable framework for large-area noise reduction, where multiple nodes operate local single-channel ANC controllers and exchange essential information to achieve global control. A key limitation of existing DMCANC implementations lies in their reliance on zero or random initialization, which leads to slow convergence of adaptive filters and restricts the efficiency of internode collaboration. To address this issue, this paper introduces a model-agnostic meta-learning (MAML) based initialization strategy for DMCANC. By aggregating heterogeneous acoustic characteristics across nodes-ncluding primary and secondary paths-a MAML framework is trained to learn an initialization that generalizes effectively across distributed ANC systems. The MAML initialization is then deployed to all nodes to improve convergence speed under both stationary and time-varying noise conditions. Numerical simulations applied on broadband and real-world noise demonstrate that the proposed algorithms achieves substantially faster convergence and improved noise reduction performance compared with conventional DMCANC, highlighting the potential of MAML initialization as an effective method for large-scale ANC.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

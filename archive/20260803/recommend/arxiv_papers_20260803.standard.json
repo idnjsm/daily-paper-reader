@@ -1,0 +1,55 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-03T21:46:55.495573+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 1,
+    "deep_cap": 6,
+    "deep_selected": 1,
+    "quick_candidates": 0,
+    "quick_skim_target": 11,
+    "quick_selected": 0
+  },
+  "deep_dive": [
+    {
+      "id": "2607.29117v1",
+      "source": "arxiv",
+      "title": "Model-Agnostic Meta-Learning Initialization for Distributed Multichannel Active Noise Control",
+      "abstract": "Distributed multichannel active noise control (DMCANC) has emerged as a scalable framework for large-area noise reduction, where multiple nodes operate local single-channel ANC controllers and exchange essential information to achieve global control. A key limitation of existing DMCANC implementations lies in their reliance on zero or random initialization, which leads to slow convergence of adaptive filters and restricts the efficiency of internode collaboration. To address this issue, this paper introduces a model-agnostic meta-learning (MAML) based initialization strategy for DMCANC. By aggregating heterogeneous acoustic characteristics across nodes-ncluding primary and secondary paths-a MAML framework is trained to learn an initialization that generalizes effectively across distributed ANC systems. The MAML initialization is then deployed to all nodes to improve convergence speed under both stationary and time-varying noise conditions. Numerical simulations applied on broadband and real-world noise demonstrate that the proposed algorithms achieves substantially faster convergence and improved noise reduction performance compared with conventional DMCANC, highlighting the potential of MAML initialization as an effective method for large-scale ANC.",
+      "authors": [
+        "Xiaoyi Shen",
+        "Junwei Ji",
+        "Woon-Seng Gan",
+        "Dongyuan Shi",
+        "Jun Yang"
+      ],
+      "primary_category": "eess.AS",
+      "categories": [
+        "eess.AS"
+      ],
+      "published": "2026-07-31T07:47:13+00:00",
+      "link": "https://arxiv.org/pdf/2607.29117v1",
+      "tags": [
+        "keyword:deep-anc",
+        "query:deep-anc"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "deep neural network active noise control with MAML initialization",
+      "llm_evidence_cn": "利用深度元学习实现主动噪声控制的网络初始化",
+      "llm_evidence": "利用深度元学习实现主动噪声控制的网络初始化",
+      "canonical_evidence": "利用深度元学习实现主动噪声控制的网络初始化",
+      "llm_tldr_en": "This paper introduces a MAML-based initialization for distributed multichannel active noise control, aggregating heterogeneous acoustic paths across nodes to speed up adaptive filter convergence and improve inter-node collaboration.",
+      "llm_tldr_cn": "分布式多通道主动噪声控制（DMCANC）依赖各节点的自适应滤波器协作，但传统零或随机初始化导致收敛缓慢。本文提出一种基于模型无关元学习（MAML）的初始化策略，通过跨节点聚合主次路径等异质声学特征，学习一个更好的初始滤波器参数。实验表明该初始化策略显著加快收敛并提升节点间协作效率。该方法为深度元学习与主动噪声控制的结合提供了新思路。",
+      "llm_tldr": "分布式多通道主动噪声控制（DMCANC）依赖各节点的自适应滤波器协作，但传统零或随机初始化导致收敛缓慢。本文提出一种基于模型无关元学习（MAML）的初始化策略，通过跨节点聚合主次路径等异质声学特征，学习一个更好的初始滤波器参数。实验表明该初始化策略显著加快收敛并提升节点间协作效率。该方法为深度元学习与主动噪声控制的结合提供了新思路。",
+      "llm_tags": [
+        "query:deep-anc"
+      ],
+      "matched_query_tag": "query:deep-anc",
+      "matched_query_text": "deep neural network active noise control",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": []
+}

@@ -1,0 +1,363 @@
+Title: Model-Agnostic Meta-Learning Initialization for Distributed Multichannel Active Noise Control
+
+URL Source: https://arxiv.org/pdf/2607.29117v1
+
+Published Time: Mon, 03 Aug 2026 00:39:28 GMT
+
+Number of Pages: 11
+
+Markdown Content:
+# Model-Agnostic Meta-Learning Initialization for Distributed Multichannel Active Noise Control 
+
+Xiaoyi Shen 1
+
+> 1State Key Laboratory of Acoustics and Marine Information, Institute of Acoustics, Chinese Academy of Sciences, Beijing, 100190, China
+
+email: shenxiaoyi@mail.ioa.ac.cn 
+
+Junwei Ji 2, Woon-Seng Gan 2
+
+> 2School of Electrical and Electronic Engineer, Nanyang Technological University, 639798, Singapore
+
+Dongyuan Shi 3
+
+> 3Center of Intelligent Acoustics and Immersive Communications, Northwestern Polytechnical University, Xi’an, 710072, China
+
+Jun Yang 1,4
+
+> 4School of Electronic, Electrical and Communication Engineering, University of Chinese Academy of Sciences, Beijing, 100049, China
+
+ABSTRACT 
+
+Distributed multichannel active noise control (DMCANC) has emerged as a scalable framework for large-area noise reduction, where multiple nodes operate local single-channel ANC controllers and exchange essential information to achieve global control. A key limitation of existing DMCANC implementations lies in their reliance on zero or random initialization, which leads to slow convergence of adaptive filters and restricts the e ffi ciency of inter-node collaboration. To address this issue, this paper introduces a model-agnostic meta-learning (MAML)–based initialization strategy for DMCANC. By aggregating heterogeneous acoustic characteristics across nodes—including primary and secondary paths—a MAML framework is trained to learn an initialization that generalizes e ff ectively across distributed ANC systems. The MAML initialization is then deployed to all nodes to improve convergence speed under both stationary and time-varying noise conditions. Numerical simulations applied on broadband and real-world noise demonstrate that the proposed algorithms achieves substantially faster convergence and improved noise reduction performance compared with conventional DMCANC, highlighting the potential of MAML initialization as an eff ective method for large-scale ANC. 
+
+Keywords : Active noise control (ANC), Distributed multichannel ANC, model-agnostic meta-learning (MAML) arXiv:2607.29117v1 [eess.AS] 31 Jul 2026 ICSV32, Annual Congress of International Institute of Acoustics and Vibration (IIAV), 5 - 10 July 2026 
+
+1. INTRODUCTION 
+
+Active noise control (ANC) has been widely used as an e ff ective technique for attenuating low-frequency noise by generating anti-noise signals with the same amplitude and opposite phase [1–3]. Benefiting from adaptive filtering algorithms such as the filtered-x least mean square (FxLMS) [4–6], ANC systems are capable of operating in dynamic environments. With the increasing demand for large-area noise reduction, multichannel ANC (MCANC) systems have been extensively studied [7, 8]. Conventional MCANC systems are typically implemented in a centralized manner, where a single controller processes all sensor and actuator signals [9, 10]. Although such centralized schemes can achieve optimal performance, they su ff er from high computational complexity and limited scalability. To address these issues, distributed multichannel ANC (DMCANC) systems have been proposed [11, 12], in which multiple nodes independently perform local adaptation while exchanging information to achieve global noise reduction. This distributed architecture provides improved scalability, flexibility, and suitability for wireless implementation [13, 14]. Recent advances in DMCANC have focused on improving system robustness and practical feasibility under non-ideal communication conditions [15–17]. The mixed-gradient FxLMS (MGDFxLMS) algorithm applied compensation filters to combine the received gradients and mitigate crosstalk e ff ects between each node [18]. MGDFxLMS has been proved haveing equivalent noise reduction performance to the centralized ANC system under ideal communication conditions. Furthermore, intermittent communication strategies have been introduced to DMCANC (IC-DMCANC) to reduce communication burden and computational complexity, while maintaining performance close to centralized systems [19]. In such frameworks, each node typically runs a local adaptive algorithm, and global coordination is achieved through periodic information exchange. Despite these improvements, most existing DMCANC methods rely on zero or random initialization of control filters [20, 21]. However, the initialization of adaptive filters plays a critical role in determining the convergence behavior of ANC systems [22–24]. In distributed settings, poor initialization not only slows down local adaptation but also limits the e ff ectiveness of inter-node collaboration, especially under time-varying noise conditions [25]. This issue becomes more pronounced in large-scale DMCANC systems, where heterogeneous acoustic paths and dynamic environments further complicate the convergence process [26]. To address this limitation, we propose a model-agnostic meta-learning (MAML)-based initialization framework for IC-DMCANC [27–30]. Unlike conventional approaches that treat each ANC node independently, the proposed method leverages meta-learning to extract shared knowledge from heterogeneous acoustic environments, including variations in primary and secondary paths. By training across multiple tasks, the MAML framework learns a generalized initialization that enables rapid adaptation when deployed in unseen DMCANC scenarios. The proposed method is designed to be compatible with existing distributed ANC architectures. The learned initialization can be directly applied to each node as the initial control filter of the adaptive algorithms, thereby significantly accelerating convergence without altering the underlying control structure. Extensive simulations under broadband and real-recorded noise conditions demonstrate that the proposed approach achieves faster convergence and improved noise reduction performance compared with conventional DMCANC methods. The remainder of this paper is organized as follows. Section 2 introduces the DMCANC system and reviews relevant adaptive algorithms and presents the proposed MAML-based initialization framework. Section 3 provides performance analysis, followed by numerical simulations. Finally, conclusions are drawn in Section 4 . 2|11 ICSV32, Annual Congress of International Institute of Acoustics and Vibration (IIAV), 5 - 10 July 2026 
+
+Figure 1: The block diagram of implemetation for IC-DMCANC. 
+
+2. PROPOSED METHOD 
+
+In order to imrove the convergence speed of IC-DMCANC, MAML is applied to pretrain the optimal initial control filter for each node of IC-DMCANC, which is shown in Fig.1. 
+
+2.1. Distributed Multichannel ANC with Intermittent Communication 
+
+DMCANC is composed of K nodes, in the k-th node, the control signal can be calculated as: 
+
+yk(n) = wT 
+
+> k
+
+(n)x(n), k = 1, 2, ..., K, (1) where yk(n) denotes the control signal of the k-th node, and x(n) is the reference signal captured by the reference sensor. wk(n) = [wk,1(n), wk,2(n), · · · , wk,L(n)] T represents the weights of adaptive filter in the k-th node with the length of L, which is updated by steepest gradient descent method: 
+
+wk(n + 1) = wk(n) + μkx′
+
+> kk
+
+(n)ek(n) + μkα ewk − wk(n) . (2) where μk and α denote the step size and penalty factor for the weight update equation of k-th node. 
+
+ewk stands for the center point of the range to which the control filter is restricted. ek(n) is the error signal of the k-th node and x′
+
+> kk
+
+(n) is the filtered reference signal calculated by 
+
+x′
+
+> kk
+
+(n) = ˆskk (n) ∗ x(n), (3) where ˆ skk (n) denotes the estimated self-secondary path skk (n) with length Ls. The compensation filters are introduced to make up for the di ff erence between the node’s self-secondary path and inter-node 3|11 ICSV32, Annual Congress of International Institute of Acoustics and Vibration (IIAV), 5 - 10 July 2026 
+
+cross-secondary path. The compensation filters cmk (n) can be estimated o ffl ine prior to the operation of the ANC system: 
+
+cmk (n + 1) = cmk (n) + μcv′(n)em(n), (4) where v′(n) denotes to the filtered WGN vector and em(n) is given by 
+
+em(n) = v′
+
+> k
+
+(n) − v′
+
+> m
+
+(n), (5) and v′
+
+> k
+
+(n) and v′
+
+> m
+
+(n) is generated by 
+
+
+
+v′
+
+> k
+
+(n) = v(n) ∗ smk (n),
+
+v′
+
+> m
+
+(n) = cT
+
+> mk
+
+(n)v(n) ∗ smm (n), (6) in which v(n) is white Gaussian noise and smk (n) is cross-secondary path. Intermittent communication (IC) strategy exchange data only at non-continuous, scheduled intervals rather than at every sampling point: 
+
+wk(n + 1) = wk(n − N + 1) +
+
+> N−1
+
+X
+
+> t=0
+
+μkx′
+
+> kk
+
+(n − t)ek(n − t) +
+
+> N−1
+
+X
+
+> t=0
+
+μkα ewk − wk(n − t) , (7) which accumulates the algorithm’s gradient information over the N steps. The new central control filter can be approximated as 
+
+ew(r+1)  
+
+> k
+
+≈ ew(r) 
+
+> k
+
++ ϕk(n) +
+
+> K
+
+X
+
+> m=1
+> m,k
+
+ϕm(n) ∗ cmk (n), (8) where 
+
+ϕk(n) = wk(n + 1) − ew(r) 
+
+> k
+
+. (9) 
+
+2.2. Model-Agnostic Meta-Learning Initialization 
+
+In order to accelerate the noise reduction process, we applied Model-Agnostic Meta-Learning (MAML) initialization to obtain the optimal initial coe ffi cients wok for k-th ANC node. The dataset is collected seperately using primary path and seconadry path for this node. Here we use one node as example. The dataset used for k-th node coe ffi cient initialization consists of randomly sampled disturbance signals {d(1)  
+
+> k
+
+(n), d(2)  
+
+> k
+
+(n), · · · } and their corresponding filtered reference signal tracks {x′
+
+> kk
+> (1)
+
+(n), x′
+
+> kk
+> (2)
+
+(n), · · · } in di ff erent ANC configuration settings. The error signal of the j-th within-task training e⋆ 
+
+> k
+> (j)
+
+(n) is obtained from 
+
+e⋆ 
+
+> k
+> (j)
+
+(n) = d( j) 
+
+> k
+
+(n) − [x′( j) 
+
+> kk
+
+]T(n)ϱ( j) 
+
+> k
+
+, (10) where ϱ( j) 
+
+> k
+
+represents the j-th initial value of the control filter. It is presumed that the best initial control filter requires only a single update to reach the optimal solution wok :
+
+wok  
+
+> (j)
+
+= ϱ( j) 
+
+> k
+
+− βe⋆ 
+
+> k
+> (j)
+
+(n)x′ 
+
+> kk
+> (j)
+
+(n), (11) in which β denotes the step size for the updation process in the within-task training. In j-th within-task testing, the testing data pair is given by 
+
+
+
+d† 
+
+> k
+> (j)
+
+(m) = dk( j)(n),
+
+x† 
+
+> kk
+> (j)
+
+(m − i) = hx′ 
+
+> kk
+> (j)
+
+(n − i) x′ 
+
+> kk
+> (j)
+
+(n − i − 1) · · · 01×i
+
+iT , (12) 4|11 ICSV32, Annual Congress of International Institute of Acoustics and Vibration (IIAV), 5 - 10 July 2026 
+
+where i = 1, 2, · · · , L, and the j-th within-task testing error e† 
+
+> k
+> (j)
+
+(m) is obtained from 
+
+e† 
+
+> k
+> (j)
+
+(m − i) = d† 
+
+> k
+> (j)
+
+(m − i) − [x† 
+
+> kk
+> (j)
+
+(m − i)] Twok 
+
+> (j)
+
+. (13) According to the gradient descent method, the recursive formula ϱk is derived as 
+
+ϱ( j+1)  
+
+> k
+
+= ϱ( j) 
+
+> k
+
++ ϵ
+
+> L−1
+
+X
+
+> i=0
+
+λie† 
+
+> k
+> (j)
+
+(m − i)x† 
+
+> kk
+> (j)
+
+(m − i), (14) where λ ∈ [0 , 1] stands for the forgetting factor and ϵ ∈ (0 , 1) denotes the learning rate. After within-task training and testing, the optimal initial value wok obtained in Equation 11 is applued for k-th node as the initial coe ffi cients to further update wk(n) . 
+
+3. SIMULATION RESULTS 
+
+Simulations were conducted to validate the noise reduction performance of the proposed MAML-ICDMCANC framework, implemented with six nodes as shown in Fig. 1. The primary and secondary paths were measured in a real acoustic environment using an acoustic chamber. The impulse response of the secondary path for ANC node 1 is illustrated in Fig. 2. The lengths of the secondary path, compensation filter, and control filter were set to 256, 33, and 512 taps, respectively. The sampling frequency for all algorithms was set at 16 kHz. For comparison, centralized implementations and MGDFxLMS, as well as the IC-DMCANC algorithm, were also evaluated. In the MAML initialization stage, broadband noise signals with frequency ranges of 100–1200 Hz, 800–1500 Hz, and 1200–2000 Hz were used to train the optimal initial coe ffi cients. The training data pairs were generated by passing the signals through the primary and secondary paths. The dataset was split into 70% for training and 30% for validation. The learned initialization was then applied to the adaptive filters under di ff erent noise conditions, while it was initialized as a zero vector for other compared algorithms. 
+
+3.1. Tonal noise cancellation 
+
+A tonal noise consisting of 315 Hz and 500 Hz components was used for evaluation. The step size for all algorithms was set to 1 × 10 −8. The mean square error (MSE) curves of the six nodes are shown in Fig. 3. It can be observed that the proposed method achieves the fastest convergence across all nodes. IC-DMCANC and centralized exhibit comparable convergence speed, both outperforming MGDFxLMS.The superior convergence performance of the proposed method is attributed to the MAML-based initialization, which captures prior acoustic characteristics before online adaptation. Due to di ff erences in local acoustic environments, the steady-state performance varies slightly across nodes; however, consistent convergence acceleration is observed. Fig. 4 presents the MSE and power spectrum of the error signals. The power spectrum was computed over the final 3 seconds of the control process. As shown in Fig. 4(b), all methods achieve comparable steady-state attenuation, while Fig. 4(a) demonstrates the faster convergence of the proposed method. 
+
+3.2. Broadband noise cancellation 
+
+Broadband noise with the frequency range of 200–800 Hz was used for evaluation. The step size was set to 3 × 10 −7 for all algorithms. The MSE curves for each node are shown in Fig. 5. Similar to the tonal noise case, the proposed method achieves the fastest convergence, while the other methods exhibit comparable convergence speed and similar steady-state performance. Fig. 6 shows the convergence behavior and power spectrum for ANC node 1. All algorithms eff ectively attenuate noise within the target frequency band. 5|11 ICSV32, Annual Congress of International Institute of Acoustics and Vibration (IIAV), 5 - 10 July 2026 
+
+Figure 2: Impluse response of estimated secondary path for ANC node 1. 
+
+Figure 3: Mean square error of di ff erent algorithms for tonal noise with each ANC node: (a). Mean square error in ANC node 1. (b). Mean square error in ANC node 2. (c). Mean square error in ANC node 3. (d). Mean square error in ANC node 4. (e). Mean square error in ANC node 5. (f). Mean square error in ANC node 6. 
+
+3.3. Real noise cancellation 
+
+In this simulation, a real recorded compressor noise was used. The step size settings were consistent with the previous simulations. The results indicate that the proposed method achieves the 6|11 ICSV32, Annual Congress of International Institute of Acoustics and Vibration (IIAV), 5 - 10 July 2026 
+
+Figure 4: Convergence performance of di ff erent algorithms for tonal noise with ANC node 1: (a). Mean square error of di ff erent algorithms. (b). Power spectrum of error signals of di ff erent algorithms. 
+
+Figure 5: Mean square error of di ff erent algorithms for braobdand noise (200 − 800Hz) with each ANC node: (a). Mean square error in ANC node 1. (b). Mean square error in ANC node 2. (c). Mean square error in ANC node 3. (d). Mean square error in ANC node 4. (e). Mean square error in ANC node 5. (f). Mean square error in ANC node 6. fastest convergence among all the compared methods. Fig. 7 and Fig. 8 illustrate the MSE and power spectrum of the error signals, respectively. As shown in Fig. 7, the proposed method suppresses the noise from the early stage of the control process, whereas other methods begin to achieve noticeable attenuation after approximately 10 seconds. Fig. 8 7|11 ICSV32, Annual Congress of International Institute of Acoustics and Vibration (IIAV), 5 - 10 July 2026 
+
+Figure 6: Convergence performance of di ff erent algorithms for braobdand noise (200 − 800Hz) with ANC node 1: (a). Mean square error of di ff erent algorithms. (b). Power spectrum of error signals of di ff erent algorithms. further confirms that the proposed method e ff ectively attenuates noise within the target frequency range. 
+
+Figure 7: Mean square error of di ff erent algorithms for real recorded noise with each ANC node: (a). Mean square error in ANC node 1. (b). Mean square error in ANC node 2. (c). Mean square error in ANC node 3. (d). Mean square error in ANC node 4. (e). Mean square error in ANC node 5. (f). Mean square error in ANC node 6. 8|11 ICSV32, Annual Congress of International Institute of Acoustics and Vibration (IIAV), 5 - 10 July 2026 
+
+Figure 8: Convergence performance of di ff erent algorithms real recorded noise with ANC node 1: (a). Mean square error of di ff erent algorithms. (b). Power spectrum of error signals of di ff erent algorithms. 
+
+4. CONCLUSION 
+
+This paper proposed a model-agnostic meta-learning (MAML)-based initialization framework for distributed multichannel active noise control with intermittent communication (IC-DMCANC). By leveraging heterogeneous acoustic information across di ff erent nodes and environments, the proposed method learned a generalized initialization that significantly improved the convergence behavior of adaptive control filters. Unlike conventional DMCANC approaches that relied on zero or random initializations, the proposed framework enabled each node to start from a more informative initial point, thereby accelerating adaptation and enhancing inter-node collaboration. The method was fully compatible with existing distributed ANC architectures and could be seamlessly integrated into practical systems without modifying the underlying control structure. Simulations under di ff erent noise conditions demonstrated that the proposed method achieved faster convergence performance compared with conventional methods. These findings highlighted the importance of initialization in DMCANC and validated the e ff ectiveness of MAML in addressing this previously overlooked problem. 
+
+ACKNOWLEDGEMENTS 
+
+This research is supported by the Chinese Academy of Sciences Talent Introduction Program for Young Researchers (Grant Number: 552025000180). 
+
+REFERENCES 
+
+[1] Sen M Kuo and Dennis R Morgan. Active noise control: a tutorial review. Proceedings of the IEEE , 87(6):943–973, 1999. [2] Colin N Hansen. Understanding active noise cancellation . CRC Press, 1999. 9|11 ICSV32, Annual Congress of International Institute of Acoustics and Vibration (IIAV), 5 - 10 July 2026 
+
+[3] S. J. Elliott. Signal processing for active control . Academic, San Diego, Calif., 2001. Includes bibliographical references and index. [4] Simon S Haykin. Adaptive filter theory . Pearson Education India, 2002. [5] Chaung Shi and Yoshinobu Kajikawa. A partial-update minimax algorithm for practical implementation of multi-channel feedforward active noise control. In 2018 16th International Workshop on Acoustic Signal Enhancement (IWAENC) , pages 1–15. IEEE, 2018. [6] Bhan Lam, Chuang Shi, Dongyuan Shi, and Woon-Seng Gan. Active control of sound through full-sized open windows. Building and Environment , 141:16–27, 2018. [7] Cheng-Yuan Chang, Xiu-Wei Liu, Sen M Kuo, et al. Active noise control for centrifugal and axial fans. Noise Control Engineering Journal , 68(6):490–500, 2020. [8] Xiaoyi Shen, Yu Guo, Junwei Ji, Dongyuan Shi, and Woon-Seng Gan. Multi-channel adjoint least mean square algorithm with momentum factor applied on active noise control. Mechanical Systems and Signal Processing , 228:112415, 2025. [9] Xiaoyi Shen, Dongyuan Shi, Zhengding Luo, Junwei Ji, and Woon-Seng Gan. A momentum two-gradient direction algorithm with variable step size applied to solve practical output constraint issue for active noise control. In ICASSP 2023-2023 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP) , pages 1–5. IEEE, 2023. [10] Woon-Seng Gan, Dongyuan Shi, and Xiaoyi Shen. Practical active noise control: Restriction of maximum output power. arXiv preprint arXiv:2307.10913 , 2023. [11] Junwei Ji, Dongyuan Shi, Zhengding Luo, Xiaoyi Shen, and Woon-Seng Gan. A practical distributed active noise control algorithm overcoming communication restrictions. In 2023 Proc. - ICASSP IEEE Int. Conf. Acoust. Speech Signal Process. , pages 1–5. IEEE, 2023. [12] Tianyou Li, Siyuan Lian, Sipei Zhao, Jing Lu, and Ian S. Burnett. Distributed active noise control based on an augmented di ff usion fxlms algorithm. IEEE /ACM Transactions on Audio, Speech, and Language Processing , pages 1–15, 2023. [13] Xiaoyi Shen, Woon-Seng Gan, and Dongyuan Shi. Multi-channel wireless hybrid active noise control with fixed-adaptive control selection. Journal of Sound and Vibration , 541:117300, 2022. [14] Xiaoyi Shen, Dongyuan Shi, Zhengding Luo, Junwei Ji, and Woon-Seng Gan. A survey of integrating wireless technology into active noise control. In INTER-NOISE and NOISE-CON Congress and Conference Proceedings , volume 270, pages 1624–1637. Institute of Noise Control Engineering, 2024. [15] Y. J. Chu, C. M. Mak, Y. Zhao, S. C. Chan, and M. Wu. Performance analysis of a di ff usion control method for anc systems and the network design. Journal of Sound and Vibration ,475:115273, 2020. [16] Tianyou Li, Li Rao, Sipei Zhao, Hongji Duan, Jing Lu, and Ian S. Burnett. An augmented di ff usion algorithm with bidirectional communication for a distributed active noise control system. The Journal of the Acoustical Society of America , 154(6):3568–3579, 2023. [17] Yang Zhou, Haiquan Zhao, Dongxu Liu, and Xinnian Guo. Distributed active noise control robust to impulsive interference. IEEE Sensors Journal , 2025. [18] Junwei Ji, Dongyuan Shi, and Woon-Seng Gan. Mixed-gradients distributed filtered reference least mean square algorithm – a robust distributed multichannel active noise control algorithm. 
+
+IEEE Transactions on Audio, Speech and Language Processing , 33:1563–1575, 2025. [19] Junwei Ji, Dongyuan Shi, Xiaoyi Shen, Woon-Seng Gan, Jie Chen, and Jun Yang. Implementation of distributed multichannel active noise control with intermittent communication and coprocessor assisted data combination. Mechanical Systems and Signal Processing , 248:114024, 2026. 10 |11 ICSV32, Annual Congress of International Institute of Acoustics and Vibration (IIAV), 5 - 10 July 2026 
+
+[20] Dongyuan Shi, Bhan Lam, Kenneth Ooi, Xiaoyi Shen, and Woon-Seng Gan. Selective fixed-filter active noise control based on convolutional neural network. Signal Processing ,190:108317, 2022. [21] Dongyuan Shi, Woon-Seng Gan, Bhan Lam, Zhengding Luo, and Xiaoyi Shen. Transferable latent of cnn-based selective fixed-filter active noise control. IEEE /ACM Transactions on Audio, Speech, and Language Processing , 31:2910–2921, 2023. [22] Yoshinobu Kajikawa, Woon-Seng Gan, and Sen M Kuo. Recent advances on active noise control: open issues and innovative applications. APSIPA Transactions on Signal and Information Processing , 1, 2012. [23] Dongyuan Shi, Woon-seng Gan, Xiaoyi Shen, Zhengding Luo, and Junwei Ji. What is behind the meta-learning initialization of adaptive filter?—a naive method for accelerating convergence of adaptive multichannel active noise control. Neural Networks , page 106145, 2024. [24] Zhengding Luo, Dongyuan Shi, Xiaoyi Shen, Junwei Ji, and Woon-Seng Gan. Deep generative fixed-filter active noise control. In ICASSP 2023-2023 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP) , pages 1–5. IEEE, 2023. [25] Junwei Ji, Dongyuan Shi, Zhengding Luo, Boxiang Wang, and Woon-Seng Gan. Self-boosted weight-constrained fxlms: A robustness distributed active noise control algorithm without internode communication. IEEE Signal Processing Letters , pages 1–5, 2025. [26] Xiaoyi Shen, Dongyuan Shi, Woon-Seng Gan, and Santi Peksi. Adaptive-gain algorithm on the fixed filters applied for active noise control headphone. Mechanical Systems and Signal Processing , 169:108641, 2022. [27] Chelsea Finn, Pieter Abbeel, and Sergey Levine. Model-agnostic meta-learning for fast adaptation of deep networks. In International conference on machine learning , pages 1126– 1135. PMLR, 2017. [28] Luisa Zintgraf, Kyriacos Shiarli, Vitaly Kurin, Katja Hofmann, and Shimon Whiteson. Fast context adaptation via meta-learning. In International Conference on Machine Learning , pages 7693–7702. PMLR, 2019. [29] Dongyuan Shi, Woon-Seng Gan, Bhan Lam, and Kenneth Ooi. Fast adaptive active noise control based on modified model-agnostic meta-learning algorithm. IEEE Signal Processing Letters ,28:593–597, 2021. [30] Xiaoyi Shen, Dongyuan Shi, and Woon-Seng Gan. Data-driven method to accelerate convergence of adaptive hybrid active noise control: Two-stage model-agnostic meta-learning. 
+
+IEEE Signal Processing Letters , 32:2654–2658, 2025. 11 |11
